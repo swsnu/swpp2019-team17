@@ -6,7 +6,7 @@ module.exports = {
     jest: true,
   },
   extends: [
-    'airbnb', 'pulgin:react/recommended'
+    'airbnb', 'plugin:react/recommended'
   ],
   globals: {
     Atomics: 'readonly',
