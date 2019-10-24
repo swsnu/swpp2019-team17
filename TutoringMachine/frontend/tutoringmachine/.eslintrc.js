@@ -3,10 +3,10 @@ module.exports = {
     browser: true,
     es6: true,
     node: true,
-    jest: true
+    jest: true,
   },
   extends: [
-    'airbnb', 'plugin:react/recommended'
+    'airbnb', 'pulgin:react/recommended'
   ],
   globals: {
     Atomics: 'readonly',
