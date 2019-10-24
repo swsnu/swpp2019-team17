@@ -6,7 +6,7 @@ import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 
 // for redux
 import { connect } from 'react-redux';
-import * as actionCreators from './store/actions/index';
+//import * as actionCreators from './store/actions/index';
 
 // import for modules
 import Login from './containers/Login/Login';
