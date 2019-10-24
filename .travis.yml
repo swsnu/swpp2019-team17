@@ -5,7 +5,7 @@ include:
 node_js:
 - '10' # node_js version
 before_install: # Script to run before install
-- cd frontend
+- cd TutoringMachine/frontend
 install: # Script to install required packages
 - yarn install
 script: # Script to test your build
