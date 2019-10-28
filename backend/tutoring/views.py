@@ -53,7 +53,7 @@ def tutor_page_tutoring(request,tutor_id):
 '''
 tutee_managers page
 '''
-def tutee_page_create(request,tutor_id):
+def tutee_page_create(request):
     '''
     implement
     '''
