@@ -3,11 +3,10 @@ import { BrowserRouter, Route, Redirect, Switch, } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 import './App.css';
 
-// containers
-import Login from './components/Login/Login';
-import SignUp from './components/SignUp/SignUp'
-import SignUpTutor from './components/SignUp/SignUpTutor'
-import SignUpTutee from './components/SignUp/SignUpTutee'
+import Login from '../Login/Login';
+import SignUp from '../SignUp/SignUp'
+import SignUpTutor from '../SignUp/SignUpTutor'
+import SignUpTutee from '../SignUp/SignUpTutee'
 
 function App(props) {
   return (
