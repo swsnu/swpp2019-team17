@@ -4,8 +4,10 @@ import { ConnectedRouter } from 'connected-react-router';
 import './App.css';
 
 // containers
-import Login from './containers/Login/Login';
-import Signup from './components/Login/Signup'
+import Login from './components/Login/Login';
+import SignUp from './components/SignUp/SignUp'
+import SignUpTutor from './components/SignUp/SignUpTutor'
+import SignUpTutee from './components/SignUp/SignUpTutee'
 
 function App(props) {
   return (
@@ -13,7 +15,9 @@ function App(props) {
       <div className="app">
         <Switch>
           <Route path="/login" exact component={Login} />
-          <Route path="/signup" exact component={Signup} />
+          <Route path="/signup" exact component={SignUp} />
+          <Route path="/signup/tutor" exact component={SignUpTutor} />
+          <Route path="/signup/tutee" exact component={SignUpTutee} />
           <Redirect from="/" to="/login" />
         </Switch>
       </div>
