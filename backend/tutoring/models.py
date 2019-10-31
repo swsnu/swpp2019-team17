@@ -13,7 +13,7 @@ class Tutor(User):
     '''
     schedule imagefield or 
     certificate imagefield
-    address
+    address tt
     '''
     GENDER_CHOICES = (
         ('male', 'Male'),
