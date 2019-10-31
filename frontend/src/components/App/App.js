@@ -1,12 +1,14 @@
 import React from 'react';
-import { BrowserRouter, Route, Redirect, Switch, } from 'react-router-dom';
+import {
+  BrowserRouter, Route, Redirect, Switch,
+} from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 import './App.css';
 
 import Login from '../Login/Login';
-import SignUp from '../SignUp/SignUp'
-import SignUpTutor from '../SignUp/SignUpTutor'
-import SignUpTutee from '../SignUp/SignUpTutee'
+import SignUp from '../SignUp/SignUp';
+import SignUpTutor from '../SignUp/SignUpTutor';
+import SignUpTutee from '../SignUp/SignUpTutee';
 
 function App(props) {
   return (

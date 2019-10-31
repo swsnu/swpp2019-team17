@@ -8,7 +8,7 @@ class SignUp extends Component {
         <button type="button" onClick={() => this.props.history.push('/signup/tutor/')}>Tutor</button>
         <button type="button" onClick={() => this.props.history.push('/signup/tutee/')}>Tutee</button>
       </div>
-    )
+    );
   }
 }
 

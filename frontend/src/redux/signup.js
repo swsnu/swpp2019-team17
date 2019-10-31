@@ -1,28 +1,20 @@
-import axios from 'axios'
+import axios from 'axios';
 
-//actions
-const SIGN_UP_TUTOR = 'SIGN_UP_TUTOR'
-const SIGN_UP_TUTEE = 'SIGN_UP_TUTEE'
+// actions
+const SIGN_UP_TUTOR = 'SIGN_UP_TUTOR';
+const SIGN_UP_TUTEE = 'SIGN_UP_TUTEE';
 
-//action creators
-export const signUpTutor = (tutor) => {
-  return (dispatch) => {
-    return axios.post('/api/signup/tutor/', tutor)
-  }
-}
+// action creators
+export const signUpTutor = (tutor) => (dispatch) => axios.post('/api/signup/tutor/', tutor);
 
-export const signUpTutee = (tutee) => {
-  return(dispatch) => {
-    return axios.post('/api/signup/tutee/', tutee)
-  }
-}
+export const signUpTutee = (tutee) => (dispatch) => axios.post('/api/signup/tutee/', tutee);
 
-//reducer
-export const reducer = (state=InitialState, action) => {
-  switch(action.type){
+// reducer
+export const reducer = (state = InitialState, action) => {
+  switch (action.type) {
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default reducer
+export default reducer;
