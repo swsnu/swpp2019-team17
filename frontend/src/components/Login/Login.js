@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import Signup from "../../components/Login/Signup";
-import { NavLink } from 'react-router-dom';
-
 
 class Login extends Component {
   state = {
