@@ -13,7 +13,7 @@ class Tutor(User):
     '''
     schedule imagefield or 
     certificate imagefield
-    address
+    address tt
     '''
     GENDER_CHOICES = (
         ('male', 'Male'),
@@ -43,3 +43,5 @@ class Tutee(models.Model):
     )
     gender=models.CharField(max_length=20, choices=GENDER_CHOICES)
     subject=models.CharField(max_length=40)
+    detailed_address_x=models.CharField(max_length=40,default='0')
+    detailed_address_y=models.CharField(max_length=40,default='0')
