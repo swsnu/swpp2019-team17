@@ -21,6 +21,8 @@ class Tutor(User):
     )
     gender=models.CharField(max_length=20, choices=GENDER_CHOICES)
     subject=models.CharField(max_length=40)
+    detailed_address_x=models.CharField(max_length=40,default='0')
+    detailed_address_y=models.CharField(max_length=40,default='0')
 
 class TuteeManager(User):
     '''

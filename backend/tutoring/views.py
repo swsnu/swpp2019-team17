@@ -1,28 +1,48 @@
 from django.shortcuts import render
-from django.http import HttpResponse,JsonResponse
+from django.http import HttpResponse,JsonResponse,HttpResponseNotAllowed
+from django.contrib.auth import authenticate,login,logout
 import json
 from .models import Tutor,TuteeManager,Tutee
 from django.contrib.auth import get_user_model
 from json import JSONDecodeError
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import ensure_csrf_cookie
 import requests
 
 User = get_user_model()
 
 def signin(request):
     if request.method == 'POST':
-        return HttpResponse(status=401)
+        try:
+            user_name=json.loads(request.body.decode())['username']
+            user_pass=json.loads(request.body.decode())['password']
+        except (KeyError, JSONDecodeError) as e:
+            return HttpResponse(status=400)
+
+        userA=authenticate(username=user_name,password=user_pass)
+        if userA is not None:
+            login(request,userA)
+            if Tutor.objects.get(username=user_name) is None:
+                return JsonResponse('TuteeManager',status=204,safe=False)
+            else:
+                return JsonResponse('Tutor',status=204,safe=False)
+        else:
+            return HttpResponse(status=401)
     else :
         return HttpResponse(status=405)
 
 def signout(request):
     if request.method == 'GET':
-        return HttpResponse(status=204)
+        if not request.user.is_authenticated:
+            return HttpResponse(status=401)
+        else:
+            logout(request)
+            return HttpResponse(status=204)
     else:
         return HttpResponse(status=405)
 
-@csrf_exempt
+
 def signup_tutee_manager(request):
     if request.method == 'POST':
         try:
@@ -34,17 +54,16 @@ def signup_tutee_manager(request):
         except (KeyError, JSONDecodeError) as e:
             return HttpResponse(status=400)
         
-        TuteeManager.objects.create_user(username=user_name1,password=pass_word1,phonenumber=phone1)
-        tuteeManager_list= [TuteeManager for TuteeManager in TuteeManager.objects.all().values()] 
+        TuteeManager.objects.create_user(username=user_name1,password=pass_word1,phonenumber=phone1,address=address1) 
         '''
         check if register tutee or not
         '''
-        return JsonResponse(tuteeManager_list,status=201,safe=False)
+        return JsonResponse("TuteeManager",status=201,safe=False)
     else:
         return HttpResponse(status=405)
 
 
-@csrf_exempt
+
 def signup_tutor(request):
     if request.method == 'POST':
         try:
@@ -59,9 +78,8 @@ def signup_tutor(request):
             return HttpResponse(status=400)
         
         Tutor.objects.create_user(username=user_name1,password=pass_word1,phonenumber=phone1,address=address1,gender=gender1,subject=subject1)
-        tutor_list= [Tutor for Tutor in Tutor.objects.all().values()] 
         
-        return JsonResponse(tutor_list,status=201,safe=False)
+        return JsonResponse("Tutor",status=201,safe=False)
     else:
         return HttpResponse(status=405)
 
@@ -117,3 +135,10 @@ def address(request, keyword):
     url = "http://api.vworld.kr/req/search?service=search&request=search&version=2.0&crs=EPSG:900913&size=10&page=1&type=address&category=road&format=json&errorformat=json&key=32988E9B-F11C-3071-B5BC-6806FAF87CE8&query="
     response = requests.get(url+keyword)
     return JsonResponse(response.json()['response']['result']['items'], status=200, safe=False)
+
+@ensure_csrf_cookie
+def token(request):
+    if request.method == 'GET':
+        return HttpResponse(status=204)
+    else:
+        return HttpResponseNotAllowed(['GET'])
