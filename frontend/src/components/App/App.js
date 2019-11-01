@@ -12,7 +12,7 @@ import SignUpTutee from '../SignUp/SignUpTutee';
 
 function App(props) {
   return (
-    <BrowserRouter>
+    <ConnectedRouter history={props.history}>
       <div className="app">
         <Switch>
           <Route path="/login" exact component={Login} />
@@ -22,7 +22,7 @@ function App(props) {
           <Redirect from="/" to="/login" />
         </Switch>
       </div>
-    </BrowserRouter>
+    </ConnectedRouter>
   );
 }
 

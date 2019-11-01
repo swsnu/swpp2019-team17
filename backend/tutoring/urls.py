@@ -15,4 +15,6 @@ urlpatterns = [
     path('tutee/<int:tutor_id>',views.tutee_page_profile,name='tutee_profile'),
     path('tutee/review/<int:tutor_id>',views.tutee_page_review,name='tutee_profile'),
     path('tutee/tutoring/<int:tutor_id>',views.tutee_page_tutoring,name='tutee_profile'),
+
+    path('address/<str:keyword>/', views.address, name='address')
 ]

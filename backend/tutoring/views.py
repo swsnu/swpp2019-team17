@@ -6,9 +6,7 @@ from django.contrib.auth import get_user_model
 from json import JSONDecodeError
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
-
-# Create your views here.
-
+import requests
 
 User = get_user_model()
 
@@ -114,3 +112,10 @@ def tutee_page_tutoring(request,tutor_id):
     implement
     '''
     return HttpResponse(status=404)
+
+def address(request, keyword):
+    url = "http://api.vworld.kr/req/search?service=search&request=search&version=2.0&crs=EPSG:900913&size=10&page=1&type=address&category=road&format=json&errorformat=json&key=32988E9B-F11C-3071-B5BC-6806FAF87CE8&query="
+    response = requests.get(url+keyword)
+    # response.data.response.result.items  -> array of search result
+    return JsonResponse(response.data.response.result.items, status=200, safe=False)
+    # .map((addr) => dispatch(getJuso_(addr.address.road + ' ' + addr.address.bldnm + ' ' + addr.point.x + ' ' + addr.point.y))))
