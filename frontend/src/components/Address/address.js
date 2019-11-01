@@ -4,21 +4,30 @@ import { withRouter } from 'react-router';
 import * as actionCreators from '../../redux/address'
 
 class Address extends React.Component {
-  componentWillMount() {
-    this.props.onGetAddress("서초대로26길19")
+  state={
+    address:'',
   }
   render() {
+    const addresses = this.props.storedAddress.map(address => {return (<div>{address.address.road + address.address.bldnm}</div>)})
     return (
       <div>
-        {this.props.storedJuso}
+        <label>address:</label>
+        <input
+          type="text"
+          value={this.state.address}
+          onChange={(event) => this.setState({ address: event.target.value })}
+        ></input>
+        <button onClick={() => this.props.onGetAddress(this.state.address)}>search address</button>
+        {addresses}
       </div>
     )
   }
 }
 
 const mapStateToProps = state => {
+  console.log(state.adr.address)
   return {
-    storedJuso: state.adr.juso,
+    storedAddress: state.adr.address,
   }
 }
 
