@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  BrowserRouter, Route, Redirect, Switch,
+  Route, Redirect, Switch,
 } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 import './App.css';

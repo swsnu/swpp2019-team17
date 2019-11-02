@@ -1,7 +1,7 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
-import addressReducer from './address'
 import { createBrowserHistory } from 'history';
+import addressReducer from './address';
 
 export const history = createBrowserHistory();
 
@@ -10,4 +10,4 @@ export const rootReducer = combineReducers({
   router: connectRouter(history),
 });
 
-export default rootReducer
+export default rootReducer;
