@@ -4,9 +4,16 @@ import DatePicker from 'react-date-picker'
 import Address from '../Address/address';
 import ChildItems from './ChildItems';
 
+import { connect } from 'react-redux';
+import actionCreators from '../../redux'; // plz check... first time at ducks...
+
+
 class SignUpTutee extends Component {
 
   state = {
+    id: '',
+    password: '',
+    phone: '',
     childList: [],
     cihldListSize: 0,
     childName: '',
@@ -45,6 +52,18 @@ class SignUpTutee extends Component {
           tutee signup input
           <Address />
         </div>
+        <div className="tutee-information-div">
+          <label className="tutee-id-label">ID</label>
+          <input className="tutee-id-input" type="text"
+            onChange={(event) => this.setState({id: event.target.value})} />
+          <label>Password</label>
+          <input className="tutee-password-input" type="password"
+            onChange={(event) => this.setState({password: event.target.value})} />
+          <label>Phone</label>
+          <input className="tutee-phone-input" type="text"
+            onChange={(event) => this.setState({phone: event.target.value})}/>
+        
+        </div>
         <div className="child-input-div">
           <h3 className="child-h3">Child</h3>
 
@@ -60,12 +79,26 @@ class SignUpTutee extends Component {
 
           <button type="button" onClick={() => this.addChild()}>Add</button>
         </div>
-        <div className="child-check-container-div">
+        <div className="child-list-container-div">
           {childItems}
+          <button type="button">Confirm</button>
         </div>
       </div>
     );
   }
 }
+export default SignUpTutee
+/*
+const mapStateToProps = state => {
+  return {
+    storedLogIn: state.login.logged
+  };
+};
 
-export default SignUpTutee;
+const mapDispatchToProps = dispatch => {
+  return {
+      signUp: (session) => dispatch(actionCreators.sign(session)),
+  }
+};
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpTutee);
+*/
