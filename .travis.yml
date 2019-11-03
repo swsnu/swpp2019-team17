@@ -35,7 +35,7 @@ matrix:
     - python manage.py makemigrations
     - python manage.py migrate
     script: 
-    - pylint */models.py */views/*.py */tests/*.py
+    - pylint --load-plugins pylint_django **/*.py
     - coverage run --branch --source='./tutoring' manage.py test
     - coverage report -m
     after_success: 
