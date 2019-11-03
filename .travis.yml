@@ -26,14 +26,14 @@ matrix:
     python: 
     - "3.7"
     - "3.8"
+    before_install: 
+    - cd backend
     install: 
     - pip install -r requirement_tutoring.txt
     - pip install coveralls
-    before_install: 
-    - cd backend
+    migrate:
     - python manage.py makemigrations
     - python manage.py migrate
-
     script: 
     - pylint */models.py */views/*.py */tests/*.py
     - coverage run --branch --source='./tutoring' manage.py test
