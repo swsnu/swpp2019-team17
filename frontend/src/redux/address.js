@@ -4,13 +4,13 @@ import axios from 'axios';
 const SEARCH_ADDRESS = 'SEARCH_ADDRESS';
 
 // action creators
-export const searchAddress = (keyword) => (dispatch) => axios.get(`/address/${keyword}`)
-  .then((res) => dispatch(searchAddress_(res.data)));
-
 export const searchAddress_ = (address) => ({
   type: SEARCH_ADDRESS,
   address,
 });
+
+export const searchAddress = (keyword) => (dispatch) => axios.get(`/address/${keyword}`)
+  .then((res) => dispatch(searchAddress_(res.data)));
 
 // reducer
 const InitialState = {

@@ -4,11 +4,11 @@ import { withRouter } from 'react-router';
 import * as actionCreators from '../../redux/address'
 
 class Address extends React.Component {
-  state={
-    address:'',
+  state = {
+    address: '',
   }
   render() {
-    const addresses = this.props.storedAddress.map(address => {return (<div>{address.address.road + address.address.bldnm}</div>)})
+    const addresses = this.props.storedAddress.map(address => { return (<div>{address.address.road + address.address.bldnm}</div>) })
     return (
       <div>
         <label>address:</label>

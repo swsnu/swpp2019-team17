@@ -10,6 +10,10 @@ export const signUpTutor = (tutor) => (dispatch) => axios.post('/signup/tutor/',
 export const signUpTutee = (tutee) => (dispatch) => axios.post('/signup/tutee/', tutee);
 
 // reducer
+const InitialState = {
+
+}
+
 export const reducer = (state = InitialState, action) => {
   switch (action.type) {
     default:
