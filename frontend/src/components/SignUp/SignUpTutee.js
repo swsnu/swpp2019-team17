@@ -5,7 +5,7 @@ import Address from '../Address/address';
 import ChildItems from './ChildItems';
 
 import { connect } from 'react-redux';
-import actionCreators from '../../redux'; // plz check... first time at ducks...
+import actionCreators from '../../redux/reducer'; // plz check... first time at ducks...
 
 
 class SignUpTutee extends Component {
