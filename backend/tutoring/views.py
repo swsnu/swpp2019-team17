@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse,HttpResponseNotAllowed
 from django.contrib.auth import authenticate,login,logout
 import json
-from .models import Tutor,TuteeManager,Tutee
+from .models import Tutor,TuteeManager,Tutee,Tutoring,Review
 from django.contrib.auth import get_user_model
 from json import JSONDecodeError
 from django.shortcuts import get_object_or_404
@@ -108,24 +108,59 @@ def tutor_page_tutoring(request,tutor_id):
 tutee_managers page
 '''
 def tutee_page_create(request):
-    '''
-    implement
-    '''
-    return HttpResponse(status=404)  
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
+    else:
+        if request.method == 'POST':
+            try:
+                req_data = json.loads(request.body.decode())
+                name1 = req_data['name']
+                gender1 = req_data['gender']
+                subject1=req_data['subject']
+            except (KeyError, JSONDecodeError) as e:
+                return HttpResponse(status=400)
+            tutee=Tutee()
+            tutee.name=name1
+            tutee.gender=gender1
+            tutee.subject=subject1
+            tutee.save()
+            return HttpResponse(status=201)
+        else:
+            return HttpResponse(status=405)  
 
-def tutee_page_profile(request,tutor_id):
+def tutee_page_profile(request,tutee_id):
     '''
     implement
     '''
     return HttpResponse(status=404)       
 
-def tutee_page_review(request,tutor_id):
+def tutee_page_review(request,tutee_id):
     '''
     implement
     '''
     return HttpResponse(status=404)
 
-def tutee_page_tutoring(request,tutor_id):
+def tutee_page_tutoring(request,tutee_id):
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
+    else:
+        if request.method == 'POST':
+            try:
+                req_data = json.loads(request.body.decode())
+
+                '''
+                choose informations address, fee, tutor, subject
+                '''
+
+            except (KeyError, JSONDecodeError) as e:
+                return HttpResponse(status=400)
+            tutee=Tutee.objects.get(id=tutee_id)
+            tutoring=Tutoring()
+            tutoring.tutee=tutee
+            tutoring.save()
+            return HttpResponse(status=201)
+        else:
+            return HttpResponse(status=405)
     '''
     implement
     '''
