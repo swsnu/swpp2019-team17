@@ -16,7 +16,7 @@ matrix:
     - npm install
     - npm install coveralls
     script: # Script to test your build
-    - ./node_modules/.bin/eslint src
+    - ./node_modules/.bin/eslint -c ./.eslintrc.js src
     - yarn test --coverage --watchAll=false
     - sonar-scanner
     after_success: 
