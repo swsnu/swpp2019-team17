@@ -50,7 +50,6 @@ def signup_tutee_manager(request):
             user_name1 = req_data['username']
             pass_word1 = req_data['password']
             phone1=req_data['phonenumber']
-            address1=req_data['address']
         except (KeyError, JSONDecodeError) as e:
             return HttpResponse(status=400)
         

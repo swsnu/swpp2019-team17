@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import './Login.css';
 
 class Login extends Component {
   state = {
-    email: '',
+    username: '',
     password: '',
   };
 
@@ -10,15 +11,15 @@ class Login extends Component {
     return (
       <div className="login">
         <div className="login">
-          <label>email: </label>
+          <label>ID</label>
           <input
             id="id-input"
             type="text"
-            value={this.state.email}
-            onChange={(event) => { this.setState({ email: event.target.value }) }}
+            value={this.state.username}
+            onChange={(event) => { this.setState({ username: event.target.value }) }}
           />
           <br />
-          <label>password: </label>
+          <label>password</label>
           <input
             id="pw-input"
             type="password"
@@ -28,8 +29,8 @@ class Login extends Component {
           <br />
         </div>
         <div id="buttons">
-          <button id="login-button" onClick={() => this.loginHandler()}>log in</button>
-          <button id="signup-button" onClick={() => this.props.history.push('/signup/')}>sign up</button>
+          <button id="login-button" onClick={() => this.loginHandler()}>Sign in</button>
+          <button id="signup-button" onClick={() => this.props.history.push('/signup/')}>Sign up</button>
         </div>
       </div>
     )
