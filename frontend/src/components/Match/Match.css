@@ -1,0 +1,13 @@
+.result {
+    border-top:solid;
+}
+.matchedtutor {
+    border:solid;
+    margin:5px;
+}
+
+fieldset {
+    border:solid;
+    float:left;
+    width:33%;
+}
