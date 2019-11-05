@@ -7,8 +7,9 @@ class Address extends React.Component {
   state = {
     address: '',
   }
+
   render() {
-    const addresses = this.props.storedAddress.map(address => { return (<div>{address.address.road + address.address.bldnm}</div>) })
+    const addresses = this.props.storedAddress.map((address) => (<div id={address.address.road}>{address.address.road + address.address.bldnm}</div>))
     return (
       <div>
         <label>address:</label>
@@ -16,7 +17,7 @@ class Address extends React.Component {
           type="text"
           value={this.state.address}
           onChange={(event) => this.setState({ address: event.target.value })}
-        ></input>
+        />
         <button onClick={() => this.props.onGetAddress(this.state.address)}>search address</button>
         {addresses}
       </div>
@@ -24,16 +25,14 @@ class Address extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   console.log(state.adr.address)
   return {
     storedAddress: state.adr.address,
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onGetAddress: (addr) => dispatch(actionCreators.searchAddress(addr))
-  }
-}
+const mapDispatchToProps = (dispatch) => ({
+  onGetAddress: (addr) => dispatch(actionCreators.searchAddress(addr)),
+})
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Address));

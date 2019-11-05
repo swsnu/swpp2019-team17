@@ -6,12 +6,13 @@ module.exports = {
     jest: true
   },
   extends: [
-    'airbnb', 'plugin:react/recommended'
+    'plugin:react/recommended'
   ],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
   },
+  parser: "babel-eslint",
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -28,7 +29,7 @@ module.exports = {
     "semi": 0,
     "react/prop-types": 0,
     "react/prefer-stateless-function": 0,
-    "react/destructiong-assignment": 0,
+    "react/destructuring-assignment": 0,
     "no-underscore-dangle": 0,
   },
 };

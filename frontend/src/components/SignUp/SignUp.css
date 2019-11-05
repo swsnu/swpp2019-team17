@@ -1,0 +1,19 @@
+.content {
+    display: block;
+    margin: 5px auto;
+    text-align: center;
+    font-weight: bold;
+    font-size:20px;
+}
+
+.content button {
+    margin: 5px 30px;
+    padding: 10px;
+    font: inherit;
+    font-size: 20px;
+    font-weight: bold;
+    border: 1px solid rgba(61, 110, 184, 0.5);
+    background-color: rgba(61, 110, 184, 0.5);
+    color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+  }

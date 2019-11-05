@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import DatePicker from 'react-date-picker'
 
+import { connect } from 'react-redux';
+import { array } from 'prop-types';
 import Address from '../Address/address';
 import TuteeSignupForm from './TuteeSignupForm'
 
-import { connect } from 'react-redux';
-import { array } from 'prop-types';
 // import actionCreators from '../../redux'; // plz check... first time at ducks...
 
 class SignUpTutee extends Component {
@@ -26,33 +26,36 @@ class SignUpTutee extends Component {
   // };
 
   addChild = () => {
-    let newChild = {
+    const newChild = {
       id: this.state.childID + 1,
       name: '',
-      //birthday: this.state.childBirthday
+      // birthday: this.state.childBirthday
     }
 
     this.setState({ childList: this.state.childList.concat(newChild), childID: this.state.childID + 1 })
   }
+
   ChangeName = (name, index) => {
-    let copyState = this.state.childList;
-    copyState[index]['name'] = name;
+    const copyState = this.state.childList;
+    copyState[index].name = name;
     this.setState({ childList: copyState })
   }
+
   Delete = (index) => {
-    let copyState = this.state.childList;
+    const copyState = this.state.childList;
     copyState.splice(index, 1)
     this.setState({ childList: copyState })
   }
+
   render() {
     let index = -1;
-    let tuteeSignupForms = this.state.childList.map((key) => { //key = {id: , name: ...}
+    const tuteeSignupForms = this.state.childList.map((key) => { // key = {id: , name: ...}
       index += 1;
       return (
         <TuteeSignupForm
           key={index}
           id={index}
-          name={this.state.childList[index]['name']}
+          name={this.state.childList[index].name}
           onChangeName={this.ChangeName}
           // birthday={item.birthday.getMonth()}
           onClickDelete={this.Delete}
@@ -72,7 +75,7 @@ class SignUpTutee extends Component {
             onChange={this.setBirthday}
             value={this.state.birthday}
           />
-          
+
         </div> */}
         <div className="child-list-container-div">
           {tuteeSignupForms}
