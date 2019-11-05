@@ -29,7 +29,7 @@ module.exports = {
     "semi": 0,
     "react/prop-types": 0,
     "react/prefer-stateless-function": 0,
-    "react/destructiong-assignment": [<enabled/>, 'never'],
+    "react/destructiong-assignment": [<enabled>, 'never'],
     "no-underscore-dangle": 0,
   },
 };
