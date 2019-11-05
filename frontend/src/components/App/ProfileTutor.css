@@ -7,16 +7,19 @@
     font-size:200%;
     padding-top:50px;
     padding-left:50px;
+    font-family:serif;
 }
 
 .profiletutor h2{
     text-align: left;
     font-size:150%;
+    font-family:serif;
 }
 
 .profiletutor h3{
     text-align: left;
     font-size:120%;
+    font-family:serif;
 }
 
 .profiletutor img{

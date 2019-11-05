@@ -7,12 +7,15 @@ class ProfileTutor extends Component {
       name: 'Gildong Hong',
       username:'tutoring',
       photo:'',
+      schedule:'',
       age:'23',
       subject:'Math',
       gender:'Male',
       phonenumber:'010-1234-5678',
       address:'관악로 25길 11, 402호',
       certificate: null,
+      //dummy data
+      //실제에서는 id(key값)-> data를 불러와서 setstate
     };
     
     render() {
@@ -52,5 +55,5 @@ class ProfileTutor extends Component {
       );
     }
   }
-  
+  //싹다 dummy data입니다
   export default ProfileTutor;
