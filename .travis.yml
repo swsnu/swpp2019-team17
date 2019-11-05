@@ -35,7 +35,7 @@ matrix:
     - python manage.py makemigrations
     - python manage.py migrate
     script: 
-    - pylint manage.py
+    - pylint manage.py --exit-zero
     - coverage run --branch --source='./tutoring' manage.py test
     - coverage report -m
     - coveralls
