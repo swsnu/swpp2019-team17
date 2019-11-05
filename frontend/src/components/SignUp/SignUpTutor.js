@@ -4,7 +4,7 @@ class SignUpTutor extends Component {
   state = {
     id: '',
     password: '',
-    certificate: null
+    certificate: null,
   };
 
   handleFileUpload = () => {
@@ -16,15 +16,24 @@ class SignUpTutor extends Component {
       <div className="signuptutor-div">
         <div className="signuptutor-div-input">
           <label className="signuptutor-label-id">ID</label>
-          <input type="text" className="signuptutor-input-id"
-            onChange={(event) => this.setState({id: event.target.value})} />
+          <input
+            type="text"
+            className="signuptutor-input-id"
+            onChange={(event) => this.setState({ id: event.target.value })}
+          />
           <label className="signuptutor-label-password">Password</label>
-          <input type="password" className="signuptutor-input-password"
-            onChange={(event) => this.setState({password: event.target.value})}/>
-          
+          <input
+            type="password"
+            className="signuptutor-input-password"
+            onChange={(event) => this.setState({ password: event.target.value })}
+          />
+
           <label className="signuptutor-label-certificate">Certificate</label>
-          <input type="file" className="signuptutor-input-certificate"
-            onChange={event => this.handleFileUpload(event)} />
+          <input
+            type="file"
+            className="signuptutor-input-certificate"
+            onChange={(event) => this.handleFileUpload(event)}
+          />
         </div>
       </div>
     );

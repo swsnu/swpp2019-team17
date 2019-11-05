@@ -6,12 +6,13 @@ module.exports = {
     jest: true
   },
   extends: [
-    'airbnb', 'plugin:react/recommended'
+    'plugin:react/recommended'
   ],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
   },
+  parser: "babel-eslint",
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
