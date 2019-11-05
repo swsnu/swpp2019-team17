@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import DatePicker from 'react-date-picker'
 
 import Address from '../Address/address';
 import TuteeSignupForm from './TuteeSignupForm'
 
 import { connect } from 'react-redux';
 import { array } from 'prop-types';
-// import actionCreators from '../../redux'; // plz check... first time at ducks...
 
 class SignUpTutee extends Component {
   state = {
