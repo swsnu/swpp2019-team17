@@ -40,7 +40,7 @@ class Tutee(models.Model):
         TuteeManager,
         on_delete=models.CASCADE,
     )
-    name=models.CharField(max_length=10)
+    name=models.CharField(max_length=10,null=True,blank=True)
     gender=models.CharField(max_length=20, choices=GENDER_CHOICES)
     subject=models.CharField(max_length=40)
     detailed_address_x=models.CharField(max_length=40,default='0')

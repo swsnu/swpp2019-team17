@@ -78,9 +78,9 @@ WSGI_APPLICATION = 'tutoringmachine.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tutoringdb',
-        'USER': 'tutoring',
-        'PASSWORD': 'machine',
+        'NAME': 'tutoringmachine_db',
+        'USER': 'root',
+        'PASSWORD': 'password',
         'HOST':'127.0.0.1',
         'PORT':'3306',
     }
