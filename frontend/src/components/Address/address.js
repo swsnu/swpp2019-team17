@@ -9,7 +9,7 @@ class Address extends React.Component {
   }
 
   render() {
-    const addresses = this.props.storedAddress.map((address) => (<div id={address.address.road}>{address.address.road + address.address.bldnm}</div>))
+    const addresses = this.props.storedAddress.map((address) => (<div key={address.address.road}>{address.address.road + address.address.bldnm}</div>))
     return (
       <div>
         <label>address:</label>
