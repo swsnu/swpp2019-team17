@@ -84,9 +84,10 @@ class SignUpTutor extends Component {
               onChange={value => this.setState({ phone: value })}
             />
           </label>
-          <label>gender
+          <br/>
+          <div className="gender">Gender:
             <Select options={[{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }]}></Select>
-          </label>
+          </div>
           <div className="signuptutor-div-authorize">
             <label className="signuptutor-label-certificate">Certificate:</label>
             <input type="file" className="signuptutor-input-certificate"
@@ -94,12 +95,13 @@ class SignUpTutor extends Component {
             <p>{message}</p>
           </div>
           <label>
-            age
+            Age:
           <input></input>
           </label>
-          <label>university
+          <br/>
+          <div className='university'>university
           <Select options={university_options} closeMenuOnSelect={true} onChange={(selectedoption) => this.ChangeUniversity(selectedoption)} />
-          </label>
+          </div>
           <label className="subject-label">
             subject
             <div className='select'>
