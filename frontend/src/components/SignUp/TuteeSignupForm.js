@@ -37,7 +37,7 @@ class TuteeSignupForm extends Component {
         </label>
         <label>available time</label>
         <AvailableTimes height={600} />
-        <button onClick={() => this.props.onClickDelete(this.props.id)}>delete</button>
+        {this.props.id != 0 ? <button onClick={() => this.props.onClickDelete(this.props.id)}>delete</button> : null}
       </div>
     )
   }
