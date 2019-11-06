@@ -26,7 +26,7 @@ class SignUpTutor extends Component {
     this.setState({ subject: subject })
   }
   ChangeUniversity = (university) => {
-    this.setState({ university: university})
+    this.setState({ university: university })
   }
 
   ClickConfirm = () => {
@@ -44,36 +44,36 @@ class SignUpTutor extends Component {
       { value: 'science', label: 'Science' },
       { value: 'social study', label: 'Social Study' },
     ]
-    const university_options =[
-      {value: 'SNU', label: 'SNU'},
-      {value: 'Yonsei', label: 'Yonsei'},
-      {value: 'Korea', label: 'Korea'},
-      {value: 'Kaist', label: 'Kaist'},
-      {value: 'Postech', label: 'Postech'},
+    const university_options = [
+      { value: 'SNU', label: 'SNU' },
+      { value: 'Yonsei', label: 'Yonsei' },
+      { value: 'Korea', label: 'Korea' },
+      { value: 'Kaist', label: 'Kaist' },
+      { value: 'Postech', label: 'Postech' },
     ]
     return (
       <div className="signuptutor-div">
         <div className="signuptutor-div-input">
           <div className="signuptutor-label-id">ID:
           <input
-            type="text"
-            className="signuptutor-input-id"
-            onChange={(event) => this.setState({ id: event.target.value })}
-          />
+              type="text"
+              className="signuptutor-input-id"
+              onChange={(event) => this.setState({ id: event.target.value })}
+            />
           </div>
           <div className="signuptutor-label-password">Password:
           <input
-            type="password"
-            className="signuptutor-input-password"
-            onChange={(event) => this.setState({ password: event.target.value })}
-          />
+              type="password"
+              className="signuptutor-input-password"
+              onChange={(event) => this.setState({ password: event.target.value })}
+            />
           </div>
           <div className="signuptutor-label-password">Password Confimation:
           <input
-            type="password"
-            className="signuptutor-input-password-confimation"
-            onChange={(event) => this.setState({ password_confimation: event.target.value })}
-          />
+              type="password"
+              className="signuptutor-input-password-confimation"
+              onChange={(event) => this.setState({ password_confimation: event.target.value })}
+            />
           </div>
 
           <label>
@@ -103,11 +103,12 @@ class SignUpTutor extends Component {
           <label className="subject-label">
             subject
             <div className='select'>
-          <Select options={options} closeMenuOnSelect={false} isMulti={true} onChange={(selectedoptions) => this.ChangeSubject(selectedoptions)} />
-          </div>
-          </div>
+              <Select options={options} closeMenuOnSelect={false} isMulti={true} onChange={(selectedoptions) => this.ChangeSubject(selectedoptions)} />
+            </div>
+          </label>
           <div className="timetable">
-          <AvailableTimes height={600} />
+            <AvailableTimes height={600} />
+          </div>
           <button onClick={this.ClickConfirm}>Confirm</button>
         </div>
       </div>
