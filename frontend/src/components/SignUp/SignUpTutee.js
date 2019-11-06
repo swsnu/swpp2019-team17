@@ -46,6 +46,9 @@ class SignUpTutee extends Component {
     this.setState({ childList: copyState })
   }
 
+  ClickConfirm = () => {
+    this.props.history.push('/tutee/match/')
+  }
   render() {
     let index = -1;
     const tuteeSignupForms = this.state.childList.map((key) => { // key = {id: , name: ...}
@@ -103,7 +106,7 @@ class SignUpTutee extends Component {
         <div className="child-list-container-div">
           {tuteeSignupForms}
           <button type="button" onClick={() => this.addChild()}>Add</button>
-          <button type="button">Confirm</button>
+          <button type="button" onClick={this.ClickConfirm}>Confirm</button>
         </div>
         {/* <TimeGridScheduler classes={classes} {...otherProps} /> */}
       </div>

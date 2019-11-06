@@ -24,6 +24,9 @@ class SignUpTutor extends Component {
     this.setState({ subject: subject })
   }
 
+  ClickConfirm = () => {
+    this.props.history.push('/profile/tutor/')
+  }
   render() {
     let message = '';
     if (this.state.isAuthorized) {
@@ -66,6 +69,9 @@ class SignUpTutor extends Component {
               onChange={value => this.setState({ phone: value })}
             />
           </label>
+          <label>gender
+            <Select options={[{value: 'male', label: 'Male'}, {value: 'female', label: 'Female'}]}></Select>
+          </label>
           <div className="signuptutor-div-authorize">
             <label className="signuptutor-label-certificate">Certificate</label>
             <input type="file" className="signuptutor-input-certificate"
@@ -77,7 +83,7 @@ class SignUpTutor extends Component {
           <Select options={options} closeMenuOnSelect={false} isMulti={true} onChange={(selectedoptions) => this.ChangeSubject(selectedoptions)} />
           </label>
           <AvailableTimes height={600} />
-          <button>Confirm</button>
+          <button onClick={this.ClickConfirm}>Confirm</button>
         </div>
       </div>
     );
