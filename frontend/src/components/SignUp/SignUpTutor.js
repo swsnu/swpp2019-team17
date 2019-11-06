@@ -8,13 +8,23 @@ class SignUpTutor extends Component {
     password_confimation: '',
     certificate: null,
     phone: '',
+    isAuthorized: false
   };
 
-  handleFileUpload = () => {
+  handleFileUpload = (event) => {
+    const formData = new FormData();
+    formData.append('file',  event.target.files[0]);
 
+    this.setState({isAuthorized: true})
   };
 
   render() {
+    
+    let message = '';
+    if (this.state.isAuthorized) {
+      message = 'Your certified has been authorized!'
+    }
+
     return (
       <div className="signuptutor-div">
         <div className="signuptutor-div-input">
@@ -43,13 +53,13 @@ class SignUpTutor extends Component {
             value={this.state.phone}
             onChange={value => this.setState({ phone: value })}
           />
-        </label>
-          <label className="signuptutor-label-certificate">Certificate</label>
-          <input
-            type="file"
-            className="signuptutor-input-certificate"
-            onChange={(event) => this.handleFileUpload(event)}
-          />
+        </label>          
+          <div className="signuptutor-div-authorize">
+            <label className="signuptutor-label-certificate">Certificate</label>
+            <input type="file" className="signuptutor-input-certificate"
+              onChange={event => this.handleFileUpload(event)} />
+            <p>{message}</p>
+          </div>
         </div>
       </div>
     );

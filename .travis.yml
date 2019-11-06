@@ -38,5 +38,5 @@ matrix:
     - pylint manage.py --exit-zero
     - coverage run --branch --source='./tutoring' manage.py test
     - coverage report -m
-    - coveralls
     after_success: 
+    - coveralls
