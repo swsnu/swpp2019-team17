@@ -3,11 +3,27 @@
 }
 .matchedtutor {
     border:solid;
-    margin:5px;
+    margin:20px;
+    display: flex;
 }
 
 fieldset {
-    border:solid;
-    float:left;
-    width:33%;
+    text-align: center;
+    display: inline;
+    margin:5px;
+    width: 50%;
+}
+
+input {
+    margin: 20px;
+}
+
+.information {
+    display: inline;
+    flex: 3;
+}
+
+.available {
+    display: inline;
+    flex: 1;
 }

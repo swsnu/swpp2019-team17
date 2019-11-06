@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Select from 'react-select'
+import AvailableTimes from 'react-available-times'
 
 class TuteeSignupForm extends Component {
-  constructor(){
+  constructor() {
     super();
   }
   render() {
@@ -25,8 +26,17 @@ class TuteeSignupForm extends Component {
         </label>
         <label className="subject-label">
           subject
-          <Select options={options} closeMenuOnSelect={false} isMulti={true} onChange={(selectedoptions) => this.props.onChangeSubject(selectedoptions, this.props.id)}/>
+          <Select options={options} closeMenuOnSelect={false} isMulti={true} onChange={(selectedoptions) => this.props.onChangeSubject(selectedoptions, this.props.id)} />
         </label>
+        <label>
+          age
+          <input></input>
+        </label>
+        <label>gender
+          <Select options={[{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }]}></Select>
+        </label>
+        <label>available time</label>
+        <AvailableTimes height={600} />
         <button onClick={() => this.props.onClickDelete(this.props.id)}>delete</button>
       </div>
     )

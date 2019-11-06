@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PhoneInput from 'react-phone-number-input/input'
+import Select from 'react-select'
+import AvailableTimes from 'react-available-times'
 
 class SignUpTutor extends Component {
   state = {
@@ -8,22 +10,35 @@ class SignUpTutor extends Component {
     password_confimation: '',
     certificate: null,
     phone: '',
-    isAuthorized: false
+    isAuthorized: false,
+    subject: [],
   };
 
   handleFileUpload = (event) => {
     const formData = new FormData();
-    formData.append('file',  event.target.files[0]);
-
-    this.setState({isAuthorized: true})
+    formData.append('file', event.target.files[0]);
+    this.setState({ isAuthorized: true })
   };
 
+  ChangeSubject = (subject) => {
+    this.setState({ subject: subject })
+  }
+
+  ClickConfirm = () => {
+    this.props.history.push('/profile/tutor/')
+  }
   render() {
-    
     let message = '';
     if (this.state.isAuthorized) {
       message = 'Your certified has been authorized!'
     }
+    const options = [
+      { value: 'korean', label: 'Korean' },
+      { value: 'math', label: 'Math' },
+      { value: 'english', label: 'English' },
+      { value: 'science', label: 'Science' },
+      { value: 'society', label: 'Society' },
+    ]
 
     return (
       <div className="signuptutor-div">
@@ -47,19 +62,32 @@ class SignUpTutor extends Component {
             onChange={(event) => this.setState({ password_confimation: event.target.value })}
           />
           <label>
-          Phone number
+            Phone number
           <PhoneInput
-            country="KR"
-            value={this.state.phone}
-            onChange={value => this.setState({ phone: value })}
-          />
-        </label>          
+              country="KR"
+              value={this.state.phone}
+              onChange={value => this.setState({ phone: value })}
+            />
+          </label>
+          <label>gender
+            <Select options={[{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }]}></Select>
+          </label>
           <div className="signuptutor-div-authorize">
             <label className="signuptutor-label-certificate">Certificate</label>
             <input type="file" className="signuptutor-input-certificate"
               onChange={event => this.handleFileUpload(event)} />
             <p>{message}</p>
           </div>
+          <label>
+            age
+          <input></input>
+          </label>
+          <label className="subject-label">
+            subject
+          <Select options={options} closeMenuOnSelect={false} isMulti={true} onChange={(selectedoptions) => this.ChangeSubject(selectedoptions)} />
+          </label>
+          <AvailableTimes height={600} />
+          <button onClick={this.ClickConfirm}>Confirm</button>
         </div>
       </div>
     );
