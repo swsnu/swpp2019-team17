@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PhoneInput from 'react-phone-number-input/input'
 import Select from 'react-select'
+import AvailableTimes from 'react-available-times'
 
 class SignUpTutor extends Component {
   state = {
@@ -75,6 +76,7 @@ class SignUpTutor extends Component {
             subject
           <Select options={options} closeMenuOnSelect={false} isMulti={true} onChange={(selectedoptions) => this.ChangeSubject(selectedoptions)} />
           </label>
+          <AvailableTimes height={600} />
           <button>Confirm</button>
         </div>
       </div>

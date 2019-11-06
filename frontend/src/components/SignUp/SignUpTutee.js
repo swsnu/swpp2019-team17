@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-
 import { connect } from 'react-redux';
 import Address from '../Address/address';
 import TuteeSignupForm from './TuteeSignupForm'
 import PhoneInput from 'react-phone-number-input/input'
-import AvailableTimes from 'react-available-times'
 // import { TimeGridScheduler, classes } from '@remotelock/react-week-scheduler';
 // import actionCreators from '../../redux';
 
@@ -107,7 +105,6 @@ class SignUpTutee extends Component {
           <button type="button" onClick={() => this.addChild()}>Add</button>
           <button type="button">Confirm</button>
         </div>
-        {/* <AvailableTimes height={800} availableHourRange={{ start: 9, end: 23 }}/> */}
         {/* <TimeGridScheduler classes={classes} {...otherProps} /> */}
       </div>
     );

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Select from 'react-select'
+import AvailableTimes from 'react-available-times'
 
 class TuteeSignupForm extends Component {
   constructor(){
@@ -31,6 +32,8 @@ class TuteeSignupForm extends Component {
           age
           <input></input>
         </label>
+        <label>available time</label>
+        <AvailableTimes height={600} />
         <button onClick={() => this.props.onClickDelete(this.props.id)}>delete</button>
       </div>
     )
