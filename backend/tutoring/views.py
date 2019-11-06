@@ -168,7 +168,16 @@ def tutee_page_tutoring(request,tutee_id):
 def address(request, keyword):
     url = "http://api.vworld.kr/req/search?service=search&request=search&version=2.0&crs=EPSG:900913&size=10&page=1&type=address&category=road&format=json&errorformat=json&key=32988E9B-F11C-3071-B5BC-6806FAF87CE8&query="
     response = requests.get(url+keyword)
-    return JsonResponse(response.json()['response']['result']['items'], status=200, safe=False)
+    if(response.json()['response']['status'] == 'NOT_FOUND'):
+        return HttpResponse(status=404)
+    else:
+        result = []
+        x = len(response.json()['response']['result']['items'])
+        result.append(response.json()['response']['result']['items'][0])
+        for i in range(1,x):
+            if (response.json()['response']['result']['items'][0]['id'] != response.json()['response']['result']['items'][i]['id']):
+                result.append(response.json()['response']['result']['items'][i])
+        return JsonResponse(result, status=200, safe=False)
 
 @ensure_csrf_cookie
 def token(request):

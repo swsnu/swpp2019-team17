@@ -27,6 +27,10 @@ class TuteeSignupForm extends Component {
           subject
           <Select options={options} closeMenuOnSelect={false} isMulti={true} onChange={(selectedoptions) => this.props.onChangeSubject(selectedoptions, this.props.id)}/>
         </label>
+        <label>
+          age
+          <input></input>
+        </label>
         <button onClick={() => this.props.onClickDelete(this.props.id)}>delete</button>
       </div>
     )
