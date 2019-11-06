@@ -11,7 +11,9 @@ class Match extends Component {
     state = {
         matchresult: [{gender: 'male', name: 'Cheol-su'}, {gender: 'female', name: 'Young-hee'}],
         male: true,
-        female: true
+        female: true,
+        science: true,
+        math: true
     };
     
     componentDidMount() {
@@ -28,12 +30,27 @@ class Match extends Component {
     onChangeGirl = (ele) => {
         this.setState({female: !this.state.female})
     }
+
+    onChangeMath = (ele) => {
+        this.setState({math: !this.state.math})
+    }
+
+    onChangeScience = (ele) => {
+        this.setState({science: !this.state.science})
+    }
     
     render() {
         let genderNum =  [0 , 0]
+        let subjectNum = [0,0,0,0,0]
 
         const MALE = 0;
         const FEMALE = 1;
+
+        const KOREAN = 0;
+        const ENGLISH = 1;
+        const MATH = 2;
+        const SOCIAL = 3;
+        const SCIENCE = 4;
 
         let tutorlistjsx = null;
 
@@ -61,6 +78,16 @@ class Match extends Component {
             }
         }
 
+        if (!this.state.science) {
+            temp = temp.filter(tutor => tutor.subject !== 'Science')
+        }
+        if (!this.state.math) {
+            temp = temp.filter(tutor => tutor.subject !== 'Math')
+        }
+
+        var science = 0;
+        var math = 0;
+
         tutorlistjsx = temp.map((tutor) => {
 
 
@@ -83,6 +110,14 @@ class Match extends Component {
                     genderNum[FEMALE]++;
                 }
 
+
+                if (tutor.subject === 'Science') {
+                    science++;
+                }
+                if (tutor.subject === 'Math') {
+                    math++;
+                }
+
                 return (<MatchedTutor name={tutor.name} gender={tutor.gender} subject={tutor.subject}/>);
             });
         }
@@ -100,10 +135,15 @@ class Match extends Component {
             <div className="matching">
                 <div className="condition">
                     {genderswitch}
-                    <fieldset className="education">
-                        <legend>education</legend>
-                        <input type="checkbox" /> SNU
-                        <input type="checkbox" /> KU
+                    <fieldset className="subject">
+                        <legend>Subject</legend>
+                        <input type="checkbox" defaultChecked='true'/> Korean (0) 
+                        <input type="checkbox" defaultChecked='true'/> English (0) 
+                        <input type="checkbox" defaultChecked='true'
+                            onChange={(event) => {this.onChangeMath(event)}}/> Math ({math}) 
+                        <input type="checkbox" defaultChecked='true'/> Social Study (0) 
+                        <input type="checkbox" defaultChecked='true'
+                            onChange={(event) => {this.onChangeScience(event)}}/> Science ({science})
                     </fieldset>
                 </div>
                 <div className="result">

@@ -6,10 +6,26 @@ import * as actionCreators from '../../redux/address'
 class Address extends React.Component {
   state = {
     address: '',
+    selected_address: '',
+    detailed_address: '',
+    mode: 'search'
   }
-
+  ClickAddress = (address) => {
+    this.setState({selected_address: address, mode:'detail', address: ''})
+  }
+  SearchAddress = () => {
+    this.props.onGetAddress(this.state.address)
+    this.setState({mode: 'search'})
+  }
   render() {
-    const addresses = this.props.storedAddress.map((address) => (<div key={address.address.road}>{address.address.road + address.address.bldnm}</div>))
+    const addresses = this.props.storedAddress.map((address) => (<div onClick={() => this.ClickAddress(address.address.road)}>{address.address.road}</div>))
+    const detail = this.state.mode == 'search' ? addresses : 
+    (<span>
+      <p>{this.state.selected_address}</p>
+      <label>detailed address</label>
+      <input onChange={e => this.setState({detailed_address:e.target.value})}>
+      </input>
+    </span>)
     return (
       <div>
         <label>address:</label>
@@ -18,8 +34,8 @@ class Address extends React.Component {
           value={this.state.address}
           onChange={(event) => this.setState({ address: event.target.value })}
         />
-        <button onClick={() => this.props.onGetAddress(this.state.address)}>search address</button>
-        {addresses}
+        <button onClick={() => this.SearchAddress()}>search address</button>
+        {detail}
       </div>
     )
   }
@@ -35,4 +51,5 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   onGetAddress: (addr) => dispatch(actionCreators.searchAddress(addr)),
 })
+
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Address));

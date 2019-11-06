@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-
 import { connect } from 'react-redux';
 import Address from '../Address/address';
 import TuteeSignupForm from './TuteeSignupForm'
 import PhoneInput from 'react-phone-number-input/input'
+// import { TimeGridScheduler, classes } from '@remotelock/react-week-scheduler';
 // import actionCreators from '../../redux';
+import './SignUpTutee.css';
 
 class SignUpTutee extends Component {
   constructor() {
@@ -46,6 +47,9 @@ class SignUpTutee extends Component {
     this.setState({ childList: copyState })
   }
 
+  ClickConfirm = () => {
+    this.props.history.push('/tutee/match/')
+  }
   render() {
     let index = -1;
     const tuteeSignupForms = this.state.childList.map((key) => { // key = {id: , name: ...}
@@ -65,46 +69,49 @@ class SignUpTutee extends Component {
 
     return (
       <div>
-        <label className="id">
-          ID
+        <div className="id">
+          ID:
           <input
             className="id-input"
             onChange={(e) => this.setState({ id: e.target.value })}
             value={this.state.id}
           />
-        </label>
-        <label className="password">
-          Password
+        </div>
+        <div className="password">
+          Password:
           <input
             type="password"
             className="password-input"
             onChange={(e) => this.setState({ password: e.target.value })}
             value={this.state.password}
           />
-        </label>
-        <label className="password-confirmation">
-          Password Confirmation
+        </div>
+        <div className="password-confirmation">
+          Password Confirmation:
           <input
             type="password"
             className="password-confirmation-input"
             onChange={(e) => this.setState({ password_confimation: e.target.value })}
             value={this.state.password_confimation}
           />
-        </label>
+        </div>
+        <br/>
         <label>
-          Phone number
+          Phone number:
           <PhoneInput
             country="KR"
             value={this.state.phone}
             onChange={value => this.setState({ phone: value })}
           />
         </label>
+        <br/>
         <Address />
         <div className="child-list-container-div">
           {tuteeSignupForms}
           <button type="button" onClick={() => this.addChild()}>Add</button>
-          <button type="button">Confirm</button>
+          <button type="button" onClick={this.ClickConfirm}>Confirm</button>
         </div>
+        {/* <TimeGridScheduler classes={classes} {...otherProps} /> */}
       </div>
     );
   }
