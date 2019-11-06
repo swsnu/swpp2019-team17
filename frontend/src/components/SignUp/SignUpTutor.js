@@ -9,6 +9,7 @@ class SignUpTutor extends Component {
     id: '',
     password: '',
     password_confimation: '',
+    name: '',
     certificate: null,
     phone: '',
     isAuthorized: false,
@@ -75,7 +76,10 @@ class SignUpTutor extends Component {
               onChange={(event) => this.setState({ password_confimation: event.target.value })}
             />
           </div>
-
+          <label>
+            Name:
+            <input onChange={(e) => this.setState({ name: e.target.value })}></input>
+          </label>
           <label>
             Phone number:
           <PhoneInput
