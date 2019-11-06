@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import PhoneInput from 'react-phone-number-input/input'
 
 class SignUpTutor extends Component {
   state = {
     id: '',
     password: '',
+    password_confimation: '',
     certificate: null,
+    phone: '',
   };
 
   handleFileUpload = () => {
@@ -27,7 +30,20 @@ class SignUpTutor extends Component {
             className="signuptutor-input-password"
             onChange={(event) => this.setState({ password: event.target.value })}
           />
-
+          <label className="signuptutor-label-password">Password Confimation</label>
+          <input
+            type="password"
+            className="signuptutor-input-password-confimation"
+            onChange={(event) => this.setState({ password_confimation: event.target.value })}
+          />
+          <label>
+          Phone number
+          <PhoneInput
+            country="KR"
+            value={this.state.phone}
+            onChange={value => this.setState({ phone: value })}
+          />
+        </label>
           <label className="signuptutor-label-certificate">Certificate</label>
           <input
             type="file"
