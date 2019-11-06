@@ -80,6 +80,7 @@ class SignUpTutor extends Component {
             Name:
             <input onChange={(e) => this.setState({ name: e.target.value })}></input>
           </label>
+          <br/>
           <label>
             Phone number:
           <PhoneInput
@@ -92,7 +93,9 @@ class SignUpTutor extends Component {
           <div className="gender">Gender:
             <Select options={[{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }]}></Select>
           </div>
-          <div className="signuptutor-div-authorize">
+          <label className="signuptutor-label-certificate">Photo:</label>
+            <input type="file" className="signuptutor-input-certificate"/>
+            <div className="signuptutor-div-authorize">
             <label className="signuptutor-label-certificate">Certificate:</label>
             <input type="file" className="signuptutor-input-certificate"
               onChange={event => this.handleFileUpload(event)} />

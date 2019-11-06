@@ -11,7 +11,6 @@ import SignUpTutor from '../SignUp/SignUpTutor';
 import SignUpTutee from '../SignUp/SignUpTutee';
 import Match from '../Match/Match';
 import ProfileTutor from '../Profile/ProfileTutor';
-import Match from '../Match/Match';
 
 function App(props) {
   return (
