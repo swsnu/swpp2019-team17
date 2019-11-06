@@ -9,7 +9,7 @@ import Login from '../Login/Login';
 import SignUp from '../SignUp/SignUp';
 import SignUpTutor from '../SignUp/SignUpTutor';
 import SignUpTutee from '../SignUp/SignUpTutee';
-import ProfileTutor from './ProfileTutor';
+import ProfileTutor from '../Profile/ProfileTutor';
 
 function App(props) {
   return (
