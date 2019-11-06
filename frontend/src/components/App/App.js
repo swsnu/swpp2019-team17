@@ -9,6 +9,7 @@ import Login from '../Login/Login';
 import SignUp from '../SignUp/SignUp';
 import SignUpTutor from '../SignUp/SignUpTutor';
 import SignUpTutee from '../SignUp/SignUpTutee';
+import Match from '../Match/Match';
 import ProfileTutor from '../Profile/ProfileTutor';
 
 function App(props) {
@@ -20,6 +21,7 @@ function App(props) {
           <Route path="/signup" exact component={SignUp} />
           <Route path="/signup/tutor" exact component={SignUpTutor} />
           <Route path="/signup/tutee" exact component={SignUpTutee} />
+          <Route path="/tutee/match" exact component={Match} />
           <Route path="/profile/tutor" exact component={ProfileTutor} />
           <Redirect from="/" to="/login" />
         </Switch>

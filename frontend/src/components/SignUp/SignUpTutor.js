@@ -13,6 +13,7 @@ class SignUpTutor extends Component {
     phone: '',
     isAuthorized: false,
     subject: [],
+    university: '',
   };
 
   handleFileUpload = (event) => {
@@ -24,7 +25,13 @@ class SignUpTutor extends Component {
   ChangeSubject = (subject) => {
     this.setState({ subject: subject })
   }
+  ChangeUniversity = (university) => {
+    this.setState({ university: university})
+  }
 
+  ClickConfirm = () => {
+    this.props.history.push('/profile/tutor/')
+  }
   render() {
     let message = '';
     if (this.state.isAuthorized) {
@@ -35,9 +42,15 @@ class SignUpTutor extends Component {
       { value: 'math', label: 'Math' },
       { value: 'english', label: 'English' },
       { value: 'science', label: 'Science' },
-      { value: 'society', label: 'Society' },
+      { value: 'social study', label: 'Social Study' },
     ]
-
+    const university_options =[
+      {value: 'SNU', label: 'SNU'},
+      {value: 'Yonsei', label: 'Yonsei'},
+      {value: 'Korea', label: 'Korea'},
+      {value: 'Kaist', label: 'Kaist'},
+      {value: 'Postech', label: 'Postech'},
+    ]
     return (
       <div className="signuptutor-div">
         <div className="signuptutor-div-input">
@@ -71,13 +84,23 @@ class SignUpTutor extends Component {
               onChange={value => this.setState({ phone: value })}
             />
           </label>
+          <label>gender
+            <Select options={[{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }]}></Select>
+          </label>
           <div className="signuptutor-div-authorize">
             <label className="signuptutor-label-certificate">Certificate:</label>
             <input type="file" className="signuptutor-input-certificate"
               onChange={event => this.handleFileUpload(event)} />
             <p>{message}</p>
           </div>
-          <div className="subject-label">
+          <label>
+            age
+          <input></input>
+          </label>
+          <label>university
+          <Select options={university_options} closeMenuOnSelect={true} onChange={(selectedoption) => this.ChangeUniversity(selectedoption)} />
+          </label>
+          <label className="subject-label">
             subject
             <div className='select'>
           <Select options={options} closeMenuOnSelect={false} isMulti={true} onChange={(selectedoptions) => this.ChangeSubject(selectedoptions)} />
@@ -85,8 +108,7 @@ class SignUpTutor extends Component {
           </div>
           <div className="timetable">
           <AvailableTimes height={600} />
-          </div>
-          <button>Confirm</button>
+          <button onClick={this.ClickConfirm}>Confirm</button>
         </div>
       </div>
     );

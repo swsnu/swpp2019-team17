@@ -4,7 +4,7 @@ import AvailableTimes from 'react-available-times'
 import './TuteeSignupForm.css';
 
 class TuteeSignupForm extends Component {
-  constructor(){
+  constructor() {
     super();
   }
   render() {
@@ -13,7 +13,7 @@ class TuteeSignupForm extends Component {
       { value: 'math', label: 'Math' },
       { value: 'english', label: 'English' },
       { value: 'science', label: 'Science' },
-      { value: 'society', label: 'Society' },
+      { value: 'social study', label: 'Social Study' },
     ]
     return (
       <div>
@@ -28,6 +28,7 @@ class TuteeSignupForm extends Component {
         <br/>
         <label className="subject-label">
 
+
           <div className="select">
           Subject:
           <Select options={options} closeMenuOnSelect={false} isMulti={true} onChange={(selectedoptions) => this.props.onChangeSubject(selectedoptions, this.props.id)}/>
@@ -39,12 +40,16 @@ class TuteeSignupForm extends Component {
           <input></input>
         </label>
         <br/>
+        <label>gender
+          <Select options={[{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }]}></Select>
+        </label>
+
         <label>available time</label>
         <div className="timetable">
         <AvailableTimes height={600} />
         </div>
         <div className="delete">
-        <button onClick={() => this.props.onClickDelete(this.props.id)}>delete</button>
+        {this.props.id != 0 ? <button onClick={() => this.props.onClickDelete(this.props.id)}>delete</button> : null}
         </div>
       </div>
     )

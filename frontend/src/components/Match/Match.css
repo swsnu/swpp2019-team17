@@ -1,0 +1,19 @@
+.result {
+    border-top:solid;
+}
+.matchedtutor {
+    border:solid;
+    margin:20px;
+}
+
+fieldset {
+    text-align: center;
+    padding: 100px;
+    display: inline;
+    margin:5px;
+    width: 50%;
+}
+
+input {
+    margin: 20px;
+}
