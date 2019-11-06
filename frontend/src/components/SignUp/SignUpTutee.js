@@ -5,6 +5,7 @@ import TuteeSignupForm from './TuteeSignupForm'
 import PhoneInput from 'react-phone-number-input/input'
 // import { TimeGridScheduler, classes } from '@remotelock/react-week-scheduler';
 // import actionCreators from '../../redux';
+import './SignUpTutee.css';
 
 class SignUpTutee extends Component {
   constructor() {
@@ -68,40 +69,42 @@ class SignUpTutee extends Component {
 
     return (
       <div>
-        <label className="id">
-          ID
+        <div className="id">
+          ID:
           <input
             className="id-input"
             onChange={(e) => this.setState({ id: e.target.value })}
             value={this.state.id}
           />
-        </label>
-        <label className="password">
-          Password
+        </div>
+        <div className="password">
+          Password:
           <input
             type="password"
             className="password-input"
             onChange={(e) => this.setState({ password: e.target.value })}
             value={this.state.password}
           />
-        </label>
-        <label className="password-confirmation">
-          Password Confirmation
+        </div>
+        <div className="password-confirmation">
+          Password Confirmation:
           <input
             type="password"
             className="password-confirmation-input"
             onChange={(e) => this.setState({ password_confimation: e.target.value })}
             value={this.state.password_confimation}
           />
-        </label>
+        </div>
+        <br/>
         <label>
-          Phone number
+          Phone number:
           <PhoneInput
             country="KR"
             value={this.state.phone}
             onChange={value => this.setState({ phone: value })}
           />
         </label>
+        <br/>
         <Address />
         <div className="child-list-container-div">
           {tuteeSignupForms}
