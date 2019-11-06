@@ -9,6 +9,7 @@ class SignUpTutor extends Component {
     id: '',
     password: '',
     password_confimation: '',
+    name: '',
     certificate: null,
     phone: '',
     isAuthorized: false,
@@ -75,7 +76,11 @@ class SignUpTutor extends Component {
               onChange={(event) => this.setState({ password_confimation: event.target.value })}
             />
           </div>
-
+          <label>
+            Name:
+            <input onChange={(e) => this.setState({ name: e.target.value })}></input>
+          </label>
+          <br/>
           <label>
             Phone number:
           <PhoneInput
@@ -84,22 +89,26 @@ class SignUpTutor extends Component {
               onChange={value => this.setState({ phone: value })}
             />
           </label>
-          <label>gender
+          <br/>
+          <div className="gender">Gender:
             <Select options={[{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }]}></Select>
-          </label>
-          <div className="signuptutor-div-authorize">
+          </div>
+          <label className="signuptutor-label-certificate">Photo:</label>
+            <input type="file" className="signuptutor-input-certificate"/>
+            <div className="signuptutor-div-authorize">
             <label className="signuptutor-label-certificate">Certificate:</label>
             <input type="file" className="signuptutor-input-certificate"
               onChange={event => this.handleFileUpload(event)} />
             <p>{message}</p>
           </div>
           <label>
-            age
+            Age:
           <input></input>
           </label>
-          <label>university
+          <br/>
+          <div className='university'>university
           <Select options={university_options} closeMenuOnSelect={true} onChange={(selectedoption) => this.ChangeUniversity(selectedoption)} />
-          </label>
+          </div>
           <label className="subject-label">
             subject
             <div className='select'>

@@ -64,6 +64,23 @@ label{
     font-size:20px;
 }
 .signuptutor-div .signuptutor-div-input .subject-label .select{
+    width:500px;
+}
+.signuptutor-div .signuptutor-div-input .gender {
+    display: block;
+    text-align: left;
+    font-weight: bold;
+    font-size:20px;
+    width:200px;
+}
+.signuptutor-div .signuptutor-div-input .university {
+    display: block;
+    text-align: left;
+    font-weight: bold;
+    font-size:20px;
+    width:200px;
+}
+.signuptutor-div .signuptutor-div-input .gender select{
     width:200px;
 }
 .signuptutor-div .signuptutor-div-input .timetable{

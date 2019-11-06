@@ -43,7 +43,7 @@ class TuteeSignupForm extends Component {
         <label>gender
           <Select options={[{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }]}></Select>
         </label>
-
+        <br/>
         <label>available time</label>
         <div className="timetable">
         <AvailableTimes height={600} />
