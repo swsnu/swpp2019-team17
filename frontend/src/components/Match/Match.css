@@ -2,8 +2,7 @@
     border-top:solid;
 }
 .matchedtutor {
-    border:solid;
-    margin:20px;
+    padding: 0px;
     display: flex;
 }
 

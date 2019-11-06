@@ -7,6 +7,11 @@ import PhoneInput from 'react-phone-number-input/input'
 // import actionCreators from '../../redux';
 import './SignUpTutee.css';
 
+// for Bootstrap
+import Button from 'react-bootstrap/Button';
+import Jumbotron from 'react-bootstrap/Jumbotron';
+import Form from 'react-bootstrap/Form';
+
 class SignUpTutee extends Component {
   constructor() {
     super();
@@ -68,51 +73,51 @@ class SignUpTutee extends Component {
     });
 
     return (
-      <div>
-        <div className="id">
-          ID:
-          <input
-            className="id-input"
-            onChange={(e) => this.setState({ id: e.target.value })}
-            value={this.state.id}
-          />
-        </div>
-        <div className="password">
-          Password:
-          <input
-            type="password"
-            className="password-input"
-            onChange={(e) => this.setState({ password: e.target.value })}
-            value={this.state.password}
-          />
-        </div>
-        <div className="password-confirmation">
-          Password Confirmation:
-          <input
-            type="password"
-            className="password-confirmation-input"
-            onChange={(e) => this.setState({ password_confimation: e.target.value })}
-            value={this.state.password_confimation}
-          />
-        </div>
-        <br/>
-        <label>
-          Phone number:
+      <Jumbotron>
+        <Form.Group>
+          <div className="id">
+            <Form.Label>ID</Form.Label>
+            <Form.Control
+              className="id-input"
+              onChange={(e) => this.setState({ id: e.target.value })}
+              value={this.state.id}
+            />
+          </div>
+          <div className="password">
+            <Form.Label>Password:</Form.Label>
+            <Form.Control
+              type="password"
+              className="password-input"
+              onChange={(e) => this.setState({ password: e.target.value })}
+              value={this.state.password}
+            />
+          </div>
+          <div className="password-confirmation">
+            <Form.Label>Password Confirmation:</Form.Label>
+            <Form.Control
+              type="password"
+              className="password-confirmation-input"
+              onChange={(e) => this.setState({ password_confimation: e.target.value })}
+              value={this.state.password_confimation}
+            />
+          </div>
+          <br/>
+          <Form.Label>Phone number:</Form.Label><br/>
           <PhoneInput
             country="KR"
             value={this.state.phone}
             onChange={value => this.setState({ phone: value })}
           />
-        </label>
-        <br/>
-        <Address />
-        <div className="child-list-container-div">
-          {tuteeSignupForms}
-          <button type="button" onClick={() => this.addChild()}>Add</button>
-          <button type="button" onClick={this.ClickConfirm}>Confirm</button>
-        </div>
-        {/* <TimeGridScheduler classes={classes} {...otherProps} /> */}
-      </div>
+          <br/>
+          <Address />
+          <div className="child-list-container-div">
+            {tuteeSignupForms}
+            <Button type="button" onClick={() => this.addChild()}>Add</Button>
+            <Button type="button" onClick={this.ClickConfirm}>Confirm</Button>
+          </div>
+          {/* <TimeGridScheduler classes={classes} {...otherProps} /> */}
+        </Form.Group>
+      </Jumbotron>
     );
   }
 }

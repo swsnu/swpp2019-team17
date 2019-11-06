@@ -3,6 +3,11 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import * as actionCreators from '../../redux/address'
 
+//bootstrap
+import Alert from 'react-bootstrap/Alert';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+
 class Address extends React.Component {
   state = {
     address: '',
@@ -23,19 +28,19 @@ class Address extends React.Component {
     (<span>
       <p>{this.state.selected_address}</p>
       <label>detailed address</label>
-      <input onChange={e => this.setState({detailed_address:e.target.value})}>
-      </input>
+      <Form.Control onChange={e => this.setState({detailed_address:e.target.value})}>
+      </Form.Control>
     </span>)
     return (
       <div>
         <label>address:</label>
-        <input
+        <Form.Control
           type="text"
           value={this.state.address}
           onChange={(event) => this.setState({ address: event.target.value })}
         />
-        <button onClick={() => this.SearchAddress()}>search address</button>
-        {detail}
+        <Button onClick={() => this.SearchAddress()}>search address</Button>
+        <Alert>{detail}</Alert>
       </div>
     )
   }
