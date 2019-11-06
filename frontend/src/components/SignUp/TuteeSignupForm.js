@@ -12,7 +12,7 @@ class TuteeSignupForm extends Component {
       { value: 'math', label: 'Math' },
       { value: 'english', label: 'English' },
       { value: 'science', label: 'Science' },
-      { value: 'society', label: 'Society' },
+      { value: 'social study', label: 'Social Study' },
     ]
     return (
       <div>

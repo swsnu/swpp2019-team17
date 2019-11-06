@@ -41,7 +41,7 @@ class SignUpTutor extends Component {
       { value: 'math', label: 'Math' },
       { value: 'english', label: 'English' },
       { value: 'science', label: 'Science' },
-      { value: 'society', label: 'Society' },
+      { value: 'social study', label: 'Social Study' },
     ]
     const university_options =[
       {value: 'SNU', label: 'SNU'},
