@@ -4,6 +4,7 @@
   "private": true,
   "proxy": "http://localhost:8000/",
   "dependencies": {
+    "@remotelock/react-week-scheduler": "^3.5.8",
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
     "connected-react-router": "^6.5.2",
@@ -11,12 +12,17 @@
     "history": "^4.10.1",
     "jest": "^24.9.0",
     "react": "^16.11.0",
+    "react-available-times": "^1.2.2",
     "react-bootstrap": "^1.0.0-beta.14",
     "react-date-picker": "^7.8.2",
+    "react-datepicker": "^2.9.6",
     "react-dom": "^16.11.0",
+    "react-list-select": "^0.4.1",
+    "react-phone-number-input": "^2.4.1",
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
+    "react-select": "^3.0.8",
     "reactjs-popup": "^1.5.0",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0"
@@ -43,6 +49,7 @@
     ]
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.3",
     "eslint": "^6.6.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-import": "^2.18.2",

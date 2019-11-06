@@ -1,58 +1,63 @@
 import React, { Component } from 'react';
-
+import { connect } from 'react-redux';
 import Address from '../Address/address';
 import TuteeSignupForm from './TuteeSignupForm'
-
-import { connect } from 'react-redux';
-import { array } from 'prop-types';
+import PhoneInput from 'react-phone-number-input/input'
+// import { TimeGridScheduler, classes } from '@remotelock/react-week-scheduler';
+// import actionCreators from '../../redux';
 
 class SignUpTutee extends Component {
-  state = {
-    id: '',
-    password: '',
-    phone: '',
-    childList: [{ id: 0, name: '' }], // [{id:1, name: jack, ...}, {id: 2, name: park, ...}, ...]
-    childID: 0,
-    // childName: '',
-    // childBirthday: new Date()
+  constructor() {
+    super();
+    this.state = {
+      id: '',
+      password: '',
+      password_confimation: '',
+      phone: '',
+      childList: [{ id: 0, name: '', subject: [] }], // [{id:1, name: jack, ...}, {id: 2, name: park, ...}, ...]
+      childID: 0,
+    }
   }
-
-  // setBirthday = childBirthday => {
-  //   this.setState({
-  //     childBirthday
-  //   });
-  // };
 
   addChild = () => {
-    let newChild = {
+    const newChild = {
       id: this.state.childID + 1,
       name: '',
-      //birthday: this.state.childBirthday
+      subject: [],
     }
-
     this.setState({ childList: this.state.childList.concat(newChild), childID: this.state.childID + 1 })
   }
+
   ChangeName = (name, index) => {
-    let copyState = this.state.childList;
-    copyState[index]['name'] = name;
+    const copyState = this.state.childList;
+    copyState[index].name = name;
     this.setState({ childList: copyState })
   }
+
+  ChangeSubject = (subject, index) => {
+    const copyState = this.state.childList;
+    copyState[index].subject = subject;
+    this.setState({ childList: copyState })
+  }
+
   Delete = (index) => {
-    let copyState = this.state.childList;
+    const copyState = this.state.childList;
     copyState.splice(index, 1)
     this.setState({ childList: copyState })
   }
+
   render() {
     let index = -1;
-    let tuteeSignupForms = this.state.childList.map((key) => { //key = {id: , name: ...}
+    const tuteeSignupForms = this.state.childList.map((key) => { // key = {id: , name: ...}
       index += 1;
       return (
         <TuteeSignupForm
           key={index}
           id={index}
-          name={this.state.childList[index]['name']}
+          name={this.state.childList[index].name}
           onChangeName={this.ChangeName}
-          // birthday={item.birthday.getMonth()}
+          subject={this.state.childList[index].subject}
+          onChangeSubject={this.ChangeSubject}
           onClickDelete={this.Delete}
         />
       );
@@ -60,23 +65,47 @@ class SignUpTutee extends Component {
 
     return (
       <div>
-        <div>
-          tutee signup input
-          <Address />
-        </div>
-        {/*
-          <label className="child-birthday-label">Birthday</label>
-          <DatePicker
-            onChange={this.setBirthday}
-            value={this.state.birthday}
+        <label className="id">
+          ID
+          <input
+            className="id-input"
+            onChange={(e) => this.setState({ id: e.target.value })}
+            value={this.state.id}
           />
-          
-        </div> */}
+        </label>
+        <label className="password">
+          Password
+          <input
+            type="password"
+            className="password-input"
+            onChange={(e) => this.setState({ password: e.target.value })}
+            value={this.state.password}
+          />
+        </label>
+        <label className="password-confirmation">
+          Password Confirmation
+          <input
+            type="password"
+            className="password-confirmation-input"
+            onChange={(e) => this.setState({ password_confimation: e.target.value })}
+            value={this.state.password_confimation}
+          />
+        </label>
+        <label>
+          Phone number
+          <PhoneInput
+            country="KR"
+            value={this.state.phone}
+            onChange={value => this.setState({ phone: value })}
+          />
+        </label>
+        <Address />
         <div className="child-list-container-div">
           {tuteeSignupForms}
           <button type="button" onClick={() => this.addChild()}>Add</button>
           <button type="button">Confirm</button>
         </div>
+        {/* <TimeGridScheduler classes={classes} {...otherProps} /> */}
       </div>
     );
   }

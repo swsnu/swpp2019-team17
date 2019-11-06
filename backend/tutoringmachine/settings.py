@@ -75,10 +75,13 @@ WSGI_APPLICATION = 'tutoringmachine.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+MEDIA_URL = '/image/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'image')
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tutoringdb',
+        'NAME': 'tutoringmachine_db',
         'USER': 'tutoring',
         'PASSWORD': 'machine',
         'HOST':'127.0.0.1',
