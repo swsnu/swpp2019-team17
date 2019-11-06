@@ -12,6 +12,7 @@ class SignUpTutor extends Component {
     phone: '',
     isAuthorized: false,
     subject: [],
+    university: '',
   };
 
   handleFileUpload = (event) => {
@@ -22,6 +23,9 @@ class SignUpTutor extends Component {
 
   ChangeSubject = (subject) => {
     this.setState({ subject: subject })
+  }
+  ChangeUniversity = (university) => {
+    this.setState({ university: university})
   }
 
   ClickConfirm = () => {
@@ -39,7 +43,13 @@ class SignUpTutor extends Component {
       { value: 'science', label: 'Science' },
       { value: 'society', label: 'Society' },
     ]
-
+    const university_options =[
+      {value: 'SNU', label: 'SNU'},
+      {value: 'Yonsei', label: 'Yonsei'},
+      {value: 'Korea', label: 'Korea'},
+      {value: 'Kaist', label: 'Kaist'},
+      {value: 'Postech', label: 'Postech'},
+    ]
     return (
       <div className="signuptutor-div">
         <div className="signuptutor-div-input">
@@ -81,6 +91,9 @@ class SignUpTutor extends Component {
           <label>
             age
           <input></input>
+          </label>
+          <label>university
+          <Select options={university_options} closeMenuOnSelect={true} onChange={(selectedoption) => this.ChangeUniversity(selectedoption)} />
           </label>
           <label className="subject-label">
             subject
