@@ -70,7 +70,7 @@ class SignUpTutor extends Component {
             />
           </label>
           <label>gender
-            <Select options={[{value: 'male', label: 'Male'}, {value: 'female', label: 'Female'}]}></Select>
+            <Select options={[{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }]}></Select>
           </label>
           <div className="signuptutor-div-authorize">
             <label className="signuptutor-label-certificate">Certificate</label>
@@ -78,6 +78,10 @@ class SignUpTutor extends Component {
               onChange={event => this.handleFileUpload(event)} />
             <p>{message}</p>
           </div>
+          <label>
+            age
+          <input></input>
+          </label>
           <label className="subject-label">
             subject
           <Select options={options} closeMenuOnSelect={false} isMulti={true} onChange={(selectedoptions) => this.ChangeSubject(selectedoptions)} />
