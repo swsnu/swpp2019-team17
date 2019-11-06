@@ -63,16 +63,16 @@ class Match extends Component {
         // for temp 
         if (this.state.male) {
             if (this.state.female) {
-                temp = [{gender: 'male', name: 'Cheol-su', subject: 'Science', available: ['Monday 5PM~7PM', 'Wednesday 5PM~7PM']}, 
-                {gender: 'female', name: 'Young-hee', subject: 'Math', available:['Friday 1PM~5PM', '']}]
+                temp = [{gender: 'male', name: 'Gildong Hong', subject: 'Math', available: ['Monday 5PM~7PM', 'Wednesday 5PM~7PM']}, 
+                {gender: 'female', name: 'Young-hee', subject: 'Science', available:['Friday 1PM~5PM', '']}]
             }
             else {
-                temp = [{gender: 'male', name: 'Cheol-su', subject: 'Science', available: ['Monday 5PM~7PM', 'Wednesday 5PM~7PM']}];
+                temp = [{gender: 'male', name: 'Gildong Hong', subject: 'Math', available: ['Monday 5PM~7PM', 'Wednesday 5PM~7PM']}];
             }
         }
         else {
             if (this.state.female) {
-                temp = [{gender: 'female', name: 'Young-hee', subject: 'Math', available:['Friday 1PM~5PM', '']}]
+                temp = [{gender: 'female', name: 'Young-hee', subject: 'Science', available:['Friday 1PM~5PM', '']}]
             }
             else {
                 temp = [];
