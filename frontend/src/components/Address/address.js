@@ -36,7 +36,7 @@ class Address extends React.Component {
     return (
       <div>
         <label>address:</label>
-        <Form.Control
+        <Form.Control className="text-left"
           type="text"
           value={this.state.address}
           onChange={(event) => this.setState({ address: event.target.value })}

@@ -15,9 +15,8 @@ label{
 .subject-label{
     text-align: left;
 }
-.subject-label Select{
-    width:100px;
-    float:center;
+.subject-label .select-label .select .select{
+    width:300px;
 }
 .timetable {
     text-align: center;

@@ -78,7 +78,7 @@ class SignUpTutee extends Component {
           <div className="id">
             <Form.Label>ID</Form.Label>
             <Form.Control
-              className="id-input"
+              className="text-left"
               onChange={(e) => this.setState({ id: e.target.value })}
               value={this.state.id}
             />
@@ -87,7 +87,7 @@ class SignUpTutee extends Component {
             <Form.Label>Password:</Form.Label>
             <Form.Control
               type="password"
-              className="password-input"
+              className="text-left"
               onChange={(e) => this.setState({ password: e.target.value })}
               value={this.state.password}
             />
@@ -96,14 +96,14 @@ class SignUpTutee extends Component {
             <Form.Label>Password Confirmation:</Form.Label>
             <Form.Control
               type="password"
-              className="password-confirmation-input"
+              className="text-left"
               onChange={(e) => this.setState({ password_confimation: e.target.value })}
               value={this.state.password_confimation}
             />
           </div>
           <br/>
           <Form.Label>Phone number:</Form.Label><br/>
-          <PhoneInput
+          <PhoneInput className="text-left"
             country="KR"
             value={this.state.phone}
             onChange={value => this.setState({ phone: value })}

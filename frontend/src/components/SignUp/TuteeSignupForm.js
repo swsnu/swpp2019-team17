@@ -35,7 +35,7 @@ class TuteeSignupForm extends Component {
 
           <div className="select">
           Subject:
-          <Select options={options} closeMenuOnSelect={false} isMulti={true} onChange={(selectedoptions) => this.props.onChangeSubject(selectedoptions, this.props.id)}/>
+          <Select className="select" options={options} closeMenuOnSelect={false} isMulti={true} onChange={(selectedoptions) => this.props.onChangeSubject(selectedoptions, this.props.id)}/>
           </div>
         </label>
         <br/>

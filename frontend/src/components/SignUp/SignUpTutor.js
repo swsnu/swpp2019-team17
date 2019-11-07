@@ -3,7 +3,7 @@ import PhoneInput from 'react-phone-number-input/input'
 import Select from 'react-select'
 import AvailableTimes from 'react-available-times'
 import './SignUpTutor.css';
-
+import Address from '../Address/address';
 // bootstrap
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -64,21 +64,21 @@ class SignUpTutor extends Component {
           <div className="signuptutor-label-id">ID:
           <Form.Control
               type="text"
-              className="signuptutor-input-id"
+              className="text-left"
               onChange={(event) => this.setState({ id: event.target.value })}
             />
           </div>
           <div className="signuptutor-label-password">Password:
           <Form.Control
               type="password"
-              className="signuptutor-input-password"
+              className="text-left"
               onChange={(event) => this.setState({ password: event.target.value })}
             />
           </div>
           <div className="signuptutor-label-password">Password Confimation:
           <Form.Control
               type="password"
-              className="signuptutor-input-password-confimation"
+              className="text-left"
               onChange={(event) => this.setState({ password_confimation: event.target.value })}
             />
           </div>
@@ -89,7 +89,7 @@ class SignUpTutor extends Component {
           <br/>
           <label>
             Phone number:
-          <PhoneInput
+          <PhoneInput className="phone"
               country="KR"
               value={this.state.phone}
               onChange={value => this.setState({ phone: value })}
@@ -112,6 +112,7 @@ class SignUpTutor extends Component {
           <Form.Control></Form.Control>
           </label>
           <br/>
+          <Address/>
           <div className='university'>university
           <Select options={university_options} closeMenuOnSelect={true} onChange={(selectedoption) => this.ChangeUniversity(selectedoption)} />
           </div>
