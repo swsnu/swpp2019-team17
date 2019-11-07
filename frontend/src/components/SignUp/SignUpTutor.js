@@ -58,7 +58,7 @@ class SignUpTutor extends Component {
       { value: 'Postech', label: 'Postech' },
     ]
     return (
-      <Jumbotron className="text-left">
+      <Jumbotron>
       <div className="signuptutor-div">
         <div className="signuptutor-div-input">
           <Form.Group className="signuptutor-label-id">ID:

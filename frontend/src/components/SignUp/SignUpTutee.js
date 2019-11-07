@@ -110,7 +110,7 @@ class SignUpTutee extends Component {
             onChange={value => this.setState({ phone: value })}
           />
           <br/>
-          <Address />
+          <Address className="address"/>
           <div className="child-list-container-div">
             {tuteeSignupForms}
             <Button type="button" onClick={() => this.addChild()}>Add</Button>

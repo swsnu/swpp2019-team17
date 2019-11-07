@@ -22,12 +22,22 @@ label{
     font-weight: bold;
     font-size:20px;
 }
+.address{
+    width:300px;
+}
 .password-confirmation {
     display: block;
     text-align: left;
     font-weight: bold;
     font-size:20px;
 }
+.password .text-left {
+    width:300px;
+}
+.password-confirmation .text-left {
+    width:300px;
+}
+
 .password-confirmation input{
     margin-left: 10px;
 }
