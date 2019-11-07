@@ -25,7 +25,7 @@ class Address extends React.Component {
     this.setState({mode: 'search'})
   }
   render() {
-    const addresses = this.props.storedAddress.map((address) => (<div onClick={() => this.ClickAddress(address.address.road)}>{address.address.road}</div>))
+    const addresses = this.props.storedAddress.map((address) => (<div key={address.address.road} onClick={() => this.ClickAddress(address.address.road)}>{address.address.road}</div>))
     const detail = this.state.mode == 'search' ? addresses : 
     (<span>
       <p>{this.state.selected_address}</p>

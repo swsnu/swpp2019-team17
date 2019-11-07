@@ -119,7 +119,7 @@ class Match extends Component {
                     math++;
                 }
 
-                return (<MatchedTutor name={tutor.name} gender={tutor.gender} subject={tutor.subject} available={tutor.available} profile={tutor.profile}/>);
+                return (<MatchedTutor key={tutor.id} name={tutor.name} gender={tutor.gender} subject={tutor.subject} available={tutor.available} profile={tutor.profile}/>);
             });
         }
 
