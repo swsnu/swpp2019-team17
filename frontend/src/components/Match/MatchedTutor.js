@@ -5,6 +5,7 @@ import Media from 'react-bootstrap/Media';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button'
 
 function MatchedTutor(props) {
   return (
@@ -28,6 +29,10 @@ function MatchedTutor(props) {
             <Col>
               <p>{props.available[0]}</p>
               <p>{props.available[1]}</p>
+            </Col>
+            <Col>
+              <Button>Request</Button>
+              <Button>Detail</Button>
             </Col>
           </Row>
         </Container>
