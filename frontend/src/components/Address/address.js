@@ -30,7 +30,7 @@ class Address extends React.Component {
     (<span>
       <p>{this.state.selected_address}</p>
       <label>detailed address</label>
-      <Form.Control onChange={e => this.setState({detailed_address:e.target.value})}>
+      <Form.Control className="text-left" onChange={e => this.setState({detailed_address:e.target.value})}>
       </Form.Control>
     </span>)
     return (

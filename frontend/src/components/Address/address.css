@@ -16,6 +16,9 @@ input{
     margin: auto;
     text-align: center;
 }
+label .text-left{
+    width:300px;
+}
 .button{
     width:200px;
     text-align: center;
