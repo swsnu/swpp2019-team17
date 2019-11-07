@@ -1,28 +1,3 @@
-.result {
-    border-top:solid;
-}
-.matchedtutor {
-    padding: 0px;
-    display: flex;
-}
-
-fieldset {
+#condition {
     text-align: center;
-    display: inline;
-    margin:5px;
-    width: 50%;
-}
-
-input {
-    margin: 20px;
-}
-
-.information {
-    display: inline;
-    flex: 3;
-}
-
-.available {
-    display: inline;
-    flex: 1;
 }

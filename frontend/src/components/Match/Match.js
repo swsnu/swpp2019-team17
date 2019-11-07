@@ -12,6 +12,11 @@ import profile2 from '../Profile/image2.png'
 
 // bootstrap
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Jumbotron from 'react-bootstrap/Jumbotron';
 
 class Match extends Component {
     state = {
@@ -121,28 +126,54 @@ class Match extends Component {
         let genderswitch = 
             <fieldset className="genderswitch-div">
                 <legend>gender</legend>
-                <div className="male"><input type='checkbox'
-                    defaultChecked='true' onClick={(event) => {this.onChangeMan(event)}} /> male ({genderNum[MALE]})</div>
-                <div className="female"><input type='checkbox'
-                    defaultChecked='true' onClick={(event) => {this.onChangeGirl(event)}} /> female ({genderNum[FEMALE]})</div>
             </fieldset>
 
         return (
             <div className="matching">
                 <Header isLoggedIn={true} />
-                <div className="condition">
-                    {genderswitch}
-                    <fieldset className="subject">
-                        <legend>Subject</legend>
-                        <input type="checkbox" defaultChecked='true'/> Korean (0)
-                        <input type="checkbox" defaultChecked='true'/> English (0) 
-                        <input type="checkbox" defaultChecked='true'
-                            onChange={(event) => {this.onChangeMath(event)}}/> Math ({math}) 
-                        <input type="checkbox" defaultChecked='true'/> Social Study (0) 
-                        <input type="checkbox" defaultChecked='true'
-                            onChange={(event) => {this.onChangeScience(event)}}/> Science ({science})
-                    </fieldset>
-                </div>
+                <Jumbotron>
+                    <Container id="condition">
+                        <Row>
+                            <Col>
+                                <legend>gender</legend>
+                            </Col>
+                            <Col>
+                                <legend>Subject</legend>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Row>
+                                    <Form.Check type='checkbox'
+                                        defaultChecked='true' onClick={(event) => {this.onChangeMan(event)}} /> male ({genderNum[MALE]})
+                                </Row>
+                                <Row>
+                                    <Form.Check type='checkbox'
+                                        defaultChecked='true' onClick={(event) => {this.onChangeGirl(event)}} /> female ({genderNum[FEMALE]})
+                                </Row>
+                            </Col>
+                            <Col>
+                                <Row>
+                                    <Form.Check type="checkbox" defaultChecked='true'/> Korean (0)
+                                </Row>
+                                <Row>
+                                    <Form.Check type="checkbox" defaultChecked='true'/> English (0) 
+                                </Row>
+                                <Row>
+                                    <Form.Check type="checkbox" defaultChecked='true'
+                                        onChange={(event) => {this.onChangeMath(event)}}/> Math ({math}) 
+                                </Row>
+                                <Row>
+                                    <Form.Check type="checkbox" defaultChecked='true'/> Social Study (0) 
+                                </Row>
+                                <Row>
+                                    <Form.Check type="checkbox" defaultChecked='true'
+                                        onChange={(event) => {this.onChangeScience(event)}}/> Science ({science})
+                                </Row>
+                            </Col>
+                        </Row>
+                    </Container>
+                </Jumbotron>
                 <div className="result">
                     {tutorlistjsx}
                 </div>
