@@ -79,7 +79,6 @@ class ProfileTutor extends Component {
           </Col>
         </Row>
       </Container>
-
     );
   }
 }
