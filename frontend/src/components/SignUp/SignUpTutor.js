@@ -4,6 +4,11 @@ import Select from 'react-select'
 import AvailableTimes from 'react-available-times'
 import './SignUpTutor.css';
 
+// bootstrap
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Jumbotron from 'react-bootstrap/Jumbotron';
+
 class SignUpTutor extends Component {
   state = {
     id: '',
@@ -53,24 +58,25 @@ class SignUpTutor extends Component {
       { value: 'Postech', label: 'Postech' },
     ]
     return (
+      <Jumbotron>
       <div className="signuptutor-div">
         <div className="signuptutor-div-input">
           <div className="signuptutor-label-id">ID:
-          <input
+          <Form.Control
               type="text"
               className="signuptutor-input-id"
               onChange={(event) => this.setState({ id: event.target.value })}
             />
           </div>
           <div className="signuptutor-label-password">Password:
-          <input
+          <Form.Control
               type="password"
               className="signuptutor-input-password"
               onChange={(event) => this.setState({ password: event.target.value })}
             />
           </div>
           <div className="signuptutor-label-password">Password Confimation:
-          <input
+          <Form.Control
               type="password"
               className="signuptutor-input-password-confimation"
               onChange={(event) => this.setState({ password_confimation: event.target.value })}
@@ -78,7 +84,7 @@ class SignUpTutor extends Component {
           </div>
           <label>
             Name:
-            <input onChange={(e) => this.setState({ name: e.target.value })}></input>
+            <Form.Control onChange={(e) => this.setState({ name: e.target.value })}></Form.Control>
           </label>
           <br/>
           <label>
@@ -94,16 +100,16 @@ class SignUpTutor extends Component {
             <Select options={[{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }]}></Select>
           </div>
           <label className="signuptutor-label-certificate">Photo:</label>
-            <input type="file" className="signuptutor-input-certificate"/>
+            <Form.Control type="file" className="signuptutor-input-certificate"/>
             <div className="signuptutor-div-authorize">
             <label className="signuptutor-label-certificate">Certificate:</label>
-            <input type="file" className="signuptutor-input-certificate"
+            <Form.Control type="file" className="signuptutor-input-certificate"
               onChange={event => this.handleFileUpload(event)} />
             <p>{message}</p>
           </div>
           <label>
             Age:
-          <input></input>
+          <Form.Control></Form.Control>
           </label>
           <br/>
           <div className='university'>university
@@ -118,9 +124,10 @@ class SignUpTutor extends Component {
           <div className="timetable">
             <AvailableTimes height={600} />
           </div>
-          <button onClick={this.ClickConfirm}>Confirm</button>
+          <Button onClick={this.ClickConfirm}>Confirm</Button>
         </div>
       </div>
+      </Jumbotron>
     );
   }
 }

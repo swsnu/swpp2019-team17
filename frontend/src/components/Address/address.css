@@ -16,7 +16,7 @@ input{
     margin: auto;
     text-align: center;
 }
-button{
+.button{
     width:200px;
     text-align: center;
     padding: 10px;
