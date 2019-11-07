@@ -4,8 +4,10 @@ import Select from 'react-select'
 import AvailableTimes from 'react-available-times'
 import './SignUpTutor.css';
 
+// bootstrap
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Jumbotron from 'react-bootstrap/Jumbotron';
 
 class SignUpTutor extends Component {
   state = {
@@ -56,6 +58,7 @@ class SignUpTutor extends Component {
       { value: 'Postech', label: 'Postech' },
     ]
     return (
+      <Jumbotron>
       <div className="signuptutor-div">
         <div className="signuptutor-div-input">
           <div className="signuptutor-label-id">ID:
@@ -124,6 +127,7 @@ class SignUpTutor extends Component {
           <Button onClick={this.ClickConfirm}>Confirm</Button>
         </div>
       </div>
+      </Jumbotron>
     );
   }
 }

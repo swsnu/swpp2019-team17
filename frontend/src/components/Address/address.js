@@ -8,6 +8,8 @@ import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
+import './address.css';
+
 class Address extends React.Component {
   state = {
     address: '',
