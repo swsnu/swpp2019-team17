@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Login.css';
-import logo from './logo.png';
+import logo from '../Logo/dark.png';
 
 // import React-Bootstrap
 import Button from 'react-bootstrap/Button';
