@@ -79,6 +79,7 @@ class SignUpTutee extends Component {
             <Form.Label>ID</Form.Label>
             <Form.Control
               className="text-left"
+
               onChange={(e) => this.setState({ id: e.target.value })}
               value={this.state.id}
             />

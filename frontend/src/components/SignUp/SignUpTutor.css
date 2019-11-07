@@ -94,3 +94,8 @@ label{
     width:70%;
     height:70%;
 }
+
+.phoneinput {
+    text-align: left;
+    width: 200px;
+}
