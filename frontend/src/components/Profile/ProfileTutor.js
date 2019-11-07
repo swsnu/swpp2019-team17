@@ -51,8 +51,9 @@ class ProfileTutor extends Component {
         <br />
         <div className="button-list">
           <button type="button">Edit Profile</button><br />
-          <button type="button">Tutoring</button><br />
-          <button type="button">Withdrawal</button><br />
+          <button type="button">Tutoring List</button><br />
+          <button type="button">Request List</button><br />
+          <button type="button">Delete Account</button><br />
         </div>
       </div>
     );
