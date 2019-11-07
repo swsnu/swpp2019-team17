@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import image from './image.png';
 import './ProfileTutor.css';
+import Header from '../Header/header';
 
 // bootstrap
 import Button from 'react-bootstrap/Button';
@@ -29,16 +30,16 @@ class ProfileTutor extends Component {
   render() {
     return (
       <Container>
+        <Header isLoggedIn={true} />
         <Row>
           <Col xs={2}>
           </Col>
           <Col>
-          <Jumbotron>
-            <div className="profiletutor">
-            <img src={image} className="photo" />
-
-            </div>
-          </Jumbotron>
+            <Jumbotron>
+              <div className="profiletutor">
+                <img src={image} className="photo" />
+              </div>
+            </Jumbotron>
           </Col>
         </Row>
         <Row>
@@ -52,8 +53,8 @@ class ProfileTutor extends Component {
             </div>
           </Col>
           <Col>
-          <Jumbotron>
-            <h1>
+            <Jumbotron>
+              <h1>
                 Name:{this.state.name}
               </h1>
               <h2>

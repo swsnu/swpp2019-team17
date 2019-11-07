@@ -6,7 +6,7 @@ import * as actionCreators from '../../redux/match';
 import MatchedTutor from './MatchedTutor';
 
 import './Match.css'
-
+import Header from '../Header/header'
 import profile1 from '../Profile/image.png'
 import profile2 from '../Profile/image2.png'
 
@@ -129,6 +129,7 @@ class Match extends Component {
 
         return (
             <div className="matching">
+                <Header isLoggedIn={true} />
                 <div className="condition">
                     {genderswitch}
                     <fieldset className="subject">
