@@ -78,7 +78,7 @@ class SignUpTutee extends Component {
           <div className="id">
             <Form.Label>ID</Form.Label>
             <Form.Control
-              className="id-input"
+              className="id-input "
               onChange={(e) => this.setState({ id: e.target.value })}
               value={this.state.id}
             />
@@ -104,6 +104,7 @@ class SignUpTutee extends Component {
           <br/>
           <Form.Label>Phone number:</Form.Label><br/>
           <PhoneInput
+            className="phoneinput"
             country="KR"
             value={this.state.phone}
             onChange={value => this.setState({ phone: value })}

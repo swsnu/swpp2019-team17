@@ -58,38 +58,39 @@ class SignUpTutor extends Component {
       { value: 'Postech', label: 'Postech' },
     ]
     return (
-      <Jumbotron>
+      <Jumbotron className="text-left">
       <div className="signuptutor-div">
         <div className="signuptutor-div-input">
-          <div className="signuptutor-label-id">ID:
+          <Form.Group className="signuptutor-label-id">ID:
           <Form.Control
               type="text"
-              className="signuptutor-input-id"
+              className="text-left"
               onChange={(event) => this.setState({ id: event.target.value })}
             />
-          </div>
+          </Form.Group>
           <div className="signuptutor-label-password">Password:
           <Form.Control
               type="password"
-              className="signuptutor-input-password"
+              className="text-left"
               onChange={(event) => this.setState({ password: event.target.value })}
             />
           </div>
           <div className="signuptutor-label-password">Password Confimation:
           <Form.Control
               type="password"
-              className="signuptutor-input-password-confimation"
+              className="text-left"
               onChange={(event) => this.setState({ password_confimation: event.target.value })}
             />
           </div>
           <label>
             Name:
-            <Form.Control onChange={(e) => this.setState({ name: e.target.value })}></Form.Control>
+            <Form.Control className="text-left" onChange={(e) => this.setState({ name: e.target.value })}></Form.Control>
           </label>
           <br/>
           <label>
             Phone number:
           <PhoneInput
+            className = "phoneinput"
               country="KR"
               value={this.state.phone}
               onChange={value => this.setState({ phone: value })}
@@ -122,7 +123,7 @@ class SignUpTutor extends Component {
             </div>
           </label>
           <div className="timetable">
-            <AvailableTimes height={600} />
+            <AvailableTimes height={1000} />
           </div>
           <Button onClick={this.ClickConfirm}>Confirm</Button>
         </div>
