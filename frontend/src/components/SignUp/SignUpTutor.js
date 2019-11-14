@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+
+// redux
+import { connect } from 'react-redux';
+
 import PhoneInput from 'react-phone-number-input/input'
 import Select from 'react-select'
 import AvailableTimes from 'react-available-times'
@@ -15,7 +19,6 @@ class SignUpTutor extends Component {
     password: '',
     password_confimation: '',
     name: '',
-    certificate: null,
     phone: '',
     isAuthorized: false,
     subject: [],
@@ -38,6 +41,8 @@ class SignUpTutor extends Component {
   ClickConfirm = () => {
     this.props.history.push('/profile/tutor/')
   }
+
+
   render() {
     let message = '';
     if (this.state.isAuthorized) {
@@ -135,4 +140,12 @@ class SignUpTutor extends Component {
   }
 }
 
-export default SignUpTutor;
+const mapStateToProps = state => {
+
+}
+
+const mapDispatchToProps = dispatch => {
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpTutor);
