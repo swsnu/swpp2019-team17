@@ -11,6 +11,7 @@ import Jumbotron from 'react-bootstrap/Jumbotron';
 
 class SignUpTutor extends Component {
   state = {
+    step: 0,
     id: '',
     password: '',
     password_confimation: '',
@@ -39,6 +40,13 @@ class SignUpTutor extends Component {
     this.props.history.push('/profile/tutor/')
   }
   render() {
+    const university_options = [
+      { value: 'SNU', label: 'SNU' },
+      { value: 'Yonsei', label: 'Yonsei' },
+      { value: 'Korea', label: 'Korea' },
+      { value: 'Kaist', label: 'Kaist' },
+      { value: 'Postech', label: 'Postech' },
+    ]
     let message = '';
     if (this.state.isAuthorized) {
       message = 'Your certified has been authorized!'
@@ -50,86 +58,95 @@ class SignUpTutor extends Component {
       { value: 'science', label: 'Science' },
       { value: 'social study', label: 'Social Study' },
     ]
-    const university_options = [
-      { value: 'SNU', label: 'SNU' },
-      { value: 'Yonsei', label: 'Yonsei' },
-      { value: 'Korea', label: 'Korea' },
-      { value: 'Kaist', label: 'Kaist' },
-      { value: 'Postech', label: 'Postech' },
-    ]
+    let input = <div></div>
+    switch (this.state.step) {
+      case 0:
+        input =
+          <div>
+            <Form.Group className="signuptutor-label-id">ID:
+          <Form.Control
+                type="text"
+                className="text-left"
+                onChange={(event) => this.setState({ id: event.target.value })}
+              />
+            </Form.Group>
+            <div className="signuptutor-label-password">Password:
+          <Form.Control
+                type="password"
+                className="text-left"
+                onChange={(event) => this.setState({ password: event.target.value })}
+              />
+            </div>
+            <div className="signuptutor-label-password">Password Confimation:
+          <Form.Control
+                type="password"
+                className="text-left"
+                onChange={(event) => this.setState({ password_confimation: event.target.value })}
+              />
+            </div>
+            <Button onClick={() => this.setState({ step: this.state.step + 1 })}>Next</Button>
+          </div>
+        break;
+      case 1:
+        input =
+          <div>
+            <label className="signuptutor-label-certificate">Photo:</label>
+            <Form.Control type="file" className="signuptutor-input-certificate" />
+            <div className="signuptutor-div-authorize">
+              <label className="signuptutor-label-certificate">Certificate:</label>
+              <Form.Control type="file" className="signuptutor-input-certificate"
+                onChange={event => this.handleFileUpload(event)} />
+            </div>
+            <div className='university'>university
+          <Select options={university_options} closeMenuOnSelect={true} onChange={(selectedoption) => this.ChangeUniversity(selectedoption)} />
+            </div>
+            <Button onClick={() => this.setState({ step: this.state.step + 1 })}>Next</Button>
+          </div>
+        break;
+      case 2:
+        input =
+          <div>
+            <label>
+              Phone number:
+          <PhoneInput
+                className="phoneinput"
+                country="KR"
+                value={this.state.phone}
+                onChange={value => this.setState({ phone: value })}
+              />
+            </label>
+            <div className="gender">Gender:
+            <Select options={[{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }]}></Select>
+            </div>
+            <label>
+              Age:
+          <Form.Control></Form.Control>
+            </label>
+            <Button onClick={() => this.setState({ step: this.state.step + 1 })}>Next</Button>
+          </div>
+        break;
+      case 3:
+        input = <label className="subject-label">
+          subject
+        <div className='select'>
+            <Select options={options} closeMenuOnSelect={false} isMulti={true} onChange={(selectedoptions) => this.ChangeSubject(selectedoptions)} />
+          </div>
+          <Button onClick={() => this.setState({ step: this.state.step + 1 })}>Next</Button>
+        </label>
+        break;
+      case 4:
+        input =
+          <div className="timetable">
+            <Address />
+            <AvailableTimes height={1000} />
+            <Button onClick={this.ClickConfirm}>Confirm</Button>
+          </div>
+        break;
+    }
+
     return (
       <Jumbotron>
-      <div className="signuptutor-div">
-        <div className="signuptutor-div-input">
-          <Form.Group className="signuptutor-label-id">ID:
-          <Form.Control
-              type="text"
-              className="text-left"
-              onChange={(event) => this.setState({ id: event.target.value })}
-            />
-          </Form.Group>
-          <div className="signuptutor-label-password">Password:
-          <Form.Control
-              type="password"
-              className="text-left"
-              onChange={(event) => this.setState({ password: event.target.value })}
-            />
-          </div>
-          <div className="signuptutor-label-password">Password Confimation:
-          <Form.Control
-              type="password"
-              className="text-left"
-              onChange={(event) => this.setState({ password_confimation: event.target.value })}
-            />
-          </div>
-          <label>
-            Name:
-            <Form.Control className="text-left" onChange={(e) => this.setState({ name: e.target.value })}></Form.Control>
-          </label>
-          <br/>
-          <label>
-            Phone number:
-          <PhoneInput
-            className = "phoneinput"
-
-              country="KR"
-              value={this.state.phone}
-              onChange={value => this.setState({ phone: value })}
-            />
-          </label>
-          <br/>
-          <div className="gender">Gender:
-            <Select options={[{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }]}></Select>
-          </div>
-          <label className="signuptutor-label-certificate">Photo:</label>
-            <Form.Control type="file" className="signuptutor-input-certificate"/>
-            <div className="signuptutor-div-authorize">
-            <label className="signuptutor-label-certificate">Certificate:</label>
-            <Form.Control type="file" className="signuptutor-input-certificate"
-              onChange={event => this.handleFileUpload(event)} />
-            <p>{message}</p>
-          </div>
-          <label>
-            Age:
-          <Form.Control></Form.Control>
-          </label>
-          <br/>
-          <Address/>
-          <div className='university'>university
-          <Select options={university_options} closeMenuOnSelect={true} onChange={(selectedoption) => this.ChangeUniversity(selectedoption)} />
-          </div>
-          <label className="subject-label">
-            subject
-            <div className='select'>
-              <Select options={options} closeMenuOnSelect={false} isMulti={true} onChange={(selectedoptions) => this.ChangeSubject(selectedoptions)} />
-            </div>
-          </label>
-          <div className="timetable">
-            <AvailableTimes height={1000} />
-          </div>
-          <Button onClick={this.ClickConfirm}>Confirm</Button>
-        </div>
-      </div>
+        {input}
       </Jumbotron>
     );
   }
