@@ -1,5 +1,6 @@
 from django.test import TestCase
 from .models import Tutee,TuteeManager,Tutor
+import json
 # Create your tests here.
 
 class ModelTest(TestCase):
