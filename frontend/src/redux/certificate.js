@@ -7,10 +7,10 @@ export const certificateTutor_ = (certified) => {
     return {type: certificateTutor, isCertified: certified};
 }
 
-export const certificateTutor = (data) => {
+export const certificateTutor = (image) => {
 
     return dispatch => {
-      return axios.post('/signup/tutor/certificate/', data)
+      return axios.post('/signup/tutor/certificate/', image)
         .then(res => {
             dispatch(certificateTutor_(res.data));
             console.log("this is response from kakao", res.data);

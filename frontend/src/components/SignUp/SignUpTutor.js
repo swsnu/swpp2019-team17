@@ -3,11 +3,12 @@ import React, { Component } from 'react';
 // redux
 import { connect } from 'react-redux';
 
-import PhoneInput from 'react-phone-number-input/input'
-import Select from 'react-select'
-import AvailableTimes from 'react-available-times'
+import PhoneInput from 'react-phone-number-input/input';
+import Select from 'react-select';
+import AvailableTimes from 'react-available-times';
 import './SignUpTutor.css';
 import Address from '../Address/address';
+import Certificate from '../Certificate/Certificate';
 // bootstrap
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -20,15 +21,8 @@ class SignUpTutor extends Component {
     password_confimation: '',
     name: '',
     phone: '',
-    isAuthorized: false,
     subject: [],
     university: '',
-  };
-
-  handleFileUpload = (event) => {
-    const formData = new FormData();
-    formData.append('file', event.target.files[0]);
-    this.setState({ isAuthorized: true })
   };
 
   ChangeSubject = (subject) => {
@@ -44,10 +38,6 @@ class SignUpTutor extends Component {
 
 
   render() {
-    let message = '';
-    if (this.state.isAuthorized) {
-      message = 'Your certified has been authorized!'
-    }
     const options = [
       { value: 'korean', label: 'Korean' },
       { value: 'math', label: 'Math' },
@@ -106,14 +96,12 @@ class SignUpTutor extends Component {
           <div className="gender">Gender:
             <Select options={[{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }]}></Select>
           </div>
-          <label className="signuptutor-label-certificate">Photo:</label>
-            <Form.Control type="file" className="signuptutor-input-certificate"/>
+          <label className="signuptutor-label-photo">Photo:</label>
+            <Form.Control type="file" className="signuptutor-input-photo"/>
             <div className="signuptutor-div-authorize">
-            <label className="signuptutor-label-certificate">Certificate:</label>
-            <Form.Control type="file" className="signuptutor-input-certificate"
-              onChange={event => this.handleFileUpload(event)} />
-            <p>{message}</p>
-          </div>
+              <label className="signuptutor-label-certificate">Certificate:</label>
+              <Certificate/>
+            </div>
           <label>
             Age:
           <Form.Control></Form.Control>

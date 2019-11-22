@@ -189,7 +189,13 @@ def certificate(request):
             "Content-Type": "multipart/form-data"
         }
 
-        response_mid = requests.post(url, data=request.body, headers=headers)
+        image_file = request['image']
+
+
+        response_mid = requests.post(url, image_file.chunks(), headers=headers)
+
+        if (response_mid.status_code == 400):
+            return HttpResponse(status=400)
 
         if (response_mid.json()['response']['status'] == 'NOT_FOUND'):
             return HttpResponse(status=404)
@@ -197,7 +203,7 @@ def certificate(request):
             boxes = response_mid.json()['response']['result']
 
             url = '' # 지금 CSRF 토큰이 막혀서 안됨
-            response_final = requests.post(url, data=response_mid, headers=headers)
+            response_final = requests.post(url, data=response_mid, headers=headers)        
     else:
         return HttpResponseNotAllowed(['POST'])
         
