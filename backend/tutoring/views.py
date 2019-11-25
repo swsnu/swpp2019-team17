@@ -197,10 +197,9 @@ def certificate(request):
         if (response_mid.json()['response']['status'] == 'NOT_FOUND'):
             return HttpResponse(status=404)
         else:
-            boxes = response_mid.json()['response']['result']
-
             url = 'https://kapi.kakao.com/v1/vision/text/recognize'
-            response_final = requests.post(url, data=response_mid.result.boxes, headers=headers)
+            response_final = requests.post(url, files={'file': request.FILES['file']}, data=response_mid.result, headers=headers)
+            return JsonResponse(result, )
     else:
         return HttpResponseNotAllowed(['POST'])
         
