@@ -50,7 +50,7 @@ class TuteeSignupForm extends Component {
         <br/>
         <label>available time</label>
         <div className="timetable">
-        <AvailableTimes height={600} />
+        <AvailableTimes height={600} onChange={(e) => console.log(e)}/>
         </div>
         <div className="delete">
         {this.props.id != 0 ? <Button onClick={() => this.props.onClickDelete(this.props.id)}>delete</Button> : null}
