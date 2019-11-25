@@ -186,13 +186,10 @@ def certificate(request):
         headers = {
             "Host": "kapi.kakao.com",
             "Authorization": "KakaoAK c7a2dff8d5d6606bae24c70081c2b5cd",
-            "Content-Type": "multipart/form-data"
+            #"Content-Type": "multipart/form-data"
         }
 
-        image_file = request['image']
-
-
-        response_mid = requests.post(url, image_file.chunks(), headers=headers)
+        response_mid = requests.post(url, files={'file': request.FILES['file']}, headers=headers)
 
         if (response_mid.status_code == 400):
             return HttpResponse(status=400)
@@ -202,8 +199,8 @@ def certificate(request):
         else:
             boxes = response_mid.json()['response']['result']
 
-            url = '' # 지금 CSRF 토큰이 막혀서 안됨
-            response_final = requests.post(url, data=response_mid, headers=headers)        
+            url = 'https://kapi.kakao.com/v1/vision/text/recognize'
+            response_final = requests.post(url, data=response_mid.result.boxes, headers=headers)
     else:
         return HttpResponseNotAllowed(['POST'])
         
