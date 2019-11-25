@@ -1,7 +1,14 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from .models import Tutee,TuteeManager,Tutor
 import json
+from django.contrib.auth.hashers import check_password
+
 # Create your tests here.
+
+'''
+viewTest ++
+'''
+
 
 class ModelTest(TestCase):
     def test_model(self):
@@ -12,12 +19,12 @@ class tokenTest(TestCase):
         client = Client(enforce_csrf_checks=True)
         response = client.post('/signup/tutor/', json.dumps({'username': 'chris', 'password': 'chris'}),
                                content_type='application/json')
-        self.assertEqual(response.status_code, 403)  # Request without csrf token returns 403 response
+        self.assertEqual(response.status_code, 403) 
 
         response = client.get('/token/')
         self.assertEqual(response.status_code, 204)
-        csrftoken = response.cookies['csrftoken'].value  # Get csrf token from cookie
+        csrftoken = response.cookies['csrftoken'].value  
 
         response = client.post('/signup/tutor/', json.dumps({'username': 'chris', 'password': 'chris'}),
                                content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
-        self.assertEqual(response.status_code, 201)  # Pass csrf protection
+        self.assertEqual(response.status_code, 201) 
