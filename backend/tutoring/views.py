@@ -86,18 +86,60 @@ def signup_tutor(request):
 tutors page
 '''
 def tutor_page_review(request,tutor_id):
-    '''
-    implement
-    '''
-    return HttpResponse(status=404)
+
+    get_object_or_404(Tutor.objects.filter(id=tutor_id))
+    if request.method == 'GET':
+        review_list = [Review for Review in Review.objects.filter(tutor_id=tutor_id).values()]  
+        return JsonResponse(comment_list,safe=False,status=200)
+    else:    
+        return HttpResponse(status=405)
 
 def tutor_page_profile(request,tutor_id):
-    '''
-    implement
-    '''
-    return HttpResponse(status=404)   
+
+    get_object_or_404(Tutor.objects.filter(id=tutor_id))
+    if request.method == 'GET':
+        tutor = Tutor.objects.get(id=tutor_id)
+        response_dict={
+            'name':tutor.name,
+            'age':tutor.age,
+            'subject':tutor.subject,
+            'address':tutor.address,
+            'phonenumber':tutor.phone1,
+            'gender':tutor.gender,
+        }
+        return JsonResponse(response_dict,status=200,safe=False)
+    elif request.method == 'POST':
+        try:
+            req_data = json.loads(request.body.decode())
+            name = req_data['name']
+            age = req_data['age']
+            subject = req_data['subject']
+            address = req_data['address']
+            phonenumber = req_datat['phonenumber']
+            gender = req_data['gender']
+        except (KeyError, JSONDecodeError) as e:
+            return HttpResponse(status=400)
+        tutor=Tutor.objects.get(id=tutor_id)
+
+        tutor.name = name
+        tutor.age = age
+        tutor.subject = subject
+        tutor.address = address
+        tutor.gender = gender
+        tutor.phonenumber = phonenumber
+        tutor.save()
+        return HttpResponse(status=201)
+    else:    
+        return HttpResponse(status=405) 
 
 def tutor_page_tutoring(request,tutor_id):
+    get_object_or_404(Tutor.objects.filter(id=tutor_id))
+    if request.method == 'GET':
+        tutoring_list = [Tutoring for Tutoring in Tutoring.objects.filter(tutor_id=tutor_id).values()]  
+        return JsonResponse(tutoring_list,safe=False,status=200)
+    else:    
+        return HttpResponse(status=405)
+    
     '''
     implement
     '''
@@ -134,6 +176,13 @@ def tutee_page_profile(request,tutee_id):
     return HttpResponse(status=404)       
 
 def tutee_page_review(request,tutee_id):
+    get_object_or_404(Tutee.objects.filter(id=tutee_id))
+    if request.method == 'GET':
+        review_list = [Review for Review in Review.objects.filter(tutee_id=tutee_id).values()]  
+        return JsonResponse(review_list,safe=False,status=200)
+    else:    
+        return HttpResponse(status=405)
+    
     '''
     implement
     '''
