@@ -184,8 +184,7 @@ def certificate(request):
     if request.method == 'POST':
         url = "https://kapi.kakao.com/v1/vision/text/detect"
         headers = {
-            "Host": "kapi.kakao.com",
-            "Authorization": "KakaoAK c7a2dff8d5d6606bae24c70081c2b5cd",
+            "Authorization": "KakaoAK c7a2dff8d5d6606bae24c70081c2b5cd"
             #"Content-Type": "multipart/form-data"
         }
 
@@ -193,13 +192,13 @@ def certificate(request):
 
         if (response_mid.status_code == 400):
             return HttpResponse(status=400)
-
-        if (response_mid.json()['response']['status'] == 'NOT_FOUND'):
-            return HttpResponse(status=404)
         else:
-            url = 'https://kapi.kakao.com/v1/vision/text/recognize'
-            response_final = requests.post(url, files={'file': request.FILES['file']}, data=response_mid.result, headers=headers)
-            return JsonResponse(result, )
+            boxes = response_mid.json()['result']['boxes']
+
+            url = "https://kapi.kakao.com/v1/vision/text/recognize"
+
+            response_final = requests.post(url, files={'file': request.FILES['file']}, data={"boxes": json.dumps(boxes)}, headers=headers)
+            return JsonResponse(response_final, status=200, safe=False)
     else:
         return HttpResponseNotAllowed(['POST'])
         
