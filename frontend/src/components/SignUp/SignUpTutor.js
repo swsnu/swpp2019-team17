@@ -19,8 +19,11 @@ class SignUpTutor extends Component {
     certificate: null,
     phone: '',
     isAuthorized: false,
+    age: '',
     subject: [],
     university: '',
+    address: [],
+    schedule: [],
   };
 
   handleFileUpload = (event) => {
@@ -28,16 +31,29 @@ class SignUpTutor extends Component {
     formData.append('file', event.target.files[0]);
     this.setState({ isAuthorized: true })
   };
-
   ChangeSubject = (subject) => {
     this.setState({ subject: subject })
   }
   ChangeUniversity = (university) => {
     this.setState({ university: university })
   }
-
   ClickConfirm = () => {
     this.props.history.push('/profile/tutor/')
+  }
+  inputSchedule = (e) => {
+    this.setState({ schedule : e })
+  }
+  inputAddress = (address, index) => {
+    var arr = this.state.address;
+    arr[index] = address
+    this.setState({ address: arr})
+  }
+  selectAddress = (index, address) => {
+    var arr = this.state.address;
+    arr[index] = address;
+    console.log(address)
+    this.setState({address: arr})
+    console.log(this.state.address)
   }
   render() {
     const university_options = [
@@ -59,6 +75,25 @@ class SignUpTutor extends Component {
       { value: 'social study', label: 'Social Study' },
     ]
     let input = <div></div>
+    var index = -2;
+    const addressInput = this.state.schedule.map((x) => {
+      var dayReg = /^([A-Za-z]{3})/g
+      var timeReg = /([0-9]{2}:[0-9]{2})/g;
+      var timeReg2 = /([0-9]{2}:[0-9]{2})/g;
+      let start = x.start.toString()
+      let end = x.end.toString()
+      let Day = dayReg.exec(start)[1]
+      let startTime = timeReg.exec(start)[1]
+      let endTime = timeReg2.exec(end)[1]
+      index += 2;
+      return(
+        <div>
+          <div>{Day}{startTime}~{endTime}</div>
+          <Address id={index} index={index} onSelectAddress={this.selectAddress}/>
+          <Address id={index+1} index={index+1} onSelectAddress={this.selectAddress}/>
+        </div>
+      )
+    })
     switch (this.state.step) {
       case 0:
         input =
@@ -107,38 +142,34 @@ class SignUpTutor extends Component {
         input =
           <div>
             <label>
-              Phone number:
-          <PhoneInput
+              Phone number
+              <PhoneInput
                 className="phoneinput"
                 country="KR"
                 value={this.state.phone}
                 onChange={value => this.setState({ phone: value })}
               />
             </label>
-            <div className="gender">Gender:
-            <Select options={[{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }]}></Select>
-            </div>
+              Gender
+              <Select options={[{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }]}></Select>
             <label>
-              Age:
-          <Form.Control></Form.Control>
+              Age
+            <Form.Control></Form.Control>
+            </label>
+            <label className="subject-label">
+              Subject
+              <div className='select'>
+                <Select options={options} closeMenuOnSelect={false} isMulti={true} onChange={(selectedoptions) => this.ChangeSubject(selectedoptions)} />
+              </div>
             </label>
             <Button onClick={() => this.setState({ step: this.state.step + 1 })}>Next</Button>
           </div>
         break;
       case 3:
-        input = <label className="subject-label">
-          subject
-        <div className='select'>
-            <Select options={options} closeMenuOnSelect={false} isMulti={true} onChange={(selectedoptions) => this.ChangeSubject(selectedoptions)} />
-          </div>
-          <Button onClick={() => this.setState({ step: this.state.step + 1 })}>Next</Button>
-        </label>
-        break;
-      case 4:
         input =
           <div className="timetable">
-            <Address />
-            <AvailableTimes height={1000} />
+            <AvailableTimes height={1000} onChange={(e) => this.inputSchedule(e)} />
+            <div>{addressInput}</div>
             <Button onClick={this.ClickConfirm}>Confirm</Button>
           </div>
         break;

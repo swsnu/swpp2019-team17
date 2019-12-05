@@ -15,10 +15,16 @@ class Address extends React.Component {
     address: '',
     selected_address: '',
     detailed_address: '',
-    mode: 'search'
+    mode: 'ready'
   }
   ClickAddress = (address) => {
-    this.setState({selected_address: address, mode:'detail', address: ''})
+    if (this.props.index != null){
+      this.props.onSelectAddress(this.props.index, address)
+      this.setState({mode: 'done'})
+    }
+    else{
+      this.setState({selected_address: address, mode:'detail', address: ''})
+    }
   }
   SearchAddress = () => {
     this.props.onGetAddress(this.state.address)
@@ -26,30 +32,45 @@ class Address extends React.Component {
   }
   render() {
     const addresses = this.props.storedAddress.map((address) => (<div key={address.address.road} onClick={() => this.ClickAddress(address.address.road)}>{address.address.road}</div>))
-    const detail = this.state.mode == 'search' ? addresses : 
-    (<span>
+    const detail = this.state.mode == 
+    'ready' ? 
+    <div>
+      <label>address:</label>
+      <Form.Control 
+        className="text-left"
+        type="text"
+        value={this.state.address}
+        onChange={(event) => this.setState({ address: event.target.value })}
+        onFocus={e => this.setState({mode: 'search'})}
+      />
+      <Button onClick={() => this.SearchAddress()}>search address</Button>
+    </div> :
+    ('search' ?
+    <div>
+      <label>address:</label>
+      <Form.Control 
+        className="text-left"
+        type="text"
+        value={this.state.address}
+        onChange={(event) => this.setState({ address: event.target.value })}
+        onFocus={e => this.setState({mode: 'search'})}
+      />
+      <Button onClick={() => this.SearchAddress()}>search address</Button>
+      {addresses}
+    </div> : 
+    <span>
       <p>{this.state.selected_address}</p>
       <label>detailed address</label>
-      <Form.Control className="text-left" onChange={e => this.setState({detailed_address:e.target.value})}>
+      <Form.Control className="text-left" onChange={e => this.setState({detailed_address:e.target.value})} >
       </Form.Control>
     </span>)
     return (
-      <div>
-        <label>address:</label>
-        <Form.Control className="text-left"
-          type="text"
-          value={this.state.address}
-          onChange={(event) => this.setState({ address: event.target.value })}
-        />
-        <Button onClick={() => this.SearchAddress()}>search address</Button>
-        <Alert>{detail}</Alert>
-      </div>
+      <Alert>{detail}</Alert>
     )
   }
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.adr.address)
   return {
     storedAddress: state.adr.address,
   }
