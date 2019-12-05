@@ -10,6 +10,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import ensure_csrf_cookie
 import requests
 
+import copy
+
 User = get_user_model()
 
 def signin(request):
@@ -188,6 +190,8 @@ def certificate(request):
             #"Content-Type": "multipart/form-data"
         }
 
+        copiedblob = copy.deepcopy(request.FILES['file']) # requests.post has somewhat side effect
+
         response_mid = requests.post(url, files={'file': request.FILES['file']}, headers=headers)
 
         if (response_mid.status_code == 400):
@@ -197,7 +201,7 @@ def certificate(request):
 
             url = "https://kapi.kakao.com/v1/vision/text/recognize"
 
-            response_final = requests.post(url, files={'file': request.FILES['file']}, data={"boxes": json.dumps(boxes)}, headers=headers)
+            response_final = requests.post(url, files={'file': copiedblob}, data={"boxes": json.dumps(boxes)}, headers=headers)
             return JsonResponse(response_final, status=200, safe=False)
     else:
         return HttpResponseNotAllowed(['POST'])
