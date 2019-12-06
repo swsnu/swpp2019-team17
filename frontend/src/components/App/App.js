@@ -12,7 +12,6 @@ import SignUpTutee from '../SignUp/SignUpTutee';
 import Match from '../Match/Match';
 import ProfileTutor from '../Profile/ProfileTutor';
 import Certificate from '../Certificate/Certificate';
-import TimeTable from '../TimeTable/TimeTable';
 
 function App(props) {
   return (
@@ -26,7 +25,6 @@ function App(props) {
           <Route path="/tutee/match" exact component={Match} />
           <Route path="/profile/tutor" exact component={ProfileTutor} />
           <Route path="/cert" exact component={Certificate} />
-          <Route path="/timetable" exact component={TimeTable} />
           <Redirect from="/" to="/login" />
         </Switch>
       </div>

@@ -6,8 +6,6 @@ import * as actionCreators from '../../redux/certificate';
 import Form from 'react-bootstrap/Form';
 
 class Certificate extends Component {
-    state = {
-    }
 
     certificateUpload = (e) => {
         const formData = new FormData();
@@ -15,13 +13,24 @@ class Certificate extends Component {
         
         this.props.certificateFile(formData);
 
-        console.log("This is from certificateUpload()", this.props.isCertified);
     }
 
     render() {
+
+        let list = null;
+
+        if (this.props.ocr !== null) {           
+            list = this.props.ocr.recognition_words.map(text => 
+            <p>{text}</p>);
+        }
+
+
         return (
-            <Form.Control type="file" className="signuptutor-input-certificate"
-                onChange={event => this.certificateUpload(event)} />
+            <div>
+                <Form.Control type="file" className="signuptutor-input-certificate"
+                    onChange={event => this.certificateUpload(event)} />
+                {list}
+            </div>
         )
     }
 
@@ -29,7 +38,7 @@ class Certificate extends Component {
 
 const mapStateToProps = state => {
     return {
-        isCertified: state.cer.isCertified
+        ocr: state.cer.ocr
     }
 }
 

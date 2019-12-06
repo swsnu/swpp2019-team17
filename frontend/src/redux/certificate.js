@@ -3,8 +3,11 @@ import axios from 'axios';
 const CERTIFICATE_TUTOR = 'CERTIFICATE_TUTOR';
 
 
-export const certificateTutor_ = (certified) => {
-    return {type: certificateTutor, isCertified: certified};
+export const certificateTutor_ = (ocr) => {
+    return {
+        type: CERTIFICATE_TUTOR,
+        ocr: ocr
+    };
 }
 
 export const certificateTutor = (image) => {
@@ -20,17 +23,15 @@ export const certificateTutor = (image) => {
 
 //reducer
 const initialState = {
-    isCertified: false
+    ocr: null
 };
-
-
 
 export const reducer = (state = initialState, action) => {
     switch (action.type) {
         case CERTIFICATE_TUTOR:
             return {
                 ...state,
-                isCertified: action.isCertified
+                ocr: action.ocr
             };
         default:
             return state;
