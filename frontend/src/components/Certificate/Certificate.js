@@ -21,7 +21,7 @@ class Certificate extends Component {
 
         if (this.props.ocr !== null) {           
             list = this.props.ocr.recognition_words.map(text => 
-            <p>{text}</p>);
+            <p key={text}>{text}</p>);
         }
 
 
