@@ -13,7 +13,7 @@ export const certificateTutor_ = (ocr) => {
 export const certificateTutor = (image) => {
 
     return dispatch => {
-      return axios.post('/signup/tutor/certificate/', image)
+      return axios.post('/api/signup/tutor/certificate/', image)
         .then(res => {
             dispatch(certificateTutor_(res.data));
             console.log("this is response from kakao", res.data);
