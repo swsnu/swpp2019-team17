@@ -205,6 +205,13 @@ def certificate(request):
             return JsonResponse(response_final.json()['result'], status=200, safe=False)
     else:
         return HttpResponseNotAllowed(['POST'])
+
+
+def match(request):
+    if request.method == "POST":
+        pass
+    else:
+        return HttpResponseNotAllowed(['POST'])
         
 
 
