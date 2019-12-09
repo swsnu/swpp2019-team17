@@ -179,6 +179,32 @@ def address(request, keyword):
                 result.append(response.json()['response']['result']['items'][i])
         return JsonResponse(result, status=200, safe=False)
 
+
+def certificate(request):
+    if request.method == 'POST':
+        url = "https://kapi.kakao.com/v1/vision/text/detect"
+        headers = {
+            "Host": "kapi.kakao.com",
+            "Authorization": "KakaoAK c7a2dff8d5d6606bae24c70081c2b5cd",
+            "Content-Type": "multipart/form-data"
+        }
+
+        response_mid = requests.post(url, data=request.body, headers=headers)
+
+        if (response_mid.json()['response']['status'] == 'NOT_FOUND'):
+            return HttpResponse(status=404)
+        else:
+            boxes = response_mid.json()['response']['result']
+
+            url = '' # 지금 CSRF 토큰이 막혀서 안됨
+            response_final = requests.post(url, data=response_mid, headers=headers)
+    else:
+        return HttpResponseNotAllowed(['POST'])
+        
+
+
+
+
 @ensure_csrf_cookie
 def token(request):
     if request.method == 'GET':
