@@ -27,14 +27,14 @@ const initialState = {
 };
 
 export const reducer = (state = initialState, action) => {
-    switch (action.type) {
-        case CERTIFICATE_TUTOR:
-            return {
-                ...state,
-                ocr: action.ocr
-            };
-        default:
-            return state;
+    if (action.type == CERTIFICATE_TUTOR) {
+        return {
+            ...state,
+            ocr: action.ocr
+        }
+    }
+    else {
+        return state;
     }
 }
 
