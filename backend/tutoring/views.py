@@ -116,7 +116,7 @@ def tutor_page_profile(request,tutor_id):
             age = req_data['age']
             subject = req_data['subject']
             address = req_data['address']
-            phonenumber = req_datat['phonenumber']
+            phonenumber = req_data['phonenumber']
             gender = req_data['gender']
         except (KeyError, JSONDecodeError) as e:
             return HttpResponse(status=400)
@@ -140,7 +140,6 @@ def tutor_page_tutoring(request,tutor_id):
         return JsonResponse(tutoring_list,safe=False,status=200)
     else:    
         return HttpResponse(status=405)    
-    return HttpResponse(status=404)   
 
 '''
 def tutoring_page(request,tutoring_id):
