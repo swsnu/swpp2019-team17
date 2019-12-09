@@ -23,10 +23,11 @@ def signin(request):
         userA=authenticate(username=user_name,password=user_pass)
         if userA is not None:
             login(request,userA)
-            if Tutor.objects.get(username=user_name) is None:
+            try:
+                Tutor.objects.get(username=user_name)
+                return JsonResponse('Tutor',status=204,safe=False)    
+            except:
                 return JsonResponse('TuteeManager',status=204,safe=False)
-            else:
-                return JsonResponse('Tutor',status=204,safe=False)
         else:
             return HttpResponse(status=401)
     else :
@@ -53,7 +54,7 @@ def signup_tutee_manager(request):
         except (KeyError, JSONDecodeError) as e:
             return HttpResponse(status=400)
         
-        TuteeManager.objects.create_user(username=user_name1,password=pass_word1,phonenumber=phone1,address=address1) 
+        TuteeManager.objects.create_user(username=user_name1,password=pass_word1,phonenumber=phone1) 
         '''
         check if register tutee or not
         '''
@@ -90,7 +91,7 @@ def tutor_page_review(request,tutor_id):
     get_object_or_404(Tutor.objects.filter(id=tutor_id))
     if request.method == 'GET':
         review_list = [Review for Review in Review.objects.filter(tutor_id=tutor_id).values()]  
-        return JsonResponse(comment_list,safe=False,status=200)
+        return JsonResponse(review_list,safe=False,status=200)
     else:    
         return HttpResponse(status=405)
 
@@ -138,12 +139,22 @@ def tutor_page_tutoring(request,tutor_id):
         tutoring_list = [Tutoring for Tutoring in Tutoring.objects.filter(tutor_id=tutor_id).values()]  
         return JsonResponse(tutoring_list,safe=False,status=200)
     else:    
-        return HttpResponse(status=405)
-    
-    '''
-    implement
-    '''
+        return HttpResponse(status=405)    
     return HttpResponse(status=404)   
+
+'''
+def tutoring_page(request,tutoring_id):
+    if request.method == 'GET':
+        tutoring = Tutoring.objects.get(tutoring_id=tutoring_id)
+        return HttpResponse(status=200)
+    elif request.method == 'PUT':
+        return HttpResponse(status=204)
+    elif request.method == 'DELETE':
+        return HttpResponse(status=204)
+    else:
+        return HttpResponse(status=405)
+    return HttpResponse(status=404)
+'''
 
 '''
 tutee_managers page

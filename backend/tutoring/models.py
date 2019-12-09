@@ -66,6 +66,7 @@ class Tutoring(models.Model):
         Tutor,
         on_delete=models.CASCADE,
     )
+    state=models.CharField(max_length=10,default="suspended")
     address=models.CharField(max_length=40)
     fee=models.IntegerField()
 
