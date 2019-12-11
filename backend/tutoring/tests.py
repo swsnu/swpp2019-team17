@@ -6,8 +6,6 @@ from django.contrib.auth.hashers import check_password
 # Create your tests here.
 
 '''
-viewTest ++
-'''
 class ViewTest(TestCase):
     def setUp(self):
         test_tutor = Tutor.objects.create_user(username='test_id',password='test',name='ske',age='26',address='Seoul',gender='Male',subject='Math',phonenumber='01012341234')
@@ -55,7 +53,7 @@ class ViewTest(TestCase):
 class APITest(TestCase):
     def test_api(self):
         pass
-
+'''
 
 class ModelTest(TestCase):
     def test_model(self):

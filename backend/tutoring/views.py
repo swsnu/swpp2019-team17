@@ -192,11 +192,6 @@ def tutee_page_review(request,tutee_id):
         return JsonResponse(review_list,safe=False,status=200)
     else:    
         return HttpResponse(status=405)
-    
-    '''
-    implement
-    '''
-    return HttpResponse(status=404)
 
 def tutee_page_tutoring(request,tutee_id):
     if not request.user.is_authenticated:
@@ -219,10 +214,6 @@ def tutee_page_tutoring(request,tutee_id):
             return HttpResponse(status=201)
         else:
             return HttpResponse(status=405)
-    '''
-    implement
-    '''
-    return HttpResponse(status=404)
 
 def address(request, keyword):
     url = "http://api.vworld.kr/req/search?service=search&request=search&version=2.0&crs=EPSG:900913&size=10&page=1&type=address&category=road&format=json&errorformat=json&key=32988E9B-F11C-3071-B5BC-6806FAF87CE8&query="
