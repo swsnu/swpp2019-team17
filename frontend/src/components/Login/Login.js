@@ -4,7 +4,6 @@ import logo from '../Logo/dark.png';
 
 // import React-Bootstrap
 import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Modal from 'react-bootstrap/Modal';

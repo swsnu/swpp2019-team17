@@ -8,6 +8,7 @@ import Select from 'react-select'
 import AvailableTimes from 'react-available-times'
 import './SignUpTutor.css';
 import Address from '../Address/address';
+import Certificate from '../Certificate/Certificate';
 // bootstrap
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -21,15 +22,8 @@ class SignUpTutor extends Component {
     password_confimation: '',
     name: '',
     phone: '',
-    isAuthorized: false,
     subject: [],
     university: '',
-  };
-
-  handleFileUpload = (event) => {
-    const formData = new FormData();
-    formData.append('file', event.target.files[0]);
-    this.setState({ isAuthorized: true })
   };
 
   ChangeSubject = (subject) => {

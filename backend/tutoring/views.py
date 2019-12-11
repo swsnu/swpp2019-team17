@@ -10,6 +10,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import ensure_csrf_cookie
 import requests
 
+import copy
+
 User = get_user_model()
 
 def signin(request):
@@ -184,20 +186,23 @@ def certificate(request):
     if request.method == 'POST':
         url = "https://kapi.kakao.com/v1/vision/text/detect"
         headers = {
-            "Host": "kapi.kakao.com",
-            "Authorization": "KakaoAK c7a2dff8d5d6606bae24c70081c2b5cd",
-            "Content-Type": "multipart/form-data"
+            "Authorization": "KakaoAK c7a2dff8d5d6606bae24c70081c2b5cd"
+            #"Content-Type": "multipart/form-data"
         }
 
-        response_mid = requests.post(url, data=request.body, headers=headers)
+        copiedblob = copy.deepcopy(request.FILES['file']) # requests.post has somewhat side effect
 
-        if (response_mid.json()['response']['status'] == 'NOT_FOUND'):
-            return HttpResponse(status=404)
+        response_mid = requests.post(url, files={'file': request.FILES['file']}, headers=headers)
+
+        if (response_mid.status_code == 400):
+            return HttpResponse(status=400)
         else:
-            boxes = response_mid.json()['response']['result']
+            boxes = response_mid.json()['result']['boxes']
 
-            url = '' # 지금 CSRF 토큰이 막혀서 안됨
-            response_final = requests.post(url, data=response_mid, headers=headers)
+            url = "https://kapi.kakao.com/v1/vision/text/recognize"
+
+            response_final = requests.post(url, files={'file': copiedblob}, data={"boxes": json.dumps(boxes)}, headers=headers)
+            return JsonResponse(response_final.json()['result'], status=200, safe=False)
     else:
         return HttpResponseNotAllowed(['POST'])
         

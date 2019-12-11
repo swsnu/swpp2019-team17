@@ -3,14 +3,18 @@ import axios from 'axios';
 const CERTIFICATE_TUTOR = 'CERTIFICATE_TUTOR';
 
 
-export const certificateTutor_ = (certified) => {
-    return {type: certificateTutor, isCertified: certified};
+export const certificateTutor_ = (ocr) => {
+    return {
+        type: CERTIFICATE_TUTOR,
+        ocr: ocr
+    };
 }
 
-export const certificateTutor = (data) => {
+export const certificateTutor = (image) => {
 
     return dispatch => {
-      return axios.post('/signup/tutor/certificate/', data)
+      return axios.post('/api/signup/tutor/certificate/', image)
+
         .then(res => {
             dispatch(certificateTutor_(res.data));
             console.log("this is response from kakao", res.data);
@@ -20,20 +24,18 @@ export const certificateTutor = (data) => {
 
 //reducer
 const initialState = {
-    isCertified: false
+    ocr: null
 };
 
-
-
 export const reducer = (state = initialState, action) => {
-    switch (action.type) {
-        case CERTIFICATE_TUTOR:
-            return {
-                ...state,
-                isCertified: action.isCertified
-            };
-        default:
-            return state;
+    if (action.type == CERTIFICATE_TUTOR) {
+        return {
+            ...state,
+            ocr: action.ocr
+        }
+    }
+    else {
+        return state;
     }
 }
 
