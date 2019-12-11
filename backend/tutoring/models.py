@@ -10,11 +10,9 @@ class User(AbstractUser):
     address=models.CharField(max_length=40,null=True,blank=True)
 
 class Tutor(User):
-    '''
-    schedule imagefield or 
-    certificate imagefield
-    address tt
-    '''
+    # schedule = models.JsonField()  [ {start: date, end: date} {start: date, end: date} ... ]
+    # address = models.JsonField()  [ {startRoad: "", startX: float, startY: int, endRoad: "", endX: int, endY: int}   ]
+    # certificate = models.ImageField
     GENDER_CHOICES = (
         ('male', 'Male'),
         ('female', 'Female'),
@@ -31,9 +29,8 @@ class TuteeManager(User):
     '''
 
 class Tutee(models.Model):
-    '''
-    tutee=
-    '''
+    # schedule = models.JsonField()  [ {start: date,end: date} {start: date, end: date} ... ]
+    # address = models.JsonField()  [Road: "", X: float, Y: float]
     GENDER_CHOICES = (
         ('male', 'Male'),
         ('female', 'Female'),
