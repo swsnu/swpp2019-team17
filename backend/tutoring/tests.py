@@ -5,7 +5,7 @@ from django.contrib.auth.hashers import check_password
 
 # Create your tests here.
 
-'''
+
 class ViewTest(TestCase):
     def setUp(self):
         test_tutor = Tutor.objects.create_user(username='test_id',password='test',name='ske',age='26',address='Seoul',gender='Male',subject='Math',phonenumber='01012341234')
@@ -80,4 +80,3 @@ class tokenTest(TestCase):
                                content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 201) 
 
-'''

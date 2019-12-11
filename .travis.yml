@@ -26,6 +26,7 @@ matrix:
     python: 
     - "3.7"
     - "3.8"
+    dist: trusty
     before_install: 
     - cd backend
     install: 
