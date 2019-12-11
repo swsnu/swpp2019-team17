@@ -21,12 +21,13 @@ class SignUpTutor extends Component {
     id: '',
     password: '',
     password_confimation: '',
+    certificate: '',
     name: '',
-    phone: '',
-    isAuthorized: false,
     age: '',
-    subject: [],
     university: '',
+    isAuthorized: false,
+    phone: '',
+    subject: [],
     address: [],
     schedule: [],
   };
@@ -49,7 +50,9 @@ class SignUpTutor extends Component {
     tutor['name'] = this.state.name;
     tutor['phonenumber'] = this.state.phone;
     tutor['age'] = this.state.age;
-    tutor['subject'] = this.state.subject[0].value;
+    if(this.state.subject.length !== 0){
+      tutor['subject'] = this.state.subject[0].value;
+    }
     tutor['gender'] = this.state.gender;
     tutor['schedule'] = this.state.schedule;
     tutor = JSON.stringify(tutor)
@@ -60,16 +63,26 @@ class SignUpTutor extends Component {
   inputSchedule = (e) => {
     this.setState({ schedule : e })
   }
-  inputAddress = (address, index) => {
+  selectAddress = (address, X, Y, index) => {
     var arr = this.state.address;
-    arr[index] = address
+    if(index%2 == 0){
+      index = index / 2;
+      if(arr[index] == null){
+        arr[index] = {};
+      }
+      arr[index]['startRoad'] = address;
+      arr[index]['startX'] = X;
+      arr[index]['startY'] = Y;
+    } else {
+      index = (index - 1) / 2
+      if(arr[index] == null){
+        arr[index] = {};
+      }
+      arr[index]['endRoad'] = address;
+      arr[index]['endX'] = X;
+      arr[index]['endY'] = Y;
+    }
     this.setState({ address: arr})
-  }
-  selectAddress = (index, address) => {
-    var arr = this.state.address;
-    arr[index] = address;
-    console.log(address)
-    this.setState({address: arr})
     console.log(this.state.address)
   }
 
@@ -104,9 +117,6 @@ class SignUpTutor extends Component {
       let startTime = timeReg.exec(start)[1]
       let endTime = timeReg2.exec(end)[1]
       index += 2;
-      // 정렬이 요일 안에서는 생성순으로 만들어짐. 
-      // 소트를 돌려서 거기서 생성한 후 signup 할때도 맞춰서
-      // 요일별로 address 생성 
       return(
         <div key={index+0.5}>
           <div key={index+0.3}>{Day}{startTime}~{endTime}</div>
@@ -146,6 +156,7 @@ class SignUpTutor extends Component {
       case 1:
         input =
           <div>
+            <p>cert should be loaded. manually input is also available.</p>
             <label className="signuptutor-label-certificate">Photo:</label>
             <Form.Control type="file" className="signuptutor-input-certificate" />
             <div className="signuptutor-div-authorize">
@@ -154,9 +165,10 @@ class SignUpTutor extends Component {
                 onChange={event => this.handleFileUpload(event)} />
             </div>
             <div className='university'>university
-          <Select options={university_options} closeMenuOnSelect={true} onChange={(selectedoption) => this.ChangeUniversity(selectedoption)} />
+              <Select options={university_options} closeMenuOnSelect={true} onChange={(selectedoption) => this.ChangeUniversity(selectedoption)} />
             </div>
             <Button onClick={() => this.setState({ step: this.state.step + 1 })}>Next</Button>
+            <Button onClick={() => this.setState({ step: this.state.step + 1 })}>Skip</Button>
           </div>
         break;
       case 2:
@@ -175,7 +187,7 @@ class SignUpTutor extends Component {
               <Select options={[{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }]}></Select>
             <label>
               Age
-            <Form.Control></Form.Control>
+              <Form.Control onChange={(event) => this.setState({ age: event.target.value })}></Form.Control>
             </label>
             <label className="subject-label">
               Subject
@@ -183,6 +195,7 @@ class SignUpTutor extends Component {
                 <Select options={options} closeMenuOnSelect={false} isMulti={true} onChange={(selectedoptions) => this.ChangeSubject(selectedoptions)} />
               </div>
             </label>
+            <Button onClick={() => this.setState({ step: this.state.step + 1 })}>Skip</Button>
             <Button onClick={() => this.setState({ step: this.state.step + 1 })}>Next</Button>
           </div>
         break;
@@ -191,6 +204,7 @@ class SignUpTutor extends Component {
           <div className="timetable">
             <AvailableTimes height={1000} onChange={(e) => this.inputSchedule(e)} />
             <div>{addressInput}</div>
+            <Button onClick={this.ClickConfirm}>Skip</Button>
             <Button onClick={this.ClickConfirm}>Confirm</Button>
           </div>
         break;
