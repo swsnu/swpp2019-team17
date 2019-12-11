@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tutoring',
+    'multiselectfield',
 ]
 
 MIDDLEWARE = [
@@ -82,8 +83,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'tutoringmachine_db',
-        'USER': 'tutoring',
-        'PASSWORD': 'machine',
+        'USER': 'root',
+        'PASSWORD': '',
         'HOST':'127.0.0.1',
         'PORT':'3306',
     }
