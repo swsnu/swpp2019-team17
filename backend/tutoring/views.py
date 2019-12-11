@@ -72,16 +72,24 @@ def signup_tutor(request):
             req_data = json.loads(request.body.decode())
             print(req_data)
             user_name1 = req_data['username']
-            pass_word1 = req_data['password']
-            phone1=req_data['phonenumber']
-            address1=req_data['address']
-            subject1=req_data['subject']
-            gender1=req_data['gender']
+            password1 = req_data['password']
+            # if(req_data['phonenumber'] != None):
+            phone1 = req_data['phonenumber']
+            # if(req_data['address'] != None):
+            #     address1 = req_data['address']
+            # if(req_data['subject'] != None):
+            #     subject1 = req_data['subject']
+            # if(req_data['gender'] != None):
+            #     gender1 = req_data['gender']
+            # if(req_data['schedule'] != None):
+            #     schedule = req_data['schedule']
         except (KeyError, JSONDecodeError) as e:
             return HttpResponse(status=400)
-        Tutor.objects.create_user(username=user_name1,password=pass_word1,phonenumber=phone1,address=address1,gender=gender1,subject=subject1)
+        Tutor.objects.create_user(username=user_name1,password=password1,phonenumber=phone1)
+        # ,address=address1,gender=gender1,subject=subject1, schedule = schedule)
         Tutor.refresh_from_db() # load the profile instance created
         Tutor.save()
+        print(Tutor)
         return JsonResponse(Tutor,status=201,safe=False)
     else:
         return HttpResponse(status=405)

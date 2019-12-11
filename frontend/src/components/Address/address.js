@@ -17,10 +17,10 @@ class Address extends React.Component {
     detailed_address: '',
     mode: 'ready'
   }
-  ClickAddress = (address) => {
+  ClickAddress = (address, X, Y) => {
     if (this.props.index != null){
-      this.props.onSelectAddress(this.props.index, address)
-      this.setState({mode: 'done'})
+      this.props.onSelectAddress(address, X, Y, this.props.index)
+      this.setState({mode: 'done', selected_address: address})
     }
     else{
       this.setState({selected_address: address, mode:'detail', address: ''})
@@ -31,42 +31,50 @@ class Address extends React.Component {
     this.setState({mode: 'search'})
   }
   render() {
-    const addresses = this.props.storedAddress.map((address) => (<div key={address.address.road} onClick={() => this.ClickAddress(address.address.road)}>{address.address.road}</div>))
-    const detail = this.state.mode == 
-    'ready' ? 
-    <div>
-      <label>address:</label>
-      <Form.Control 
-        className="text-left"
-        type="text"
-        value={this.state.address}
-        onChange={(event) => this.setState({ address: event.target.value })}
-        onFocus={e => this.setState({mode: 'search'})}
-      />
+    const addressLabel = this.props.index == null ? "address:" : (this.props.index%2 == 0 ? "start address" : "end address:");
+    const addresses = this.props.storedAddress.map(
+      (address) => (<div key={address.address.road} onClick={() => this.ClickAddress(address.address.road, address.point.x, address.point.y)}>{address.address.road}</div>))
+    const detail = this.state.mode == 'ready' ? 
+      <div>
+        <label>{addressLabel}</label>
+        <Form.Control 
+          className="text-left"
+          type="text"
+          value={this.state.address}
+          onChange={(event) => this.setState({ address: event.target.value })}
+        />
+        <Button onClick={() => this.SearchAddress()}>search address</Button>
+      </div>
+    : (this.state.mode == 'search' ?
+      <div>
+        <label>{addressLabel}</label>
+        <Form.Control 
+          className="text-left"
+          type="text"
+          value={this.state.address}
+          onChange={(event) => this.setState({ address: event.target.value })}
+        />
+        <Button onClick={() => this.SearchAddress()}>search address</Button>
+        {addresses}
+      </div> 
+    : ( this.state.mode == 'detail' ? 
+      <span>
+        <p>{this.state.selected_address}</p>
+        <label>detailed address</label>
+        <Form.Control className="text-left" onChange={e => this.setState({detailed_address:e.target.value})} >
+        </Form.Control>
+      </span>
+    : <div>
+      <label>{addressLabel}</label>
+      {this.state.selected_address}
       <Button onClick={() => this.SearchAddress()}>search address</Button>
-    </div> :
-    ('search' ?
-    <div>
-      <label>address:</label>
-      <Form.Control 
-        className="text-left"
-        type="text"
-        value={this.state.address}
-        onChange={(event) => this.setState({ address: event.target.value })}
-        onFocus={e => this.setState({mode: 'search'})}
-      />
-      <Button onClick={() => this.SearchAddress()}>search address</Button>
-      {addresses}
-    </div> : 
-    <span>
-      <p>{this.state.selected_address}</p>
-      <label>detailed address</label>
-      <Form.Control className="text-left" onChange={e => this.setState({detailed_address:e.target.value})} >
-      </Form.Control>
-    </span>)
+    </div>
+    )
+    )
     return (
       <Alert>{detail}</Alert>
     )
+    
   }
 }
 
