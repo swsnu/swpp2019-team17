@@ -79,4 +79,5 @@ class tokenTest(TestCase):
         response = client.post('/api/signup/tutor/', json.dumps({'username': 'chris', 'password': 'chris','phonenumber':'01012341234','subject':'Math','gender':'Male','address':'Seoul'}),
                                content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 201) 
-        
+
+'''
