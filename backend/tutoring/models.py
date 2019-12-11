@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+from multiselectfield import MultiSelectField
 
 # Create your models here.
 
@@ -23,6 +23,7 @@ class Tutor(User):
     subject=models.CharField(max_length=40)
     name=models.CharField(max_length=10,null=True,blank=True)
     photo=models.ImageField(upload_to='tutor/',null=True)
+    age=models.CharField(max_length=3,null=True,blank=True)
 
 class TuteeManager(User):
     '''
@@ -37,16 +38,23 @@ class Tutee(models.Model):
         ('male', 'Male'),
         ('female', 'Female'),
     )
-
+    SUBJECT_CHOICES = (
+        ('math','Math'),
+        ('korean','Korean'),
+        ('english','English'),
+        ('society','Society'),
+        ('science','Science'),
+    )
     tutee_manager=models.ForeignKey(
         TuteeManager,
         on_delete=models.CASCADE,
     )
     name=models.CharField(max_length=10,null=True,blank=True)
     gender=models.CharField(max_length=20, choices=GENDER_CHOICES)
-    subject=models.CharField(max_length=40)
+    subject=MultiSelectField(choices=SUBJECT_CHOICES,max_choices=5,max_length=5)
     detailed_address_x=models.CharField(max_length=40,default='0')
     detailed_address_y=models.CharField(max_length=40,default='0')
+    age=models.CharField(max_length=3,null=True,blank=True)
 
 class Tutoring(models.Model):
     subject=models.CharField(max_length=40)
@@ -58,6 +66,7 @@ class Tutoring(models.Model):
         Tutor,
         on_delete=models.CASCADE,
     )
+    state=models.CharField(max_length=10,default="suspended")
     address=models.CharField(max_length=40)
     fee=models.IntegerField()
 
