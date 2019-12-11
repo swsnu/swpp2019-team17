@@ -3,13 +3,12 @@ from django.http import HttpResponse,JsonResponse,HttpResponseNotAllowed
 from django.contrib.auth import authenticate,login,logout
 import json
 from .models import Tutor,TuteeManager,Tutee,Tutoring,Review
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate, login
 from json import JSONDecodeError
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import ensure_csrf_cookie
 import requests
-
 import copy
 
 User = get_user_model()
@@ -101,6 +100,12 @@ def signup_tutor(request):
             address=address, gender=gender,subject=subject, schedule=schedule)
         tutor.save()
         tutor.refresh_from_db()
+        tutor2 = authenticate(request, username=username, password=password)
+        if tutor2 is not None:
+            login(request, tutor2)
+            print(tutor2)
+        else:
+            None
         # tutor to json, and send back
         return JsonResponse(tutor.schedule,status=201,safe=False)
     else:
