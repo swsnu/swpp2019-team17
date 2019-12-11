@@ -16,6 +16,7 @@ class SignUpTutee extends Component {
   constructor() {
     super();
     this.state = {
+      step: 0,
       id: '',
       password: '',
       password_confimation: '',
@@ -55,6 +56,11 @@ class SignUpTutee extends Component {
   ClickConfirm = () => {
     this.props.history.push('/tutee/match/')
   }
+  ClickNext = () => {
+    this.setState({
+      step: this.state.step + 1
+    })
+  }
   render() {
     let index = -1;
     const tuteeSignupForms = this.state.childList.map((key) => { // key = {id: , name: ...}
@@ -72,53 +78,67 @@ class SignUpTutee extends Component {
       );
     });
 
-    return (
-      <Jumbotron>
-        <Form.Group>
-          <div className="id">
-            <Form.Label>ID</Form.Label>
-            <Form.Control
-              className="text-left"
+    let input = <div></div>;
+    switch (this.state.step) {
+      case 0:
+        input =
+          <div>
+            <Form.Group>
+              <div className="id">
+                <Form.Label>ID</Form.Label>
+                <Form.Control
+                  className="text-left"
+                  onChange={(e) => this.setState({ id: e.target.value })}
+                  value={this.state.id}
+                />
+              </div>
+              <div className="password">
+                <Form.Label>Password:</Form.Label>
+                <Form.Control
+                  type="password"
+                  className="text-left"
+                  onChange={(e) => this.setState({ password: e.target.value })}
+                  value={this.state.password}
+                />
+              </div>
+              <div className="password-confirmation">
+                <Form.Label>Password Confirmation:</Form.Label>
+                <Form.Control
+                  type="password"
+                  className="text-left"
+                  onChange={(e) => this.setState({ password_confimation: e.target.value })}
+                  value={this.state.password_confimation}
+                />
+              </div>
+              <br />
+              <Form.Label>Phone number:</Form.Label><br />
+              <PhoneInput className="text-left"
+                country="KR"
+                value={this.state.phone}
+                onChange={value => this.setState({ phone: value })}
+              />
+              <br />
+              <Address className="address" />
 
-              onChange={(e) => this.setState({ id: e.target.value })}
-              value={this.state.id}
-            />
-          </div>
-          <div className="password">
-            <Form.Label>Password:</Form.Label>
-            <Form.Control
-              type="password"
-              className="text-left"
-              onChange={(e) => this.setState({ password: e.target.value })}
-              value={this.state.password}
-            />
-          </div>
-          <div className="password-confirmation">
-            <Form.Label>Password Confirmation:</Form.Label>
-            <Form.Control
-              type="password"
-              className="text-left"
-              onChange={(e) => this.setState({ password_confimation: e.target.value })}
-              value={this.state.password_confimation}
-            />
-          </div>
-          <br/>
-          <Form.Label>Phone number:</Form.Label><br/>
-          <PhoneInput className="text-left"
-            country="KR"
-            value={this.state.phone}
-            onChange={value => this.setState({ phone: value })}
-          />
-          <br/>
-          <Address className="address"/>
+            </Form.Group>
+            <Button onClick={this.ClickNext}>Next</Button>
+            </div>
+        break;
+      case 1:
+        input =
           <div className="child-list-container-div">
+            <div>checking tutee = tutee manager. if true, delete add tutee button</div>
             {tuteeSignupForms}
             <Button type="button" onClick={() => this.addChild()}>Add</Button>
             <Button type="button" onClick={this.ClickConfirm}>Confirm</Button>
           </div>
-          {/* <TimeGridScheduler classes={classes} {...otherProps} /> */}
-        </Form.Group>
-      </Jumbotron>
+        break;
+    }
+
+    return (
+      <div>
+        { input }
+      </div>
     );
   }
 }

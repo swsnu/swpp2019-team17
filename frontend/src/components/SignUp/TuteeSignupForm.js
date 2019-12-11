@@ -22,7 +22,7 @@ class TuteeSignupForm extends Component {
     return (
       <div>
         <label className="child-name-label">
-          Name:
+          Name
           <Form.Control
             className="child-name-input"
             onChange={(e) => this.props.onChangeName(e.target.value, this.props.id)}
@@ -31,29 +31,28 @@ class TuteeSignupForm extends Component {
         </label>
         <br/>
         <label className="subject-label">
-
-
           <div className="select">
-          Subject:
+          Subject
           <Select className="select" options={options} closeMenuOnSelect={false} isMulti={true} onChange={(selectedoptions) => this.props.onChangeSubject(selectedoptions, this.props.id)}/>
           </div>
         </label>
         <br/>
         <label>
-          Age:
+          Age
           <Form.Control/>
         </label>
         <br/>
-        <label>gender
+        <label>
+          Gender
           <Select options={[{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }]}></Select>
         </label>
         <br/>
-        <label>available time</label>
+        <label>Available Time</label>
         <div className="timetable">
-        <AvailableTimes height={600} />
+          <AvailableTimes height={600} onChange={(e) => console.log(e)}/>
         </div>
         <div className="delete">
-        {this.props.id !== 0 ? <Button onClick={() => this.props.onClickDelete(this.props.id)}>delete</Button> : null}
+          {this.props.id !== 0 ? <Button onClick={() => this.props.onClickDelete(this.props.id)}>delete</Button> : null}
         </div>
       </div>
     )
