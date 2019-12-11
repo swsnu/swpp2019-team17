@@ -8,8 +8,8 @@ export const getTutor_ = (tutors) => ({
     tutors: tutors
 })
 
-export const getTutor = () => (dispatch) => {
-    axios.get('/')
+export const getTutor = (gender, subject) => (dispatch) => {
+    axios.post('/', {gender: gender, subject: subject})
         .then((res) => dispatch(getTutor_(res.data)));
 }
 

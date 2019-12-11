@@ -18,6 +18,9 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 
+// design div
+//import Navbar from 'D:/sajeokgonggan/project/swpp/swpp2019-team17/design/src/components/Navbar';
+
 class Match extends Component {
     state = {
         gender: 3,
@@ -25,7 +28,7 @@ class Match extends Component {
     };
     
     componentDidMount() {
-      this.props.getTutors();
+      this.props.getTutors(3, 31);
     }
 
     onChangeSubject = (e) => {
@@ -33,8 +36,19 @@ class Match extends Component {
             case "Korean":
                 this.setState({subject: this.state.subject ^ 1});
                 break;
-            case "":
+            case "English":
+                this.setState({subject: this.state.subject ^ 2});
+                break;
+            case "Math":
+                this.setState({subject: this.state.subject ^ 4});
+                break;
+            case "Social":
+                this.setState({subject: this.state.subject ^ 8});
+            case "Science":
+                this.setState({subject: this.state.subject ^ 16});
         }
+
+        this.props.getTutors(this.state.gender, this.state.subject);
     }
 
     onChangeGender = (e) => {
@@ -48,9 +62,20 @@ class Match extends Component {
             default:
                 console.log("Something went wrong on onChangeGender!!");
         }
+
+        this.props.getTutors(this.state.gender, this.state.subject);
     }
     
     render() {
+        let tutors = this.props.loadedTutor;
+
+        let jsxitems = null;
+
+        if (tutors.length !== 0) {
+            jsxitems = tutors.map((tutor) => {
+                
+            })
+        }
 
         return (
             <div className="matching">
@@ -117,7 +142,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getTutors: () => dispatch(actionCreators.getTutor)
+        getTutors: (gender, subject) => dispatch(actionCreators.getTutor(gender, subject))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Match));
