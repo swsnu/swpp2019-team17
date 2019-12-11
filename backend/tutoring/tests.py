@@ -53,7 +53,7 @@ class ViewTest(TestCase):
 class APITest(TestCase):
     def test_api(self):
         pass
-'''
+
 
 class ModelTest(TestCase):
     def test_model(self):
@@ -62,9 +62,7 @@ class ModelTest(TestCase):
         self.assertEqual(test_tutor.username, 'test_id')
         self.assertEqual(test_tutor.name, 'ske')
         self.assertEqual(test_tutor.age, '26')
-        '''
-        need to test multiselectfield
-        '''
+
 
 
 class tokenTest(TestCase):
@@ -81,3 +79,4 @@ class tokenTest(TestCase):
         response = client.post('/api/signup/tutor/', json.dumps({'username': 'chris', 'password': 'chris','phonenumber':'01012341234','subject':'Math','gender':'Male','address':'Seoul'}),
                                content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 201) 
+        
