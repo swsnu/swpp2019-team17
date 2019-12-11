@@ -4,6 +4,7 @@ import Select from 'react-select'
 import AvailableTimes from 'react-available-times'
 import './SignUpTutor.css';
 import Address from '../Address/address';
+import * as actioncreators from '../../redux/signup';
 // bootstrap
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -38,6 +39,18 @@ class SignUpTutor extends Component {
     this.setState({ university: university })
   }
   ClickConfirm = () => {
+    let tutor = {}
+    tutor['username'] = this.state.id;
+    tutor['password'] = this.state.password;
+    tutor['name'] = this.state.name;
+    tutor['phonenumber'] = this.state.phone;
+    tutor['age'] = this.state.age;
+    tutor['subject'] = this.state.subject[0].value;
+    tutor['gender'] = this.state.gender;
+    tutor['schedule'] = this.state.schedule;
+    tutor = JSON.stringify(tutor)
+    console.log(tutor);
+    actioncreators.signUpTutor(tutor);
     this.props.history.push('/profile/tutor/')
   }
   inputSchedule = (e) => {
@@ -86,11 +99,14 @@ class SignUpTutor extends Component {
       let startTime = timeReg.exec(start)[1]
       let endTime = timeReg2.exec(end)[1]
       index += 2;
+      // 정렬이 요일 안에서는 생성순으로 만들어짐. 
+      // 소트를 돌려서 거기서 생성한 후 signup 할때도 맞춰서
+      // 요일별로 address 생성 
       return(
-        <div>
-          <div>{Day}{startTime}~{endTime}</div>
-          <Address id={index} index={index} onSelectAddress={this.selectAddress}/>
-          <Address id={index+1} index={index+1} onSelectAddress={this.selectAddress}/>
+        <div key={index+0.5}>
+          <div key={index+0.3}>{Day}{startTime}~{endTime}</div>
+          <Address key={index} id={index} index={index} onSelectAddress={this.selectAddress}/>
+          <Address key={index+1} id={index+1} index={index+1} onSelectAddress={this.selectAddress}/>
         </div>
       )
     })

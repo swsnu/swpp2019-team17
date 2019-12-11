@@ -67,6 +67,7 @@ def signup_tutor(request):
     if request.method == 'POST':
         try:
             req_data = json.loads(request.body.decode())
+            print(req_data)
             user_name1 = req_data['username']
             pass_word1 = req_data['password']
             phone1=req_data['phonenumber']
@@ -75,10 +76,10 @@ def signup_tutor(request):
             gender1=req_data['gender']
         except (KeyError, JSONDecodeError) as e:
             return HttpResponse(status=400)
-        
         Tutor.objects.create_user(username=user_name1,password=pass_word1,phonenumber=phone1,address=address1,gender=gender1,subject=subject1)
-        
-        return JsonResponse("Tutor",status=201,safe=False)
+        Tutor.refresh_from_db() # load the profile instance created
+        Tutor.save()
+        return JsonResponse(Tutor,status=201,safe=False)
     else:
         return HttpResponse(status=405)
 
