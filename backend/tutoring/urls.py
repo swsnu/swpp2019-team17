@@ -4,7 +4,7 @@ from tutoring import views
 urlpatterns = [
     path('signup/tutee_manager/', views.signup_tutee_manager, name='signup'),
     path('signup/tutor/', views.signup_tutor, name='signup'),
-    path('api/signup/tutor/certificate/', views.certificate, name='certificate'),
+    path('signup/tutor/certificate/', views.certificate, name='certificate'),
     path('signin/', views.signin, name='signin'),
     path('signout/', views.signout, name='signout'),
 
