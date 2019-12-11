@@ -30,7 +30,7 @@ matrix:
     - "3.7"
     - "3.8"
     before_install: 
-    - mysql -e "CREATE DATABASE club4u;"
+    - mysql -e "CREATE DATABASE tutoringmachine_db;"
     - cd backend
     install: 
     - pip install -r requirement_tutoring.txt
