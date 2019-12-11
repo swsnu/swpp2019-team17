@@ -29,7 +29,7 @@ class ViewTest(TestCase):
         self.assertEqual(response.status_code,400)
         
         response=client.post('/api/signin/',json.dumps({'username':'test_id','password':'111test'}),content_type='application/json')
-        self.assertEqual(response.status_code,204)
+        self.assertEqual(response.status_code,401)
         response=client.post('/api/signin/',json.dumps({'username':'test_id','password':'test'}),content_type='application/json')
         self.assertEqual(response.status_code,204)
 
