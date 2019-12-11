@@ -30,7 +30,7 @@ matrix:
     - "3.8"
     before_install: 
     - cd backend
-    - mysql -e 'CREATE DATABASE myapp_test;'
+    - mysql -e 'CREATE DATABASE tutoringmachine_db;'
     - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
     install: 
     - pip install -r requirement_tutoring.txt
