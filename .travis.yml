@@ -23,12 +23,15 @@ matrix:
     - cat ./coverage/lcov/info | ./node_modules/coveralls/bin/coveralls.js
     
   - language: python
+    services:
+    - mysql
     python: 
     - "3.7"
     - "3.8"
-    dist: trusty
     before_install: 
     - cd backend
+    - mysql -e 'CREATE DATABASE myapp_test;'
+    - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
     install: 
     - pip install -r requirement_tutoring.txt
     - pip install coveralls
