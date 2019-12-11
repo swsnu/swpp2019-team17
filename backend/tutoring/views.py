@@ -70,27 +70,39 @@ def signup_tutor(request):
     if request.method == 'POST':
         try:
             req_data = json.loads(request.body.decode())
-            print(req_data)
-            user_name1 = req_data['username']
-            password1 = req_data['password']
-            # if(req_data['phonenumber'] != None):
-            phone1 = req_data['phonenumber']
-            # if(req_data['address'] != None):
-            #     address1 = req_data['address']
-            # if(req_data['subject'] != None):
-            #     subject1 = req_data['subject']
-            # if(req_data['gender'] != None):
-            #     gender1 = req_data['gender']
-            # if(req_data['schedule'] != None):
-            #     schedule = req_data['schedule']
+            username = req_data['username']
+            password = req_data['password']
+            phonenumber = None
+            address = None
+            subject = None
+            gender = None
+            schedule = None
+            if('phonenumber' in req_data):
+                phonenumber = req_data['phonenumber']
+            if('address' in req_data):
+                index = 0
+                address = {}
+                for x in req_data['address']:
+                    address[str(index)] = x
+                    index += 1
+            if('subject' in req_data):
+                subject = req_data['subject']
+            if('gender' in req_data):
+                gender = req_data['gender']
+            if('schedule' in req_data):
+                index = 0
+                schedule = {}
+                for x in req_data['schedule']:
+                    schedule[str(index)] = x
+                    index += 1
         except (KeyError, JSONDecodeError) as e:
             return HttpResponse(status=400)
-        Tutor.objects.create_user(username=user_name1,password=password1,phonenumber=phone1)
-        # ,address=address1,gender=gender1,subject=subject1, schedule = schedule)
-        Tutor.refresh_from_db() # load the profile instance created
-        Tutor.save()
-        print(Tutor)
-        return JsonResponse(Tutor,status=201,safe=False)
+        tutor = Tutor.objects.create_user(username=username, password=password, phonenumber=phonenumber,
+            address=address, gender=gender,subject=subject, schedule=schedule)
+        tutor.save()
+        tutor.refresh_from_db()
+        # tutor to json, and send back
+        return JsonResponse(tutor.schedule,status=201,safe=False)
     else:
         return HttpResponse(status=405)
 

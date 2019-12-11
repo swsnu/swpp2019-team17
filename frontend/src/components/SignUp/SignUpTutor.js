@@ -55,6 +55,7 @@ class SignUpTutor extends Component {
     }
     tutor['gender'] = this.state.gender;
     tutor['schedule'] = this.state.schedule;
+    tutor['address'] = this.state.address;
     tutor = JSON.stringify(tutor)
     console.log(tutor);
     actioncreators.signUpTutor(tutor);
