@@ -20,113 +20,37 @@ import Jumbotron from 'react-bootstrap/Jumbotron';
 
 class Match extends Component {
     state = {
-        matchresult: [{gender: 'male', name: 'Gildong Hong', subject: 'Math', available: ['Monday 5PM~7PM', 'Wednesday 5PM~7PM'], profile: profile1}, 
-        {gender: 'female', name: 'Young-hee', subject: 'Science', available:['Friday 1PM~5PM', ''], profile: profile2}],
-        male: true,
-        female: true,
-        science: true,
-        math: true
+        gender: 3,
+        subject: 31
     };
     
     componentDidMount() {
       this.props.getTutors();
-      // this.setState({matchresult: this.props.loadedTutor});
-      // 테스트를 위해서 꺼둠
     }
 
-    onChangeMan = (ele) => {
-        
-        this.setState({male: !this.state.male})
+    onChangeSubject = (e) => {
+        switch (e.target.className) {
+            case "Korean":
+                this.setState({subject: this.state.subject ^ 1});
+                break;
+            case "":
+        }
     }
 
-    onChangeGirl = (ele) => {
-        this.setState({female: !this.state.female})
-    }
-
-    onChangeMath = (ele) => {
-        this.setState({math: !this.state.math})
-    }
-
-    onChangeScience = (ele) => {
-        this.setState({science: !this.state.science})
+    onChangeGender = (e) => {
+        switch (e.target.className) {
+            case "Male":
+                this.setState({gender: this.state.gender ^ 1});
+                break;
+            case "Female":
+                this.setState({gender: this.state.gender ^ 2});
+                break;
+            default:
+                console.log("Something went wrong on onChangeGender!!");
+        }
     }
     
     render() {
-        let genderNum =  [0 , 0]
-        let subjectNum = [0,0,0,0,0]
-
-        const MALE = 0;
-        const FEMALE = 1;
-
-        const KOREAN = 0;
-        const ENGLISH = 1;
-        const MATH = 2;
-        const SOCIAL = 3;
-        const SCIENCE = 4;
-
-        let tutorlistjsx = null;
-
-        let temp = this.state.matchresult;
-
-        // matchresult를 받았다면, 이를 불러와서 리스트로 만듭니다
-        // 겸사겸사 체크박스에 표시될 값도 표시해줍니다. 
-        // 어떻게 해야 업데이트를 할 수 있을지 생각이 안난다
-        if (this.state.matchresult.length !== 0) {
-        // for temp 
-        if (!this.state.male) {
-            temp = temp.filter((tutor) => tutor.gender !== "male");
-        }
-        if (!this.state.female) {
-            temp = temp.filter((tutor) => tutor.gender !== "female");
-        }
-        if (!this.state.science) {
-            temp = temp.filter(tutor => tutor.subject !== 'Science')
-        }
-        if (!this.state.math) {
-            temp = temp.filter(tutor => tutor.subject !== 'Math')
-        }
-
-        var science = 0;
-        var math = 0;
-
-        tutorlistjsx = temp.map((tutor) => {
-
-
-            //tutorlistjsx = this.state.matchresult.map((tutor) => {
-                /*
-                // adding college dictionary
-                // 그런데 지금 database에 university가 없음...
-                if (!(tutor.university in univdict)) {
-                    univdict[tutor.university] = 1;
-                }
-                else {
-                    univdict[tutor.university] = univdict[tutor.university] + 1;
-                }*/
-
-                // adding gender to list
-                if (tutor.gender === "male") {
-                    genderNum[MALE]++;
-                }
-                else {
-                    genderNum[FEMALE]++;
-                }
-
-
-                if (tutor.subject === 'Science') {
-                    science++;
-                }
-                if (tutor.subject === 'Math') {
-                    math++;
-                }
-
-                return (<MatchedTutor key={tutor.id} name={tutor.name} gender={tutor.gender} subject={tutor.subject} available={tutor.available} profile={tutor.profile}/>);
-            });
-        }
-
-        let genderswitch = 
-            <fieldset className="genderswitch-div">
-                <legend>gender</legend>
-            </fieldset>
 
         return (
             <div className="matching">
@@ -144,38 +68,41 @@ class Match extends Component {
                         <Row>
                             <Col>
                                 <Row>
-                                    <Form.Check type='checkbox'
-                                        defaultChecked='true' onClick={(event) => {this.onChangeMan(event)}} /> male ({genderNum[MALE]})
+                                    <Form.Check type='checkbox' className="Male"
+                                        defaultChecked='true' onClick={(event) => {this.onChangeGender(event)}} /> male ()
                                 </Row>
                                 <Row>
-                                    <Form.Check type='checkbox'
-                                        defaultChecked='true' onClick={(event) => {this.onChangeGirl(event)}} /> female ({genderNum[FEMALE]})
+                                    <Form.Check type='checkbox' className="Female"
+                                        defaultChecked='true' onClick={(event) => {this.onChangeGender(event)}} /> female ()
                                 </Row>
                             </Col>
                             <Col>
                                 <Row>
-                                    <Form.Check type="checkbox" defaultChecked='true'/> Korean (0)
+                                    <Form.Check type="checkbox" className="Korean"
+                                    defaultChecked='true' onClick={(event) => {this.onChangeSubject(event)}}/> Korean (0)
                                 </Row>
                                 <Row>
-                                    <Form.Check type="checkbox" defaultChecked='true'/> English (0) 
+                                    <Form.Check type="checkbox" className="English"
+                                    defaultChecked='true' onClick={(event) => {this.onChangeSubject(event)}}/> English (0) 
                                 </Row>
                                 <Row>
-                                    <Form.Check type="checkbox" defaultChecked='true'
-                                        onChange={(event) => {this.onChangeMath(event)}}/> Math ({math}) 
+                                    <Form.Check type="checkbox" defaultChecked='true' className="Math"
+                                        onChange={(event) => {this.onChangeSubject(event)}}/> Math () 
                                 </Row>
                                 <Row>
-                                    <Form.Check type="checkbox" defaultChecked='true'/> Social Study (0) 
+                                    <Form.Check type="checkbox" className="Social"
+                                    defaultChecked='true' onChange={(event) => {this.onChangeSubject(event)}}/> Social Study (0) 
                                 </Row>
                                 <Row>
-                                    <Form.Check type="checkbox" defaultChecked='true'
-                                        onChange={(event) => {this.onChangeScience(event)}}/> Science ({science})
+                                    <Form.Check type="checkbox" defaultChecked='true' className="Science"
+                                        onChange={(event) => {this.onChangeSubject(event)}}/> Science ()
                                 </Row>
                             </Col>
                         </Row>
                     </Container>
                 </Jumbotron>
                 <div className="result">
-                    {tutorlistjsx}
+                    
                 </div>
             </div>
         )

@@ -65,7 +65,7 @@ def signup_tutee_manager(request):
         return HttpResponse(status=405)
 
 
-
+@csrf_exempt
 def signup_tutor(request):
     if request.method == 'POST':
         try:
