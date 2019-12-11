@@ -9,8 +9,7 @@ class Certificate extends Component {
 
     certificateUpload = (e) => {
         const formData = new FormData();
-        formData.append('file', e.target.files[0]);
-        
+        formData.append('file', e.target.files[0]);        
         this.props.certificateFile(formData);
 
     }

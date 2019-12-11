@@ -14,6 +14,7 @@ export const certificateTutor = (image) => {
 
     return dispatch => {
       return axios.post('/api/signup/tutor/certificate/', image)
+
         .then(res => {
             dispatch(certificateTutor_(res.data));
             console.log("this is response from kakao", res.data);

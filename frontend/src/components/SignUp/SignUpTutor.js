@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 // redux
 import { connect } from 'react-redux';
 
-import PhoneInput from 'react-phone-number-input/input';
-import Select from 'react-select';
-import AvailableTimes from 'react-available-times';
+import PhoneInput from 'react-phone-number-input/input'
+import Select from 'react-select'
+import AvailableTimes from 'react-available-times'
 import './SignUpTutor.css';
 import Address from '../Address/address';
 import Certificate from '../Certificate/Certificate';
