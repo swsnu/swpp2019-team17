@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
+
+// redux
+import { connect } from 'react-redux';
+
 import PhoneInput from 'react-phone-number-input/input'
 import Select from 'react-select'
 import AvailableTimes from 'react-available-times'
 import './SignUpTutor.css';
 import Address from '../Address/address';
 import * as actioncreators from '../../redux/signup';
+import Certificate from '../Certificate/Certificate';
 // bootstrap
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -17,7 +22,6 @@ class SignUpTutor extends Component {
     password: '',
     password_confimation: '',
     name: '',
-    certificate: null,
     phone: '',
     isAuthorized: false,
     age: '',
@@ -68,6 +72,7 @@ class SignUpTutor extends Component {
     this.setState({address: arr})
     console.log(this.state.address)
   }
+
   render() {
     const university_options = [
       { value: 'SNU', label: 'SNU' },
@@ -199,4 +204,12 @@ class SignUpTutor extends Component {
   }
 }
 
-export default SignUpTutor;
+const mapStateToProps = state => {
+
+}
+
+const mapDispatchToProps = dispatch => {
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpTutor);

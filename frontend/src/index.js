@@ -14,6 +14,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 // this is set to make CSRF pass
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
+axios.defaults.withCredentials = true;
 
 ReactDOM.render(
   <Provider store={store}>
