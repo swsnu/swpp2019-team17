@@ -126,7 +126,9 @@ class Match extends Component {
         gender: 3,
         subject: 31,
         minAge: 20,
-        maxAge: 40
+        maxAge: 40,
+        genderStat: [0, 0],
+        subjectStat: [0, 0, 0, 0, 0]
     };
     
     componentDidMount() {
@@ -194,7 +196,12 @@ class Match extends Component {
     render() {
         let tutors = this.props.loadedTutor; 
 
-        let jsxitems = null;
+        let jsxitems = <MatchedTutor 
+                        profile={profile2}
+                        gender="None"
+                        subject="None"
+
+                        />;
 
         if (tutors.length !== 0) {
             jsxitems = tutors.map((tutor) => 
@@ -222,34 +229,34 @@ class Match extends Component {
                             <Col id="query-item">
                                 <Row>
                                     <input type='checkbox' id = "Male" className="Male"
-                                        defaultChecked='true' onClick={(event) => {this.onChangeGender(event)}} /> Male
+                                        defaultChecked='true' onClick={(event) => {this.onChangeGender(event)}} /> Male ({this.state.genderStat[0]})
                                 </Row>
                                 <Row>
                                     <input type='checkbox' className="Female"
-                                        defaultChecked='true' onClick={(event) => {this.onChangeGender(event)}} /> Female
+                                        defaultChecked='true' onClick={(event) => {this.onChangeGender(event)}} /> Female ({this.state.genderStat[1]})
                                 </Row>
                             </Col>
                             <Col id="query-item">
                                 <Row>
                                     <input type="checkbox" className="Korean"
-                                    defaultChecked='true' onClick={(event) => {this.onChangeSubject(event)}}/> Korean (0)
+                                    defaultChecked='true' onClick={(event) => {this.onChangeSubject(event)}}/> Korean ({this.state.subjectStat[0]})
                                 </Row>
                                 <Row>
                                     <input type="checkbox" className="English"
-                                    defaultChecked='true' onClick={(event) => {this.onChangeSubject(event)}}/> English (0) 
+                                    defaultChecked='true' onClick={(event) => {this.onChangeSubject(event)}}/> English ({this.state.subjectStat[1]})
                                 </Row>
                                 <Row>
                                     <input type="checkbox" defaultChecked='true' className="Math"
-                                        onChange={(event) => {this.onChangeSubject(event)}}/> Math () 
+                                        onChange={(event) => {this.onChangeSubject(event)}}/> Math ({this.state.subjectStat[2]})
                                 </Row>
                                 <Row>
                                     <input type="checkbox" className="Social"
-                                    defaultChecked='true' onChange={(event) => {this.onChangeSubject(event)}}/> Social Study (0) 
+                                    defaultChecked='true' onChange={(event) => {this.onChangeSubject(event)}}/> Social Study ({this.state.subjectStat[3]}) 
                                 </Row>
                                 <Row>
                                     <input type="checkbox" defaultChecked='true' className="Science"
                                         value = {this.state.age}
-                                        onChange={(event) => {this.onChangeSubject(event)}}/> Science ()
+                                        onChange={(event) => {this.onChangeSubject(event)}}/> Science ({this.state.subjectStat[4]})
                                 </Row>
                             </Col>
                             <Col>
