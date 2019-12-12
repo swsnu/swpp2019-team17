@@ -132,7 +132,7 @@ class Match extends Component {
     };
     
     componentDidMount() {
-      this.props.getTutors(3, 31);
+      this.props.getTutors(this.props.childID, 3, 31, 20, 40);
     }
 
     
@@ -151,7 +151,7 @@ class Match extends Component {
                 console.log("Something went wrong on onChangeGender!!");
         }
 
-        this.props.getTutors(current, this.state.subject, this.state.minAge, this.state.maxAge);
+        this.props.getTutors(this.props.childID, current, this.state.subject, this.state.minAge, this.state.maxAge);
     }
 
 
@@ -181,7 +181,7 @@ class Match extends Component {
                 break;
         }
 
-        this.props.getTutors(this.state.gender, current, this.state.minAge, this.state.maxAge);
+        this.props.getTutors(this.props.childID, this.state.gender, current, this.state.minAge, this.state.maxAge);
     }
 
     onChangeAge = (e) => {
@@ -190,7 +190,7 @@ class Match extends Component {
         this.setState({minAge: e[0]});
         this.setState({maxAge: e[1]});
 
-        this.props.getTutors(this.state.gender, this.state.subject, e[0], e[1]);
+        this.props.getTutors(this.props.childID, this.state.gender, this.state.subject, e[0], e[1]);
     }
     
     render() {
@@ -210,6 +210,7 @@ class Match extends Component {
                     ////////////////////////////////
                     // This is for counting stats //
                     ////////////////////////////////
+                    // 여기에 적절한 값을 넣고 component에 값을 전달해야합니다!!
                 }
 
                 return <MatchedTutor proflie={tutor.profile} gender={tutor.gender} subject={tutor.subject} />
@@ -335,13 +336,14 @@ class Match extends Component {
 
 const mapStateToProps = state => {
     return {
-      loadedTutor: state.mat.tutors
+      loadedTutor: state.mat.tutors,
+      childID: state.pro.sentChildID
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        getTutors: (gender, subject, minAge, maxAge) => dispatch(actionCreators.getTutor(gender, subject, minAge, maxAge))
+        getTutors: (childID, gender, subject, minAge, maxAge) => dispatch(actionCreators.getTutor(childID, gender, subject, minAge, maxAge))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Match));

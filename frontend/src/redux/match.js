@@ -28,9 +28,9 @@ export const getTutor_ = (tutors) => ({
 })
 
 
-export const getTutor = (gender, subject, minAge, maxAge) => (dispatch) => {
+export const getTutor = (childID, gender, subject, minAge, maxAge) => (dispatch) => {
     console.log(gender, subject, minAge, maxAge);
-    axios.post('/', {gender: gender, subject: subject, minAge: minAge, maxAge: maxAge})
+    axios.post('tutee/tutoring/'+ childID +'/', {gender: gender, subject: subject, minAge: minAge, maxAge: maxAge})
         .then((res) => dispatch(getTutor_(res.data)));
 }
 
