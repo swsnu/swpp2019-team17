@@ -326,7 +326,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getTutors: (gender, subject) => dispatch(actionCreators.getTutor(gender, subject))
+        getTutors: (gender, subject, minAge, maxAge) => dispatch(actionCreators.getTutor(gender, subject, minAge, maxAge))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Match));
