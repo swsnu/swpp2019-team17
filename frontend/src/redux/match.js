@@ -3,10 +3,7 @@ import axios from 'axios';
 const GET_TUTOR = "GET_TUTOR";
 
 // create action
-export const getTutor_ = (tutors) => ({
-    type: GET_TUTOR,
-    tutors: tutors
-})
+
 
 /* tutor의 리스트를 요구합니다.
 gender와 subject는 각각 2비트, 5비트의 integer로 전송됩니다. 기본적으로 모두 체크된 상태이므로 3, 31을 보냅니다.
@@ -25,6 +22,11 @@ subject는
 & 16을 하면 Science
 의 현 checkbox가 나옵니다. 
 */
+export const getTutor_ = (tutors) => ({
+    type: GET_TUTOR,
+    tutors: tutors
+})
+
 
 export const getTutor = (gender, subject, minAge, maxAge) => (dispatch) => {
     console.log(gender, subject, minAge, maxAge);

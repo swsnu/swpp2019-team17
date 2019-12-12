@@ -6,6 +6,7 @@ import certificateReducer from './certificate';
 import loginReducer from './login';
 import signupReducer from './signup';
 import matchReducer from './match';
+import profileReducer from './profile';
 
 export const history = createBrowserHistory();
 
@@ -15,6 +16,7 @@ export const rootReducer = combineReducers({
   log: loginReducer,
   sig: signupReducer,
   mat: matchReducer,
+  pro: profileReducer,
   router: connectRouter(history),
 });
 

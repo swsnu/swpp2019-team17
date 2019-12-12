@@ -207,11 +207,10 @@ class Match extends Component {
         if (tutors.length !== 0) {
             jsxitems = tutors.map((tutor) => {
                 if (false) {
-                    ///////////////////////////////
-                    // This is for counting stats//
-                    ///////////////////////////////
+                    ////////////////////////////////
+                    // This is for counting stats //
+                    ////////////////////////////////
                 }
-                
 
                 return <MatchedTutor proflie={tutor.profile} gender={tutor.gender} subject={tutor.subject} />
             }
