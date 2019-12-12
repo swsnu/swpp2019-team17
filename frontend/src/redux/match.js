@@ -26,9 +26,9 @@ subject는
 의 현 checkbox가 나옵니다. 
 */
 
-export const getTutor = (gender, subject, age) => (dispatch) => {
-    console.log(gender, subject, age);
-    axios.post('/', {gender: gender, subject: subject, age: age})
+export const getTutor = (gender, subject, minAge, maxAge) => (dispatch) => {
+    console.log(gender, subject, minAge, maxAge);
+    axios.post('/', {gender: gender, subject: subject, minAge: minAge, maxAge: maxAge})
         .then((res) => dispatch(getTutor_(res.data)));
 }
 

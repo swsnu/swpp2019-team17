@@ -125,8 +125,8 @@ class Match extends Component {
     state = {
         gender: 3,
         subject: 31,
-        age: -1,
-        value: {min:20, max:30}
+        minAge: 20,
+        maxAge: 40
     };
     
     componentDidMount() {
@@ -149,7 +149,7 @@ class Match extends Component {
                 console.log("Something went wrong on onChangeGender!!");
         }
 
-        this.props.getTutors(current, this.state.subject, this.state.age);
+        this.props.getTutors(current, this.state.subject, this.state.minAge, this.state.maxAge);
     }
 
 
@@ -179,22 +179,16 @@ class Match extends Component {
                 break;
         }
 
-        this.props.getTutors(this.state.gender, current, this.state.age);
+        this.props.getTutors(this.state.gender, current, this.state.minAge, this.state.maxAge);
     }
 
     onChangeAge = (e) => {
-        let re = /^[0-9]{2}$/;
+        console.log(e[0]);
+        console.log(e[1]);
+        this.setState({minAge: e[0]});
+        this.setState({maxAge: e[1]});
 
-        let current = Number(e.target.value);
-
-        if (!re.exec(e.target.value)) {
-            return;
-        }
-        
-        this.setState({age: current});
-        this.props.getTutors(this.state.gender, this.state.subject, current);
-        
-        console.log("This is onchangeage", Number(e.target.value));
+        this.props.getTutors(this.state.gender, this.state.subject, e[0], e[1]);
     }
     
     render() {
@@ -266,6 +260,7 @@ class Match extends Component {
                                         step={1}
                                         mode={2}
                                         values = {[20, 40]}
+                                        onChange={(event) => {this.onChangeAge(event)}}
                                         >
                                             <Rail>
                                                 {({ getRailProps }) => (
