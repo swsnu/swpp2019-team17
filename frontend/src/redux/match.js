@@ -27,6 +27,7 @@ subject는
 */
 
 export const getTutor = (gender, subject, age) => (dispatch) => {
+    console.log(gender, subject, age);
     axios.post('/', {gender: gender, subject: subject, age: age})
         .then((res) => dispatch(getTutor_(res.data)));
 }

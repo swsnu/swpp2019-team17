@@ -21,3 +21,7 @@ label {
 input {
     text-align: left;
 }
+
+input[type="checkbox"] {
+    width: auto;
+}
