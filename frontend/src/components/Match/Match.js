@@ -196,6 +196,7 @@ class Match extends Component {
     render() {
         let tutors = this.props.loadedTutor; 
 
+        // for UI testing when no matching is caught
         let jsxitems = <MatchedTutor 
                         profile={profile2}
                         gender="None"
@@ -204,8 +205,16 @@ class Match extends Component {
                         />;
 
         if (tutors.length !== 0) {
-            jsxitems = tutors.map((tutor) => 
-                <MatchedTutor proflie={tutor.profile} gender={tutor.gender} subject={tutor.subject} />
+            jsxitems = tutors.map((tutor) => {
+                if (false) {
+                    ///////////////////////////////
+                    // This is for counting stats//
+                    ///////////////////////////////
+                }
+                
+
+                return <MatchedTutor proflie={tutor.profile} gender={tutor.gender} subject={tutor.subject} />
+            }
             )
         }
 
