@@ -18,13 +18,12 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 
-// design div
-//import Navbar from 'D:/sajeokgonggan/project/swpp/swpp2019-team17/design/src/components/Navbar';
 
 class Match extends Component {
     state = {
         gender: 3,
-        subject: 31
+        subject: 31,
+        age: -1
     };
     
     componentDidMount() {
@@ -63,7 +62,15 @@ class Match extends Component {
                 console.log("Something went wrong on onChangeGender!!");
         }
 
-        this.props.getTutors(this.state.gender, this.state.subject);
+        this.props.getTutors(this.state.gender, this.state.subject, this.state.age);
+    }
+
+    onChangeAge = (e) => {
+        if (e.target.value.toString().length != 2) {
+            return;
+        }
+
+        this.props.getTutors
     }
     
     render() {
@@ -72,36 +79,39 @@ class Match extends Component {
         let jsxitems = null;
 
         if (tutors.length !== 0) {
-            jsxitems = tutors.map((tutor) => {
-                
-            })
+            jsxitems = tutors.map((tutor) => 
+                <MatchedTutor proflie={tutor.profile} gender={tutor.gender} subject={tutor.subject} />
+            )
         }
 
         return (
             <div className="matching">
                 <Header isLoggedIn={true} />
-                <Jumbotron>
+                <Jumbotron id="jumbo">
                     <Container id="condition">
                         <Row>
                             <Col>
-                                <legend>gender</legend>
+                                <legend>Gender</legend>
                             </Col>
                             <Col>
                                 <legend>Subject</legend>
                             </Col>
+                            <Col>
+                                <legend>Age</legend>
+                            </Col>
                         </Row>
                         <Row>
-                            <Col>
+                            <Col id="query-item">
                                 <Row>
                                     <Form.Check type='checkbox' className="Male"
-                                        defaultChecked='true' onClick={(event) => {this.onChangeGender(event)}} /> male ()
+                                        defaultChecked='true' onClick={(event) => {this.onChangeGender(event)}} /> Male
                                 </Row>
                                 <Row>
                                     <Form.Check type='checkbox' className="Female"
-                                        defaultChecked='true' onClick={(event) => {this.onChangeGender(event)}} /> female ()
+                                        defaultChecked='true' onClick={(event) => {this.onChangeGender(event)}} /> Female
                                 </Row>
                             </Col>
-                            <Col>
+                            <Col id="query-item">
                                 <Row>
                                     <Form.Check type="checkbox" className="Korean"
                                     defaultChecked='true' onClick={(event) => {this.onChangeSubject(event)}}/> Korean (0)
@@ -123,11 +133,16 @@ class Match extends Component {
                                         onChange={(event) => {this.onChangeSubject(event)}}/> Science ()
                                 </Row>
                             </Col>
+                            <Col>
+                                <Row>
+                                    <Form.Control type="text" placeholder="Type age here" onChange={ (event)=> {this.onChangeAge(event)} }/>
+                                </Row>
+                            </Col>
                         </Row>
                     </Container>
                 </Jumbotron>
                 <div className="result">
-                    
+                    {jsxitems};
                 </div>
             </div>
         )
