@@ -5,7 +5,7 @@ import image2 from '../image2.png';
 import Header from '../../Header/header';
 
 import TuteeChildListComponent from './TuteeChildListComponent';
-import actionCreators from '../../../redux/profile';
+import * as actionCreators from '../../../redux/profile';
 
 // bootstrap
 import Button from 'react-bootstrap/Button';
@@ -25,26 +25,27 @@ class ProfileTutee extends Component {
       this.props.getTutee();
     }
     
+    onClickMatching = (childID) => {
+      this.props.sendChildID(childID);
+      this.props.history.push('/tutee/match/');
+    }
+
     render() {
-
-      onClickMatching = (childID) => {
-
-      }
 
       let tutee_manager = null;
       
-      if (this.state.loadedTutee !== null) {
+      if (this.props.loadedTutee !== null) {
         // 중요하니깐 한글로 씁니다. 여기에 loadedTutee가 받아져요!!
         // 앞으로 DB를 쓸 거면 얘 형식이 어떻게 될지 알아야합니다
-        tutee_manager = this.state.loadedTutee;
+        tutee_manager = this.props.loadedTutee;
       }
 
       let children = <TuteeChildListComponent onClickMatching={() => this.onClickMatching(0)}/>;
 
-      if (this.state.loadedChildren.length() !== 0) {
+      if (this.props.loadedChildren.length !== 0) {
         // In here, we map the information from redux
         // 여기도 component에 적절한 값 넣어줘야해요
-        children = loadedChildren.map(() => (
+        children = this.props.loadedChildren.map(() => (
           <TuteeChildListComponent/>
         ))
       }
@@ -104,7 +105,7 @@ class ProfileTutee extends Component {
           </Row>
         </Container>
       );
-  }
+    }
 }
 
 const mapStateToProps = state => {
@@ -116,8 +117,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-      getTutee: () => dispatch(actionCreators.getTuteeManager()),
-      sendChildID: (id) => dispatch(actionCreators.sendChildID(id))
+      getTutee: () => {
+        dispatch(actionCreators.getTuteeManager())
+      },
+      sendChildID: (id) => {
+        dispatch(actionCreators.sendChildID(id))
+      }
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileTutee);
