@@ -12,14 +12,14 @@ export const getTuteeManager_ = (data) => {
         // 확정 아닙니다 데이터 보내주시는 거에 따라서 바꿀거에용
         tutee_manager: data.tutee_manager,
         // children이 현재 undefined로 자꾸 나와요. 엉엉
-        children: []//data.children
+        children: data.children
     };
 }
 
 // should put backend address here in axios
 export const getTuteeManager = () => {
     return dispatch => {
-        return axios.get('/')
+        return axios.get('/api/뭐시기') //여기에 주소 넣어야함!!
             .then((res) => dispatch(getTuteeManager_(res.data)));
     }
 }
