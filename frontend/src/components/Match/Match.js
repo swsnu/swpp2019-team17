@@ -17,6 +17,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Jumbotron from 'react-bootstrap/Jumbotron';
+import Modal from 'react-bootstrap/Modal';
 
 
 // slider
@@ -128,7 +129,8 @@ class Match extends Component {
         minAge: 20,
         maxAge: 40,
         genderStat: [0, 0],
-        subjectStat: [0, 0, 0, 0, 0]
+        subjectStat: [0, 0, 0, 0, 0],
+        modalShow: false
     };
     
     componentDidMount() {
@@ -192,16 +194,28 @@ class Match extends Component {
 
         this.props.getTutors(this.props.childID, this.state.gender, this.state.subject, e[0], e[1]);
     }
+
+    // Detail버튼을 누르면 profile과 review가 있는 modal이 나오게 한다
+    // 물론 내용을 표시하기 위한 값들도 옮겨야 한다. 지금은 구현중...
+    onClickDetail = (id) => {
+        setShow(true);
+        // 여기에 get review를 redux로?
+    }
+
+    setShow = (isShown) => {
+        this.setState({modalshow: isShown});
+    }
     
     render() {
         let tutors = this.props.loadedTutor; 
 
         // for UI testing when no matching is caught
         let jsxitems = <MatchedTutor 
+                        id={0}
                         profile={profile2}
                         gender="None"
                         subject="None"
-
+                        onClickDetail={() => onClickDetail(0)}
                         />;
 
         if (tutors.length !== 0) {
@@ -213,7 +227,12 @@ class Match extends Component {
                     // 여기에 적절한 값을 넣고 component에 값을 전달해야합니다!!
                 }
 
-                return <MatchedTutor proflie={tutor.profile} gender={tutor.gender} subject={tutor.subject} />
+                return <MatchedTutor 
+                        id={tutor.id}
+                        proflie={tutor.profile}
+                        gender={tutor.gender}
+                        subject={tutor.subject}
+                        onClickDetail={() => onClickDetail(tutor.id)} />
             }
             )
         }
@@ -330,6 +349,54 @@ class Match extends Component {
                     {jsxitems};
                 </div>
             </div>
+
+            <Modal show={this.state.modalShow} onHide={() =>this.setShow(false)}>
+                <Modal.Header>
+                    <Media>
+                        <img
+                            width={64}
+                            height={64}
+                            src={props.profile}
+                            alt="Profile photo"
+                            rounded
+                        />
+                        <Media.Body>
+                            <Container>
+                            <Row>
+                                <Col>
+                                <p><b>{props.name}</b></p>
+                                <p>{props.gender}</p>
+                                </Col>
+                                <Col>
+                                <p>{props.subject}</p>
+                                </Col>
+                                <Col>
+                                {/* 데모 때는 스케쥴을 둘만 넣었는데 어떻게 넣을지 고려해봐야겠네요 
+                                <p>{props.available[0]}</p>
+                                <p>{props.available[1]}</p>
+                                */}
+                                </Col>
+                                <Col>
+                                <Button>Request</Button>
+                                <Button>Detail</Button>
+                                </Col>
+                            </Row>
+                            </Container>
+                        </Media.Body>
+                    </Media>
+                </Modal.Header>
+                <Modal.Body>
+                    {/* 여기 즈음에 리뷰 넣어야하는데 따로 component로 만들어서 넣어야할듯*/}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button onClick={() => {}}>
+                        Request
+                    </Button>
+                    <Button onClick={() => {}}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         )
     }
 }
