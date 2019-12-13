@@ -21,7 +21,6 @@ class ProfileTutee extends Component {
 
     
     componentDidMount() {
-      // 
       this.props.getTutee();
     }
     
@@ -40,13 +39,13 @@ class ProfileTutee extends Component {
         tutee_manager = this.props.loadedTutee;
       }
 
-      let children = <TuteeChildListComponent onClickMatching={() => this.onClickMatching(0)}/>;
+      let children = <TuteeChildListComponent name="None" onClickMatching={() => this.onClickMatching(0)}/>;
 
       if (this.props.loadedChildren.length !== 0) {
         // In here, we map the information from redux
-        // 여기도 component에 적절한 값 넣어줘야해요
-        children = this.props.loadedChildren.map(() => (
-          <TuteeChildListComponent/>
+        // 여기도 component에 적절한 값 넣어줘야해요. 지금은 대충 넣었습니다
+        children = this.props.loadedChildren.map((child) => (
+          <TuteeChildListComponent name={child.name} onClickMatching={() => this.onClickMatching(child.id)}/>
         ))
       }
 

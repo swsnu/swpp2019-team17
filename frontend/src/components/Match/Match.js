@@ -343,6 +343,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        // ProfileTutee에서부터 받은 childID, 그리고 여기서 설정한 각종 설정 등을 맞춰서 올려보내줍니다
         getTutors: (childID, gender, subject, minAge, maxAge) => dispatch(actionCreators.getTutor(childID, gender, subject, minAge, maxAge))
     }
 }
