@@ -24,6 +24,7 @@ class Tutor(User):
     name=models.CharField(max_length=10,null=True,blank=True)
     photo=models.ImageField(upload_to='tutor/',null=True)
     age=models.CharField(max_length=3,null=True,blank=True)
+    distance=models.FloatField(default=0,null=True,blank=True)
 
 class TuteeManager(User):
     '''
@@ -66,7 +67,7 @@ class Tutoring(models.Model):
         Tutor,
         on_delete=models.CASCADE,
     )
-    state=models.CharField(max_length=10,default="suspended")
+    state=models.CharField(max_length=10,default="requested")
     address=models.CharField(max_length=40)
     fee=models.IntegerField()
 
