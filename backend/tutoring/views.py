@@ -332,7 +332,7 @@ def tutee_page_tutoring(request,tuteemanager_id):
             return HttpResponse(status=405)
 
 def get_distance(start_x,start_y,end_x,end_y,point_x,point_y):
-    if start_x==end_x&&start_y==end_y:
+    if start_x==end_x and start_y==end_y:
         return (abs(start_x-point_x)**2+abs(start_y-end_y)**2)**0.5
     elif start_x==end_x:
         return 0
