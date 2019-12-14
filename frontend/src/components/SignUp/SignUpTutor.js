@@ -161,8 +161,7 @@ class SignUpTutor extends Component {
             <Form.Control type="file" className="signuptutor-input-certificate" />
             <div className="signuptutor-div-authorize">
               <label className="signuptutor-label-certificate">Certificate:</label>
-              <Form.Control type="file" className="signuptutor-input-certificate"
-                onChange={event => this.handleFileUpload(event)} />
+              <Certificate />
             </div>
             <div className='university'>university
               <Select options={university_options} closeMenuOnSelect={true} onChange={(selectedoption) => this.ChangeUniversity(selectedoption)} />
