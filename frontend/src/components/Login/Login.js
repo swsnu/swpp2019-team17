@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Modal from 'react-bootstrap/Modal';
+import * as actionCreators from '../../redux/login'
 
 class Login extends Component {
   state = {
@@ -18,7 +19,21 @@ class Login extends Component {
   setShow = (isShown) => {
     this.setState({modalshow: isShown});
   }
-
+  loginHandler = () => {
+    let login_info = {username: this.state.username, password: this.state.password}
+    actionCreators.login(login_info)
+    .then((res) => {
+      console.log(res)
+      if(res.status == 204){
+        this.props.history.push('/profile/tutor/')
+      } else {
+        this.props.history.push('/tutee/match/')
+      }
+    })
+    .catch((error) => {
+      console.log('wrong id or password')
+    })
+  }
   render() {
     return (
       <Jumbotron className="login">
@@ -63,4 +78,5 @@ class Login extends Component {
     )
   }
 }
+
 export default Login;
