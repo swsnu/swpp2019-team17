@@ -40,7 +40,7 @@ export const getReviewByID_ = (reviews) => ({
     reviewByID: reviews
 })
 export const getReviewByID = (id) => (dispatch) => {
-    axios.post('/대충tutor의 리뷰가져오는주소', {id: id})
+    axios.get('tutee/review/' + id + '/')
         .then((res) => dispatch(getReviewByID_(res.data)));
 }
 
