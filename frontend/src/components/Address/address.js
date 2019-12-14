@@ -23,6 +23,7 @@ class Address extends React.Component {
       this.setState({mode: 'done', selected_address: address})
     }
     else{
+      this.props.onSelectAddress(address, X, Y)
       this.setState({selected_address: address, mode:'detail', address: ''})
     }
   }
@@ -59,9 +60,10 @@ class Address extends React.Component {
       </div> 
     : ( this.state.mode == 'detail' ? 
       <span>
-        <p>{this.state.selected_address}</p>
+        <span>{this.state.selected_address}</span>
+        <Button onClick={() => this.SearchAddress()}>search</Button>
         <label>detailed address</label>
-        <Form.Control className="text-left" onChange={e => this.setState({detailed_address:e.target.value})} >
+        <Form.Control className="text-left" onChange={e => this.props.onDetailAddress(e.target.value)} >
         </Form.Control>
       </span>
     : <div>
@@ -69,8 +71,7 @@ class Address extends React.Component {
       {this.state.selected_address}
       <Button onClick={() => this.SearchAddress()}>search address</Button>
     </div>
-    )
-    )
+    ))
     return (
       <Alert>{detail}</Alert>
     )

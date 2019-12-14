@@ -2,9 +2,10 @@ from django.urls import path
 from tutoring import views
 
 urlpatterns = [
-    path('signup/tutee_manager/', views.signup_tutee_manager, name='signup'),
+    path('signup/tutee/', views.signup_tutee, name='signup'),
     path('signup/tutor/', views.signup_tutor, name='signup'),
     path('signup/tutor/certificate/', views.certificate, name='certificate'),
+    path('signup/uniqueid/<str:id>', views.uniqueid, name='sidnup'),
     path('signin/', views.signin, name='signin'),
     path('signout/', views.signout, name='signout'),
 

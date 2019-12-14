@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse,HttpResponseNotAllowed
 from django.contrib.auth import authenticate,login,logout
 import json
-from .models import Tutor,TuteeManager,Tutee,Tutoring,Review
+from .models import Tutor,Tutee,Tutoring,Review
 from django.contrib.auth import get_user_model, authenticate, login
 from json import JSONDecodeError
 from django.shortcuts import get_object_or_404
@@ -44,22 +44,62 @@ def signout(request):
     else:
         return HttpResponse(status=405)
 
+def uniqueid(request, id):
+    if request.method == 'GET':
+        if User.objects.filter(username=id).exists():
+            return HttpResponse(status=202)
+        else:
+            return HttpResponse(status=200)
 
-def signup_tutee_manager(request):
+@csrf_exempt
+def signup_tutee(request):
     if request.method == 'POST':
         try:
             req_data = json.loads(request.body.decode())
-            user_name1 = req_data['username']
-            pass_word1 = req_data['password']
-            phone1=req_data['phonenumber']
+            username = req_data['username']
+            password = req_data['password']
+            phonenumber = None
+            address = None
+            subject = None
+            gender = None
+            schedule = None
+            name = None
+            age = None
+            if('age' in req_data):
+                age = req_data['age']
+            if('name' in req_data):
+                name = req_data['name'] # mysql setting utf8로 해야함
+            if('phonenumber' in req_data):
+                phonenumber = req_data['phonenumber']
+            if('address' in req_data):
+                address = {}
+                address['Road'] = req_data['address']['Road']
+                address['X'] = req_data['address']['X']
+                address['Y'] = req_data['address']['Y']
+                address['detail'] = req_data['address']['detail']
+            if('subject' in req_data):
+                subject = req_data['subject']
+            if('gender' in req_data):
+                gender = req_data['gender']
+            if('schedule' in req_data):
+                index = 0
+                schedule = {}
+                for x in req_data['schedule']:
+                    schedule[str(index)] = x
+                    index += 1
         except (KeyError, JSONDecodeError) as e:
             return HttpResponse(status=400)
-        
-        TuteeManager.objects.create_user(username=user_name1,password=pass_word1,phonenumber=phone1) 
-        '''
-        check if register tutee or not
-        '''
-        return JsonResponse("TuteeManager",status=201,safe=False)
+        tutee = Tutee.objects.create_user(username=username, password=password, phonenumber=phonenumber,
+            age=age, name=name, address=address, gender=gender,subject=subject, schedule=schedule)
+        tutee.save()
+        tutee.refresh_from_db()
+        tutee2 = authenticate(request, username=username, password=password)
+        if tutee2 is not None:
+            login(request, tutee2)
+        else:
+            None
+        # tutor to json, and send back
+        return JsonResponse(tutee.schedule,status=201,safe=False)
     else:
         return HttpResponse(status=405)
 
@@ -257,7 +297,7 @@ def address(request, keyword):
                 result.append(response.json()['response']['result']['items'][i])
         return JsonResponse(result, status=200, safe=False)
 
-
+@csrf_exempt
 def certificate(request):
     if request.method == 'POST':
         url = "https://kapi.kakao.com/v1/vision/text/detect"
