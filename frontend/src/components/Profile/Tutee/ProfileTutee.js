@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import image2 from '../image2.png';
 import Header from '../../Header/header';
+import './ProfileTutee.css';
 
 import TuteeChildListComponent from './TuteeChildListComponent';
 import * as actionCreators from '../../../redux/profile';
@@ -31,7 +32,12 @@ class ProfileTutee extends Component {
 
     render() {
 
-      let tutee_manager = null;
+      let tutee_manager = {
+        name: "Name",
+        id: "ID",
+        phone: "000-0000-0000",
+        address: "SNU"
+      };
       
       if (this.props.loadedTutee !== null) {
         // 중요하니깐 한글로 씁니다. 여기에 loadedTutee가 받아져요!!
@@ -57,9 +63,12 @@ class ProfileTutee extends Component {
             </Col>
             <Col>
               <Jumbotron>
-                <div className="profiletutor">
-                  <img src={image2} className="photo" />
-                </div>
+                  <div className="profiletutee">
+                    <img src={image2} className="photo" width="300" />
+                    <h2>
+                      ID: {tutee_manager.id}
+                    </h2>
+                  </div>
               </Jumbotron>
             </Col>
           </Row>
@@ -68,7 +77,7 @@ class ProfileTutee extends Component {
               <div className="button-list">
                 <ButtonGroup vertical>
                   <Button type="button">Edit Profile</Button>
-                  <Button type="button">Tutoring</Button>
+                  <Button type="button">Requested Tutoring</Button>
                   <Button type="button" variant="danger">Delete Account</Button>
                 </ButtonGroup>
               </div>
@@ -76,25 +85,13 @@ class ProfileTutee extends Component {
             <Col>
               <Jumbotron>
                 <h1>
-                  Name: Name
+                  Name: {tutee_manager.name /* 이건 확정 아닙니다. backend 따라서 고치죠 */}
                 </h1>
-                <h2>
-                  ID: 
-                </h2>
-                <h2>
-                  Age:
-                </h2>
-                <h2>
-                  Subject:
-                </h2>
-                <h2>
-                  gender:
-                </h2>
                 <h3>
-                  phonenumber:
+                  phonenumber: {tutee_manager.phone}
                 </h3>
                 <h3>
-                  address:
+                  address: {tutee_manager.address}
                 </h3>
               </Jumbotron>
             </Col>

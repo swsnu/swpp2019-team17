@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import image from './image.png';
+import {connect} from 'react-redux';
+
+import * as actionCreators from '../../../redux/profile';
+import image from '../image.png';
 import './ProfileTutor.css';
-import Header from '../Header/header';
-import Navbar from "./../Navbar";
-import Footer from "./../Footer";
+import Header from '../../Header/header';
+import Navbar from "../../Navbar";
+import Footer from "../../Footer";
 // bootstrap
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
@@ -28,7 +31,24 @@ class ProfileTutor extends Component {
     //실제에서는 id(key값)-> data를 불러와서 setstate
   };
 
+  componentDidMount() {
+    this.props.getTutor();
+  }
+
   render() {
+    let tutor = {
+      name: "Hong Gil Dong",
+      age: 23,
+      subject: "Math",
+      gender: "Male",
+      phone: "010-1234-5678",
+      university: null,
+    };
+  
+    if (this.props.loadedTutor !== null) {
+      tutor = this.props.loadedTutor;
+    }
+
     return (
       <>
       <Container>
@@ -40,6 +60,9 @@ class ProfileTutor extends Component {
             <Jumbotron>
               <div className="profiletutor">
                 <img src={image} className="photo" />
+                <h2>
+                  ID:{this.state.username}
+                </h2>
               </div>
             </Jumbotron>
           </Col>
@@ -57,25 +80,22 @@ class ProfileTutor extends Component {
           <Col>
             <Jumbotron>
               <h1>
-                Name:{this.state.name}
+                Name:{tutor.name}
               </h1>
               <h2>
-                ID:{this.state.username}
+                Age:{tutor.age}
               </h2>
               <h2>
-                Age:{this.state.age}
+                Subject:{tutor.subject}
               </h2>
               <h2>
-                Subject:{this.state.subject}
-              </h2>
-              <h2>
-                gender:{this.state.gender}
+                gender:{tutor.gender}
               </h2>
               <h3>
-                phonenumber:{this.state.phonenumber}
+                phonenumber:{tutor.phone}
               </h3>
               <h3>
-                address:{this.state.address}
+                address:{tutor.address}
               </h3>
             </Jumbotron>
           </Col>
@@ -93,5 +113,18 @@ class ProfileTutor extends Component {
     );
   }
 }
-//싹다 dummy data입니다
-export default ProfileTutor;
+
+const mapStateToProps = state => {
+  return {
+      loadedTutor: state.pro.tutor,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getTutor: () => {
+      dispatch(actionCreators.getTutor())
+    }
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileTutor);

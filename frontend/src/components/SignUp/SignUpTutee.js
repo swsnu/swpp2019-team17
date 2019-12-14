@@ -61,7 +61,7 @@ class SignUpTutee extends Component {
     tutee = JSON.stringify(tutee)
     console.log(tutee);
     actionCreators.signUpTutee(tutee);
-    this.props.history.push('/tutee/match/')
+    this.props.history.push('/profile/tutee')
   }
 
   ClickNext = () => {

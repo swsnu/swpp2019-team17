@@ -1,3 +1,7 @@
+.profiletutor {
+    display: flex;
+    align-items: center;
+}
 
 
 .profiletutor h1{
@@ -10,8 +14,6 @@
 
 .profiletutor h2{
     text-align: left;
-    font-size:150%;
-    font-family:serif;
 }
 
 .profiletutor h3{

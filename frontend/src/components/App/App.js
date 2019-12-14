@@ -11,7 +11,7 @@ import SignUpTutor from '../SignUp/SignUpTutor';
 import SignUpTutee from '../SignUp/SignUpTutee';
 import Match from '../Match/Match';
 import ProfileTutee from '../Profile/Tutee/ProfileTutee';
-import ProfileTutor from '../Profile/ProfileTutor';
+import ProfileTutor from '../Profile/Tutor/ProfileTutor';
 import Certificate from '../Certificate/Certificate';
 import * as actionCreators from '../../redux/login'
 import { connect } from 'react-redux';
@@ -30,6 +30,7 @@ function App(props) {
             <Route path="/signup/tutee" exact component={SignUpTutee} />
             <Route path="/tutee/match" exact component={Match} />
             <Route path="/profile/tutor" exact component={ProfileTutor} />
+            <Route path="/profile/tutee" exact component={ProfileTutee} />
             <Route path="/cert" exact component={Certificate} />
             <Redirect from="/" to="/login" />
           </Switch>

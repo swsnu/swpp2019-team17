@@ -11,7 +11,6 @@ export const getTuteeManager_ = (data) => {
         type: GET_TUTEE_MANAGER,
         // 확정 아닙니다 데이터 보내주시는 거에 따라서 바꿀거에용
         tutee_manager: data.tutee_manager,
-        // children이 현재 undefined로 자꾸 나와요. 엉엉
         children: data.children
     };
 }
@@ -34,15 +33,19 @@ export const sendChildID = (id) => ({
 // === TUTOR PROFILE PART ===
 const GET_TUTOR = "GET_TUTOR";
 
-export const getTutor_ = (tutor) => ({
-    type: GET_TUTOR,
-    tutor: tutor
-})
+export const getTutor_ = (tutor) => {
+    return {
+        type: GET_TUTOR,
+        tutor: tutor
+    };
+}
 
 // should put backend address here in axios
-export const getTutor = () => (dispatch) => {
-    axios.get('/')
+export const getTutor = () => {
+    return dispatch => {
+        return axios.get('/api/뭐시기')
         .then((res) => dispatch(getTutor_(res.data)));
+    }
 }
 
 
