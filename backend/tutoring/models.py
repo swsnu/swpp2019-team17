@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from multiselectfield import MultiSelectField
-from jsonfield import JSONField
+from django.contrib.postgres.fields import JSONField
 
 # Create your models here.
 

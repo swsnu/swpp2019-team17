@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import image from './image.png';
 import './ProfileTutor.css';
 import Header from '../Header/header';
-
+import Navbar from "./../Navbar";
+import Footer from "./../Footer";
 // bootstrap
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
@@ -29,6 +30,7 @@ class ProfileTutor extends Component {
 
   render() {
     return (
+      <>
       <Container>
         <Header isLoggedIn={true} />
         <Row>
@@ -79,6 +81,15 @@ class ProfileTutor extends Component {
           </Col>
         </Row>
       </Container>
+      <Footer
+        color="white"
+        size="normal"
+        backgroundImage=""
+        backgroundImageOpacity={1}
+        copyright="© 2019 Company"
+        logo="https://uploads.divjoy.com/logo.svg"
+      />
+      </>
     );
   }
 }
