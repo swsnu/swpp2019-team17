@@ -13,11 +13,13 @@ import copy
 
 User = get_user_model()
 
+@csrf_exempt
 def signin(request):
     if request.method == 'POST':
         try:
-            user_name=json.loads(request.body.decode())['username']
-            user_pass=json.loads(request.body.decode())['password']
+            login_info = json.loads(request.body.decode())
+            user_name=login_info['username']
+            user_pass=login_info['password']
         except (KeyError, JSONDecodeError) as e:
             return HttpResponse(status=400)
 
@@ -26,9 +28,9 @@ def signin(request):
             login(request,userA)
             try:
                 Tutor.objects.get(username=user_name)
-                return JsonResponse('Tutor',status=204,safe=False)    
+                return JsonResponse({'type':'tutor'}, status=204,safe=False)
             except:
-                return JsonResponse('TuteeManager',status=204,safe=False)
+                return JsonResponse({'type':'tutee'}, status=205,safe=False)
         else:
             return HttpResponse(status=401)
     else :
