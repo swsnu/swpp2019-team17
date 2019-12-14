@@ -44,21 +44,20 @@ class SignUpTutor extends Component {
     this.setState({ university: university })
   }
   CheckUniqueID = () => {
-    if (this.state.id != null && this.state.password != null && this.state.password == this.state.password_confirmation) {
+    if (this.state.id != '' && this.state.password != '' && this.state.password == this.state.password_confirmation) {
       actionCreators.uniqueID(this.state.id).then(res => {
         if (res.status == 200){
           this.setState({ step: this.state.step+1})
         } else {
-          //todo: print id is duplicated under id form
-          console.log('id duplicated')
+          alert('ID already exists')
         }
       })
-    } else if (this.state.id == null){
-      //todo: print id is mandatory
-    } else if (this.state.password == null || this.state.password_confirmation == null){
-      //todo: print password is madatory
+    } else if (this.state.id == ''){
+      alert('Fill in the ID')
+    } else if (this.state.password == '' || this.state.password_confirmation == ''){
+      alert('Fill in the password')
     } else if (this.state.password_confirmation != this.state.password){
-      //todo: password confirmation doesn't match
+      alert('password and confimation are not matching')
     }
   }
   setName = (name) => {

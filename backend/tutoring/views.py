@@ -46,6 +46,13 @@ def signout(request):
     else:
         return HttpResponse(status=405)
 
+def isloggedin(request):
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            return HttpResponse(status=200)
+        else:
+            return HttpResponse(status=201)
+
 def uniqueid(request, id):
     if request.method == 'GET':
         if User.objects.filter(username=id).exists():

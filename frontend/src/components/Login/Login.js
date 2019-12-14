@@ -10,34 +10,42 @@ import Modal from 'react-bootstrap/Modal';
 import * as actionCreators from '../../redux/login'
 
 class Login extends Component {
-  state = {
-    username: '',
-    password: '',
-    modalshow: false
-  };
+  constructor() {
+    super();
+    this.state = {
+      username: '',
+      password: '',
+      modalshow: false,
+    }
+  }
 
   setShow = (isShown) => {
-    this.setState({modalshow: isShown});
+    this.setState({ modalshow: isShown });
   }
   loginHandler = () => {
-    let login_info = {username: this.state.username, password: this.state.password}
-    actionCreators.login(login_info)
-    .then((res) => {
-      console.log(res)
-      if(res.status == 204){
-        this.props.history.push('/profile/tutor/')
-      } else {
-        this.props.history.push('/tutee/match/')
-      }
-    })
-    .catch((error) => {
-      console.log('wrong id or password')
-    })
+    if (this.state.username == '') {
+      alert('Fill ID')
+    } else if (this.state.password == '') {
+      alert('Fill password')
+    } else {
+      let login_info = { username: this.state.username, password: this.state.password }
+      actionCreators.login(login_info)
+        .then((res) => {
+          if (res.status == 204) {
+            this.props.history.push('/profile/tutor/')
+          } else {
+            this.props.history.push('/tutee/match/')
+          }
+        })
+        .catch((error) => {
+          alert('wrong ID or password')
+        })
+    }
   }
   render() {
     return (
       <Jumbotron className="login">
-        <img className="logo" src={logo}/>
+        <img className="logo" src={logo} />
         <Form.Group className="login">
           <Form.Label>ID</Form.Label>
           <Form.Control

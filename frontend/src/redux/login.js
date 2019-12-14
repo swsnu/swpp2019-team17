@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const IS_LOGGED = 'IS_LOGGED';
+const IS_LOGGED_IN = 'IS_LOGGED_IN';
 const LOG_IN = 'LOG_IN';
 const LOG_OUT = 'LOG_OUT';
 
@@ -11,10 +11,8 @@ export const login_ = (data) => {
   })
 }
 
-export const login = (login_info) => 
-    axios.post('/api/signin/', login_info)
-    // .then(res => dispatch(login_(res.data)))
-
+export const login = (login_info) =>
+  axios.post('/api/signin/', login_info)
 
 export const logout_ = () => ({
   type: LOG_OUT
@@ -25,9 +23,34 @@ export const logout = () => (dispatch) => {
     .then((res) => dispatch(logout_()));
 }
 
+export const isLoggedIn = () => {
+  return dispatch => {
+    return axios
+      .get("/api/isloggedin/")
+      .then(res => {
+        if(res.status==200){
+          dispatch(isLoggedIn_(true));
+        } else {
+          dispatch(isLoggedIn_(false))
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        dispatch(isLoggedIn_(false));
+      });
+  };
+};
+
+export const isLoggedIn_ = res => {
+  return {
+    type: IS_LOGGED_IN,
+    authenticated: res
+  };
+};
+
 // reducer
 const InitialState = {
-  session: null
+  authenticated: false,
 };
 
 export const reducer = (state = InitialState, action) => {
@@ -36,6 +59,8 @@ export const reducer = (state = InitialState, action) => {
       return { ...state, };
     case LOG_OUT:
       return state;
+    case IS_LOGGED_IN:
+      return{...state, authenticated: action.authenticated}
     default:
       return state;
   }
