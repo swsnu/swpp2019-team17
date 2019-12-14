@@ -1,57 +1,40 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from multiselectfield import MultiSelectField
+from django.contrib.postgres.fields import JSONField
 
 # Create your models here.
 
 class User(AbstractUser):
-    phonenumber=models.CharField(blank=False, max_length=13)
-    address=models.CharField(max_length=40,null=True,blank=True)
+    phonenumber=models.CharField(null=True, blank=True, max_length=15)
 
 class Tutor(User):
-    # schedule = models.JsonField()  [ {start: date, end: date} {start: date, end: date} ... ]
-    # address = models.JsonField()  [ {startRoad: "", startX: float, startY: int, endRoad: "", endX: int, endY: int}   ]
+    schedule = JSONField(null=True, blank=True) # { 0:{start: date, end: date} 1:{start: date, end: date} ... ]
+    address = JSONField(null=True, blank=True) # { 0:{startRoad: "", startX: float, startY: float, endRoad: "", endX: float, endY: float}, 1:{...} ...]
     # certificate = models.ImageField
     GENDER_CHOICES = (
         ('male', 'Male'),
         ('female', 'Female'),
     )
-    gender=models.CharField(max_length=20, choices=GENDER_CHOICES)
-    subject=models.CharField(max_length=40)
+    gender=models.CharField(max_length=20, choices=GENDER_CHOICES, null=True, blank=True)
+    subject=models.CharField(max_length=40, null=True, blank=True) # multiselect or char ?
     name=models.CharField(max_length=10,null=True,blank=True)
     photo=models.ImageField(upload_to='tutor/',null=True)
-    age=models.IntegerField(max_length=3,null=True,blank=True)
+    distance=models.FloatField(default=0,null=True,blank=True)
+    age=models.IntegerField(null=True,blank=True)
 
-class TuteeManager(User):
-    '''
-    tutee=onetomany field
-    '''
-
-class Tutee(models.Model):
-    # schedule = models.JsonField()  [ {start: date,end: date} {start: date, end: date} ... ]
-    # address = models.JsonField()  [Road: "", X: float, Y: float]
+class Tutee(User):
+    address=JSONField(null=True,blank=True) # [Road: "", X: float, Y: float, detail: ""]
+    schedule = JSONField(null=True,blank=True)  # [ 0: {start: date,end: date} 1: {start: date, end: date} ... ]
     GENDER_CHOICES = (
         ('male', 'Male'),
         ('female', 'Female'),
     )
-    SUBJECT_CHOICES = (
-        ('math','Math'),
-        ('korean','Korean'),
-        ('english','English'),
-        ('society','Society'),
-        ('science','Science'),
-    )
-    tutee_manager=models.ForeignKey(
-        TuteeManager,
-        on_delete=models.CASCADE,
-    )
     name=models.CharField(max_length=10,null=True,blank=True)
-    gender=models.CharField(max_length=20, choices=GENDER_CHOICES)
-    subject=MultiSelectField(choices=SUBJECT_CHOICES,max_choices=5,max_length=5)
-    detailed_address_x=models.CharField(max_length=40,default='0')
-    detailed_address_y=models.CharField(max_length=40,default='0')
-    age=models.CharField(max_length=3,null=True,blank=True)
-
+    gender=models.CharField(max_length=20, choices=GENDER_CHOICES,null=True,blank=True)
+    subject=models.CharField(max_length=80, null=True, blank=True)
+    age=models.IntegerField(null=True,blank=True)
+    
 class Tutoring(models.Model):
     subject=models.CharField(max_length=40)
     tutee=models.ForeignKey(
@@ -62,7 +45,7 @@ class Tutoring(models.Model):
         Tutor,
         on_delete=models.CASCADE,
     )
-    state=models.CharField(max_length=10,default="suspended")
+    state=models.CharField(max_length=10,default="requested")
     address=models.CharField(max_length=40)
     fee=models.IntegerField()
 

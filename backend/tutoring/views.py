@@ -2,23 +2,24 @@ from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse,HttpResponseNotAllowed
 from django.contrib.auth import authenticate,login,logout
 import json
-from .models import Tutor,TuteeManager,Tutee,Tutoring,Review
-from django.contrib.auth import get_user_model
+from .models import Tutor,Tutee,Tutoring,Review
+from django.contrib.auth import get_user_model, authenticate, login
 from json import JSONDecodeError
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import ensure_csrf_cookie
 import requests
-
 import copy
 
 User = get_user_model()
 
+@csrf_exempt
 def signin(request):
     if request.method == 'POST':
         try:
-            user_name=json.loads(request.body.decode())['username']
-            user_pass=json.loads(request.body.decode())['password']
+            login_info = json.loads(request.body.decode())
+            user_name=login_info['username']
+            user_pass=login_info['password']
         except (KeyError, JSONDecodeError) as e:
             return HttpResponse(status=400)
 
@@ -27,9 +28,9 @@ def signin(request):
             login(request,userA)
             try:
                 Tutor.objects.get(username=user_name)
-                return JsonResponse('Tutor',status=204,safe=False)    
+                return JsonResponse({'type':'tutor'}, status=204,safe=False)
             except:
-                return JsonResponse('TuteeManager',status=204,safe=False)
+                return JsonResponse({'type':'tutee'}, status=205,safe=False)
         else:
             return HttpResponse(status=401)
     else :
@@ -45,22 +46,69 @@ def signout(request):
     else:
         return HttpResponse(status=405)
 
+def isloggedin(request):
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            return HttpResponse(status=200)
+        else:
+            return HttpResponse(status=201)
 
-def signup_tutee_manager(request):
+def uniqueid(request, id):
+    if request.method == 'GET':
+        if User.objects.filter(username=id).exists():
+            return HttpResponse(status=202)
+        else:
+            return HttpResponse(status=200)
+
+@csrf_exempt
+def signup_tutee(request):
     if request.method == 'POST':
         try:
             req_data = json.loads(request.body.decode())
-            user_name1 = req_data['username']
-            pass_word1 = req_data['password']
-            phone1=req_data['phonenumber']
+            username = req_data['username']
+            password = req_data['password']
+            phonenumber = None
+            address = None
+            subject = None
+            gender = None
+            schedule = None
+            name = None
+            age = None
+            if('age' in req_data):
+                age = req_data['age']
+            if('name' in req_data):
+                name = req_data['name'] # mysql setting utf8로 해야함
+            if('phonenumber' in req_data):
+                phonenumber = req_data['phonenumber']
+            if('address' in req_data):
+                address = {}
+                address['Road'] = req_data['address']['Road']
+                address['X'] = req_data['address']['X']
+                address['Y'] = req_data['address']['Y']
+                address['detail'] = req_data['address']['detail']
+            if('subject' in req_data):
+                subject = req_data['subject']
+            if('gender' in req_data):
+                gender = req_data['gender']
+            if('schedule' in req_data):
+                index = 0
+                schedule = {}
+                for x in req_data['schedule']:
+                    schedule[str(index)] = x
+                    index += 1
         except (KeyError, JSONDecodeError) as e:
             return HttpResponse(status=400)
-        
-        TuteeManager.objects.create_user(username=user_name1,password=pass_word1,phonenumber=phone1) 
-        '''
-        check if register tutee or not
-        '''
-        return JsonResponse("TuteeManager",status=201,safe=False)
+        tutee = Tutee.objects.create_user(username=username, password=password, phonenumber=phonenumber,
+            age=age, name=name, address=address, gender=gender,subject=subject, schedule=schedule)
+        tutee.save()
+        tutee.refresh_from_db()
+        tutee2 = authenticate(request, username=username, password=password)
+        if tutee2 is not None:
+            login(request, tutee2)
+        else:
+            None
+        # tutor to json, and send back
+        return JsonResponse(tutee.schedule,status=201,safe=False)
     else:
         return HttpResponse(status=405)
 
@@ -70,27 +118,45 @@ def signup_tutor(request):
     if request.method == 'POST':
         try:
             req_data = json.loads(request.body.decode())
-            print(req_data)
-            user_name1 = req_data['username']
-            password1 = req_data['password']
-            # if(req_data['phonenumber'] != None):
-            phone1 = req_data['phonenumber']
-            # if(req_data['address'] != None):
-            #     address1 = req_data['address']
-            # if(req_data['subject'] != None):
-            #     subject1 = req_data['subject']
-            # if(req_data['gender'] != None):
-            #     gender1 = req_data['gender']
-            # if(req_data['schedule'] != None):
-            #     schedule = req_data['schedule']
+            username = req_data['username']
+            password = req_data['password']
+            phonenumber = None
+            address = None
+            subject = None
+            gender = None
+            schedule = None
+            if('phonenumber' in req_data):
+                phonenumber = req_data['phonenumber']
+            if('address' in req_data):
+                index = 0
+                address = {}
+                for x in req_data['address']:
+                    address[str(index)] = x
+                    index += 1
+            if('subject' in req_data):
+                subject = req_data['subject']
+            if('gender' in req_data):
+                gender = req_data['gender']
+            if('schedule' in req_data):
+                index = 0
+                schedule = {}
+                for x in req_data['schedule']:
+                    schedule[str(index)] = x
+                    index += 1
         except (KeyError, JSONDecodeError) as e:
             return HttpResponse(status=400)
-        Tutor.objects.create_user(username=user_name1,password=password1,phonenumber=phone1)
-        # ,address=address1,gender=gender1,subject=subject1, schedule = schedule)
-        Tutor.refresh_from_db() # load the profile instance created
-        Tutor.save()
-        print(Tutor)
-        return JsonResponse(Tutor,status=201,safe=False)
+        tutor = Tutor.objects.create_user(username=username, password=password, phonenumber=phonenumber,
+            address=address, gender=gender,subject=subject, schedule=schedule)
+        tutor.save()
+        tutor.refresh_from_db()
+        tutor2 = authenticate(request, username=username, password=password)
+        if tutor2 is not None:
+            login(request, tutor2)
+            print(tutor2)
+        else:
+            None
+        # tutor to json, and send back
+        return JsonResponse(tutor.schedule,status=201,safe=False)
     else:
         return HttpResponse(status=405)
 
@@ -190,39 +256,114 @@ def tutee_page_create(request):
         else:
             return HttpResponse(status=405)  
 
-def tutee_page_profile(request,tutee_id):
-    '''
-    implement
-    '''
-    return HttpResponse(status=404)       
+def tutee_page_profile(request,tuteemanager_id):
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
+    else:
+        tutee_manager1 = TuteeManager.objects.get(id=tuteemanager_id)
+        if request.method == 'GET':
+            tutee_list = [Tutee for Tutee in Tutee.objects.filter(tutee_manager_id=tuteemanager_id).values()]  
+            return JsonResponse(tutee_list,safe=False,status=200)
+        elif request.method == 'POST':
+            try:
+                req_data = json.loads(request.body.decode())
+                name1 = req_data['name']
+                gender1 = req_data['gender']
+            except (KeyError, JSONDecodeError) as e:
+                return HttpResponse(status=400)
+            tutee=Tutee()
+            tutee.name=name1
+            tutee.gender=gender1
+            tutee.tutee_manager=tutee_manager1
+            tutee.save()
+            return HttpResponse(status=201)
+        elif request.method == 'PUT':
+            try:
+                req_data = json.loads(request.body.decode())
+                name1 = req_data['name']
+                gender1 = req_data['gender']
+                tuteeid = req_data['ChildID']
+            except (KeyError, JSONDecodeError) as e:
+                return HttpResponse(status=400)
+            Tutee.objects.filter(id=tuteeid).update(name=name1)
+            Tutee.objects.filter(id=tuteeid).update(gender=gender1)
+            return HttpResponse(status=201)
+        elif request.method == 'DELETE':
+            try:
+                req_data = json.loads(request.body.decode())
+                tuteeid = req_data['ChildID']
+            except (KeyError, JSONDecodeError) as e:
+                return HttpResponse(status=400)
+            tutee=Tutee.objects.get(id=tuteeid)
+            tutee.delete()
+            return HttpResponse(status=204)
+        else:
+            return HttpResponse(status=405)       
 
-def tutee_page_review(request,tutee_id):
-    get_object_or_404(Tutee.objects.filter(id=tutee_id))
+def tutee_page_review(request,tuteemanager_id):
+    get_object_or_404(TuteeManager.objects.filter(id=tuteemanager_id))
     if request.method == 'GET':
-        review_list = [Review for Review in Review.objects.filter(tutee_id=tutee_id).values()]  
+        review_list = [Review for Review in Review.objects.filter(tutee_id=tuteemanager_id).values()]  
         return JsonResponse(review_list,safe=False,status=200)
     else:    
         return HttpResponse(status=405)
 
-def tutee_page_tutoring(request,tutee_id):
+def tutee_page_tutoring(request,tuteemanager_id):
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
+    else:
+        if request.method == 'GET':
+            try:
+                req_data = json.loads(request.body.decode())
+                tuteeid = req_data['ChildID']
+            except (KeyError, JSONDecodeError) as e:
+                return HttpResponse(status=400)
+            tutoring_list = [Tutoring for Tutoring in Tutoring.objects.filter(tutee_id=tuteeid).values()]
+            return JsonResponse(tutoring_list,status=201,safe=False)
+        elif request.method == 'POST':
+            try:
+                req_data = json.loads(request.body.decode())
+                option_gender = req_data['gender']
+                option_subject = req_data['subject']
+                option_age_min = req_data['minAge']
+                option_age_max = req_data['maxAge']
+                tuteeid = req_data['ChildID']
+            except (KeyError, JSONDecodeError) as e:
+                return HttpResponse(status=400)
+            tutee1=Tutee.objects.get(id=tuteeid)
+            tutor_list=Tutor.objects.filter(subject=option_subject).filter(gender=option_gender).filter(age__gte=option_age_min).filter(age__lte=option_age_max)
+            if tutor_list.exists():
+                for tutor_target in tutor_list.iterator():
+                    tutor_list[i].update(distance=get_distance())
+            sorted_tutor_list=tutor_list.order_by('distance')    
+            return JsonResponse(sorted_tutor_list,status=201,safe=False)
+        else:
+            return HttpResponse(status=405)
+
+def get_distance(start_x,start_y,end_x,end_y,point_x,point_y):
+    if start_x==end_x and start_y==end_y:
+        return (abs(start_x-point_x)**2+abs(start_y-end_y)**2)**0.5
+    elif start_x==end_x:
+        return 0
+
+def tutee_request_tutoring(request,tutee_id):
     if not request.user.is_authenticated:
         return HttpResponse(status=401)
     else:
         if request.method == 'POST':
             try:
                 req_data = json.loads(request.body.decode())
-
-                '''
-                choose informations address, fee, tutor, subject
-                '''
-
+                tutorid = req_data['TutorID']
+                option_subject = req_data['subject']
             except (KeyError, JSONDecodeError) as e:
                 return HttpResponse(status=400)
-            tutee=Tutee.objects.get(id=tutee_id)
-            tutoring=Tutoring()
-            tutoring.tutee=tutee
-            tutoring.save()
-            return HttpResponse(status=201)
+            tutoring_new = Tutoring()
+            tutoring_new.tutee=tutee1
+            tutoring_new.tutor=Tutor.objects.get(id=tutorid)
+            tutoring_new.address=tutee1.address
+            tutoring_new.subject=option_subject
+            tutoring_new.save()
+            return JsonResponse(tutoring_new,status=201,safe=False)
         else:
             return HttpResponse(status=405)
 
@@ -240,7 +381,7 @@ def address(request, keyword):
                 result.append(response.json()['response']['result']['items'][i])
         return JsonResponse(result, status=200, safe=False)
 
-
+@csrf_exempt
 def certificate(request):
     if request.method == 'POST':
         url = "https://kapi.kakao.com/v1/vision/text/detect"
