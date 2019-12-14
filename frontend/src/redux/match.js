@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const GET_TUTOR = "GET_TUTOR";
+const GET_REVIEW_BY_ID = "GET_REVIEW_BY_ID";
 
 // create action
 
@@ -27,22 +28,34 @@ export const getTutor_ = (tutors) => ({
     tutors: tutors
 })
 
-
 export const getTutor = (childID, gender, subject, minAge, maxAge) => (dispatch) => {
     console.log(gender, subject, minAge, maxAge);
     axios.post('tutee/tutoring/'+ childID +'/', {gender: gender, subject: subject, minAge: minAge, maxAge: maxAge})
         .then((res) => dispatch(getTutor_(res.data)));
 }
 
+
+export const getReviewByID_ = (reviews) => ({
+    type: GET_REVIEW_BY_ID,
+    reviewByID: reviews
+})
+export const getReviewByID = (id) => (dispatch) => {
+    axios.post('/대충tutor의 리뷰가져오는주소', {id: id})
+        .then((res) => dispatch(getReviewByID_(res.data)));
+}
+
 // reducer
 const InitialState = {
-    tutors: []
+    tutors: [],
+    reviewByID: []
 }
 
 export const reducer = (state = InitialState, action) => {
     switch(action.type) {
         case GET_TUTOR:
             return { ...state, tutors: action.tutors};
+        case GET_REVIEW_BY_ID:
+            return { ...state, reviewByID: action.reviewByID};
         default:
             return state;
     }

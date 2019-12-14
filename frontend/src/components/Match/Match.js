@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 import * as actionCreators from '../../redux/match';
 
 import MatchedTutor from './MatchedTutor';
+import ReviewBody from '../Review/ReviewBody';
 
 import './Match.css'
 import Header from '../Header/header'
@@ -131,7 +132,7 @@ class Match extends Component {
         maxAge: 40,
         genderStat: [0, 0],
         subjectStat: [0, 0, 0, 0, 0],
-        modalShow: false
+        modalshow: false
     };
     
     componentDidMount() {
@@ -204,11 +205,13 @@ class Match extends Component {
     // Detail버튼을 누르면 profile과 review가 있는 modal이 나오게 한다
     // 물론 내용을 표시하기 위한 값들도 옮겨야 한다. 지금은 구현중...
     onClickDetail = (id) => {
+        this.props.getReviewByID(id);
         this.setShow(true);
         // 여기에 get review를 redux로?
     }
 
     render() {
+        // This gives the tutor basic information in MatchedTutor
         let tutors = this.props.loadedTutor; 
 
         // for UI testing when no matching is caught
@@ -235,8 +238,16 @@ class Match extends Component {
                         gender={tutor.gender}
                         subject={tutor.subject}
                         onClickDetail={() => this.onClickDetail(tutor.id)} />
-            }
-            )
+            })
+        }
+
+        // This will give get review
+        let reviews = this.props.reviewByID;
+
+        let reviewComponent = <ReviewBody title="Good tutor" content="Passionate and gentle"/>
+
+        if (reviews.length !== 0) {
+            reviewComponent = <ReviewBody title={reviews.title} content={reviews.content}/>
         }
 
         return (
@@ -352,13 +363,13 @@ class Match extends Component {
                 </div>
             
 
-                <Modal show={this.state.modalShow} onHide={() =>this.setShow(false)}>
+                <Modal show={this.state.modalshow} onHide={() =>this.setShow(false)}>
                     <Modal.Header>
                         <Media>
                             <img
                                 width={64}
                                 height={64}
-                                src={this.props.profile}
+                                src={profile2 /* redux로 교체하기 */}
                                 alt="Profile photo"
                                 rounded
                             />
@@ -378,28 +389,25 @@ class Match extends Component {
                                     <p>{this.props.available[1]}</p>
                                     */}
                                     </Col>
-                                    <Col>
-                                    <Button>Request</Button>
-                                    <Button>Detail</Button>
-                                    </Col>
                                 </Row>
                                 </Container>
                             </Media.Body>
                         </Media>
                     </Modal.Header>
                     <Modal.Body>
-                        {/* 여기 즈음에 리뷰 넣어야하는데 따로 component로 만들어서 넣어야할듯*/}
+                        {reviewComponent}
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={() => {}}>
                             Request
                         </Button>
-                        <Button onClick={() => {}}>
+                        <Button onClick={() => this.setShow(false)}>
                             Close
                         </Button>
                     </Modal.Footer>
                 </Modal>
             </div>
+            
         )
     }
 }
@@ -407,6 +415,7 @@ class Match extends Component {
 const mapStateToProps = state => {
     return {
       loadedTutor: state.mat.tutors,
+      reviewByID: state.mat.reviewByID,
       childID: state.pro.sentChildID
     };
 };
@@ -414,7 +423,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         // ProfileTutee에서부터 받은 childID, 그리고 여기서 설정한 각종 설정 등을 맞춰서 올려보내줍니다
-        getTutors: (childID, gender, subject, minAge, maxAge) => dispatch(actionCreators.getTutor(childID, gender, subject, minAge, maxAge))
+        getTutors: (childID, gender, subject, minAge, maxAge) => dispatch(actionCreators.getTutor(childID, gender, subject, minAge, maxAge)),
+        getReviewByID: (id) => dispatch(actionCreators.getReviewByID(id))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Match));

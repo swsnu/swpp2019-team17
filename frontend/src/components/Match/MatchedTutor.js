@@ -35,7 +35,7 @@ function MatchedTutor(props) {
             </Col>
             <Col>
               <Button>Request</Button>
-              <Button onClick={() => props.onClickDetail}>Detail</Button>
+              <Button onClick={props.onClickDetail}>Detail</Button>
             </Col>
           </Row>
         </Container>
