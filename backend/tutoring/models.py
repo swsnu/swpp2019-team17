@@ -17,39 +17,22 @@ class Tutor(User):
         ('female', 'Female'),
     )
     gender=models.CharField(max_length=20, choices=GENDER_CHOICES, null=True, blank=True)
-    subject=models.CharField(max_length=40, null=True, blank=True)
+    subject=models.CharField(max_length=40, null=True, blank=True) # multiselect or char ?
     name=models.CharField(max_length=10,null=True,blank=True)
     photo=models.ImageField(upload_to='tutor/',null=True)
     distance=models.FloatField(default=0,null=True,blank=True)
     age=models.IntegerField(null=True,blank=True)
 
-class TuteeManager(User):
-    '''
-    tutee=onetomany field
-    '''
-    address=JSONField(null=True,blank=True)
-
-class Tutee(models.Model):
-    # schedule = models.JsonField()  [ {start: date,end: date} {start: date, end: date} ... ]
-    # address = models.JsonField()  [Road: "", X: float, Y: float]
+class Tutee(User):
+    address=JSONField(null=True,blank=True) # [Road: "", X: float, Y: float, detail: ""]
+    schedule = JSONField(null=True,blank=True)  # [ 0: {start: date,end: date} 1: {start: date, end: date} ... ]
     GENDER_CHOICES = (
         ('male', 'Male'),
         ('female', 'Female'),
     )
-    SUBJECT_CHOICES = (
-        ('math','Math'),
-        ('korean','Korean'),
-        ('english','English'),
-        ('society','Society'),
-        ('science','Science'),
-    )
-    tutee_manager=models.ForeignKey(
-        TuteeManager,
-        on_delete=models.CASCADE,
-    )
     name=models.CharField(max_length=10,null=True,blank=True)
-    gender=models.CharField(max_length=20, choices=GENDER_CHOICES)
-    subject=MultiSelectField(choices=SUBJECT_CHOICES,max_choices=5,max_length=5)
+    gender=models.CharField(max_length=20, choices=GENDER_CHOICES,null=True,blank=True)
+    subject=models.CharField(max_length=80, null=True, blank=True)
     age=models.IntegerField(null=True,blank=True)
     
 class Tutoring(models.Model):

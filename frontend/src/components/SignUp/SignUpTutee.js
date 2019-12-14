@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 import Address from '../Address/address';
 import TuteeSignupForm from './TuteeSignupForm'
 import PhoneInput from 'react-phone-number-input/input'
+import Select from 'react-select'
+import AvailableTimes from 'react-available-times'
 // import { TimeGridScheduler, classes } from '@remotelock/react-week-scheduler';
-// import actionCreators from '../../redux';
+import * as actionCreators from '../../redux/signup';
 import './SignUpTutee.css';
 
 // for Bootstrap
@@ -19,64 +21,81 @@ class SignUpTutee extends Component {
       step: 0,
       id: '',
       password: '',
-      password_confimation: '',
-      phone: '',
-      childList: [{ id: 0, name: '', subject: [] }], // [{id:1, name: jack, ...}, {id: 2, name: park, ...}, ...]
-      childID: 0,
-    }
-  }
-
-  addChild = () => {
-    const newChild = {
-      id: this.state.childID + 1,
+      password_confirmation: '',
       name: '',
-      subject: [],
+      gender: '',
+      age: 0,
+      phone: '',
+      subject: '',
+      schedule: [],
+      address: [],
+      detail: [],
     }
-    this.setState({ childList: this.state.childList.concat(newChild), childID: this.state.childID + 1 })
   }
-
-  ChangeName = (name, index) => {
-    const copyState = this.state.childList;
-    copyState[index].name = name;
-    this.setState({ childList: copyState })
+  selectAddress = (address, X, Y) => {
+    this.setState({ address: [address, X, Y]})
+    console.log(this.state.address)
   }
-
-  ChangeSubject = (subject, index) => {
-    const copyState = this.state.childList;
-    copyState[index].subject = subject;
-    this.setState({ childList: copyState })
+  ChangeSubject = (subject) => {
+    this.setState({ subject: subject })
+    console.log(this.state.subject)
   }
-
-  Delete = (index) => {
-    const copyState = this.state.childList;
-    copyState.splice(index, 1)
-    this.setState({ childList: copyState })
-  }
-
   ClickConfirm = () => {
+    let tutee = {}
+    tutee['username'] = this.state.id;
+    tutee['password'] = this.state.password;
+    tutee['name'] = this.state.name;
+    tutee['phonenumber'] = this.state.phone;
+    tutee['age'] = this.state.age;
+    tutee['subject'] = ''
+    if (this.state.subject.length !== 0) {
+      for(var i = 0; i < this.state.subject.length; i++){
+        tutee['subject'] = tutee['subject'].concat(this.state.subject[i].value + ' ');
+      }
+    }
+    tutee['gender'] = this.state.gender;
+    tutee['schedule'] = this.state.schedule;
+    tutee['address'] = {'Road': this.state.address[0], 'X': this.state.address[1], 
+      'Y': this.state.address[2], 'detail': this.state.detail}
+    tutee = JSON.stringify(tutee)
+    console.log(tutee);
+    actionCreators.signUpTutee(tutee);
     this.props.history.push('/tutee/match/')
   }
+
   ClickNext = () => {
     this.setState({
       step: this.state.step + 1
     })
   }
+  CheckUniqueID = () => {
+    if (this.state.id != null && this.state.password != null && this.state.password == this.state.password_confirmation) {
+      actionCreators.uniqueID(this.state.id).then(res => {
+          if (res.status == 200) {
+            this.setState({ step: this.state.step + 1 })
+          } else {
+            console.log('id duplicated')
+          }
+        })
+    } else if (this.state.id == null) {
+      //todo: print id is mandatory
+    } else if (this.state.password == null || this.state.password_confirmation == null) {
+      //todo: print password is madatory
+    } else if (this.state.password_confirmation != this.state.password) {
+      //todo: password confirmation doesn't match
+    }
+  }
+  detailAddress = (detail) => {
+    this.setState({detail: detail})
+  }
   render() {
-    let index = -1;
-    const tuteeSignupForms = this.state.childList.map((key) => { // key = {id: , name: ...}
-      index += 1;
-      return (
-        <TuteeSignupForm
-          key={index}
-          id={index}
-          name={this.state.childList[index].name}
-          onChangeName={this.ChangeName}
-          subject={this.state.childList[index].subject}
-          onChangeSubject={this.ChangeSubject}
-          onClickDelete={this.Delete}
-        />
-      );
-    });
+    const options = [
+      { value: 'korean', label: 'Korean' },
+      { value: 'math', label: 'Math' },
+      { value: 'english', label: 'English' },
+      { value: 'science', label: 'Science' },
+      { value: 'social study', label: 'Social Study' },
+    ]
 
     let input = <div></div>;
     switch (this.state.step) {
@@ -106,30 +125,49 @@ class SignUpTutee extends Component {
                 <Form.Control
                   type="password"
                   className="text-left"
-                  onChange={(e) => this.setState({ password_confimation: e.target.value })}
-                  value={this.state.password_confimation}
+                  onChange={(e) => this.setState({ password_confirmation: e.target.value })}
+                  value={this.state.password_confirmation}
                 />
               </div>
-              <br />
-              <Form.Label>Phone number:</Form.Label><br />
-              <PhoneInput className="text-left"
-                country="KR"
-                value={this.state.phone}
-                onChange={value => this.setState({ phone: value })}
-              />
-              <br />
-              <Address className="address" />
-
+              <Button onClick={this.CheckUniqueID} >Next</Button>
             </Form.Group>
-            <Button onClick={this.ClickNext}>Next</Button>
-            </div>
+          </div>
         break;
       case 1:
         input =
-          <div className="child-list-container-div">
-            <div>checking tutee = tutee manager. if true, delete add tutee button</div>
-            {tuteeSignupForms}
-            <Button type="button" onClick={() => this.addChild()}>Add</Button>
+          <div>
+            <label>
+              Name:
+                <input onChange={(e) => this.setState({ name: e.target.value })} />
+            </label>
+            <label>
+              Age:
+                <Form.Control onChange={(e) => this.setState({ age: e.target.value })} />
+            </label>
+            <label>
+              Gender:
+                <Select options={[{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }]}></Select>
+            </label>
+            <Form.Label>Phone number:</Form.Label>
+            <PhoneInput className="text-left"
+              country="KR"
+              value={this.state.phone}
+              onChange={value => this.setState({ phone: value })}
+            />
+            <label className="subject-label">
+              Subject
+                <div className='select'>
+                <Select options={options} closeMenuOnSelect={false} isMulti={true} onChange={(selectedoptions) => this.ChangeSubject(selectedoptions)} />
+              </div>
+            </label>
+            <Address className="address" onSelectAddress={this.selectAddress} onDetailAddress={this.detailAddress} />
+            <Button onClick={this.ClickNext}>Next</Button>
+          </div>
+        break;
+      case 2:
+        input =
+          <div>
+            <AvailableTimes height={1000} onChange={(e) => this.setState({ schedule: e })} />
             <Button type="button" onClick={this.ClickConfirm}>Confirm</Button>
           </div>
         break;
@@ -137,24 +175,22 @@ class SignUpTutee extends Component {
 
     return (
       <div>
-        { input }
+        {input}
       </div>
     );
   }
 }
 
-export default SignUpTutee
-/*
 const mapStateToProps = state => {
   return {
-    storedLogIn: state.login.logged
+    // storedLogIn: state.login.logged
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-      signUp: (session) => dispatch(actionCreators.sign(session)),
+    // signUp: (session) => dispatch(actionCreators.(session)),
   }
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpTutee);
-*/
