@@ -16,6 +16,8 @@ urlpatterns = [
     path('tutee/review/<int:tuteemanager_id>/',views.tutee_page_review,name='tutee_profile'),
     path('tutee/tutoring/<int:tuteemanager_id>/',views.tutee_page_tutoring,name='tutee_profile'),
 
+    path('tutee/request/<int:tutee_id>/',views.tutee_request_tutoring,name='tutee_request'),
+
     path('address/<str:keyword>/', views.address, name='address'),
     path('token/', views.token, name='token')
 ]

@@ -249,7 +249,6 @@ def tutee_page_tutoring(request,tuteemanager_id):
         elif request.method == 'POST':
             try:
                 req_data = json.loads(request.body.decode())
-                type1 = req_data['choose']
                 option_gender = req_data['gender']
                 option_subject = req_data['subject']
                 option_age_min = req_data['minAge']
@@ -263,16 +262,7 @@ def tutee_page_tutoring(request,tuteemanager_id):
                 for tutor_target in tutor_list.iterator():
                     tutor_list[i].update(distance=get_distance())
             sorted_tutor_list=tutor_list.order_by('distance')    
-            if type1==0:
-                return JsonResponse(sorted_tutor_list,status=201,safe=False)
-            else :
-                tutoring_new = Tutoring()
-                tutoring_new.tutee=tutee1
-                tutoring_new.tutor=sorted_tutor_list[type1]
-                tutoring_new.address=tutee1.address
-                tutoring_new.subject=option_subject
-                tutoring_new.save()
-                return JsonResponse(tutoring_new,status=201,safe=False)
+            return JsonResponse(sorted_tutor_list,status=201,safe=False)
         else:
             return HttpResponse(status=405)
 
@@ -282,6 +272,26 @@ def get_distance(start_x,start_y,end_x,end_y,point_x,point_y):
     elif start_x==end_x:
         return 0
 
+def tutee_request_tutoring(request,tutee_id):
+    if not request.user.is_authenticated:
+        return HttpResponse(status=401)
+    else:
+        if request.method == 'POST':
+            try:
+                req_data = json.loads(request.body.decode())
+                tutorid = req_data['TutorID']
+                option_subject = req_data['subject']
+            except (KeyError, JSONDecodeError) as e:
+                return HttpResponse(status=400)
+            tutoring_new = Tutoring()
+            tutoring_new.tutee=tutee1
+            tutoring_new.tutor=Tutor.objects.get(id=tutorid)
+            tutoring_new.address=tutee1.address
+            tutoring_new.subject=option_subject
+            tutoring_new.save()
+            return JsonResponse(tutoring_new,status=201,safe=False)
+        else:
+            return HttpResponse(status=405)
 
 def address(request, keyword):
     url = "http://api.vworld.kr/req/search?service=search&request=search&version=2.0&crs=EPSG:900913&size=10&page=1&type=address&category=road&format=json&errorformat=json&key=32988E9B-F11C-3071-B5BC-6806FAF87CE8&query="
