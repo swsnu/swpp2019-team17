@@ -9,7 +9,7 @@ export const searchAddress_ = (address) => ({
   address: address,
 });
 
-export const searchAddress = (keyword) => (dispatch) => axios.get(`/address/${keyword}`)
+export const searchAddress = (keyword) => (dispatch) => axios.get(`/api/address/${keyword}`)
   .then((res) => dispatch(searchAddress_(res.data)))
   .catch(function (error) {
     console.log(error);
