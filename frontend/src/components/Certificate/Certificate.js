@@ -40,7 +40,7 @@ class Certificate extends Component {
                 }
                 if (birthRe.test(element)) {
                     let numberElement = Number(RegExp.$1);
-                    if (numberElement !== 2019) {
+                    if (numberElement < 2001) {
                         console.log(RegExp.$1);
                         age = new Date().getFullYear() - numberElement + 1;
                     }
