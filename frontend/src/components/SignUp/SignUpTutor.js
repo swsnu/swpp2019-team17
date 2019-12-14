@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-// redux
 import { connect } from 'react-redux';
 
 import PhoneInput from 'react-phone-number-input/input'
@@ -8,8 +7,9 @@ import Select from 'react-select'
 import AvailableTimes from 'react-available-times'
 import './SignUpTutor.css';
 import Address from '../Address/address';
-import * as actioncreators from '../../redux/signup';
+import * as actionCreators from '../../redux/signup';
 import Certificate from '../Certificate/Certificate';
+
 // bootstrap
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -20,7 +20,7 @@ class SignUpTutor extends Component {
     step: 0,
     id: '',
     password: '',
-    password_confimation: '',
+    password_confirmation: '',
     certificate: '',
     name: '',
     age: '',
@@ -43,6 +43,39 @@ class SignUpTutor extends Component {
   ChangeUniversity = (university) => {
     this.setState({ university: university })
   }
+  CheckUniqueID = () => {
+    if (this.state.id != null && this.state.password != null && this.state.password == this.state.password_confirmation) {
+      actionCreators.uniqueID(this.state.id).then(res => {
+        if (res.status == 200){
+          this.setState({ step: this.state.step+1})
+        } else {
+          //todo: print id is duplicated under id form
+          console.log('id duplicated')
+        }
+      })
+    } else if (this.state.id == null){
+      //todo: print id is mandatory
+    } else if (this.state.password == null || this.state.password_confirmation == null){
+      //todo: print password is madatory
+    } else if (this.state.password_confirmation != this.state.password){
+      //todo: password confirmation doesn't match
+    }
+  }
+  setName = (name) => {
+    this.setState({
+      name: name
+    })
+  }
+  setAge = (age) => {
+    this.setState({
+      age: age
+    })
+  }
+  setUniversity = (university) => {
+    this.setState({
+      university: university
+    })
+  }
   ClickConfirm = () => {
     let tutor = {}
     tutor['username'] = this.state.id;
@@ -50,15 +83,18 @@ class SignUpTutor extends Component {
     tutor['name'] = this.state.name;
     tutor['phonenumber'] = this.state.phone;
     tutor['age'] = this.state.age;
-    if(this.state.subject.length !== 0){
-      tutor['subject'] = this.state.subject[0].value;
+    tutor['subject'] = ''
+    if (this.state.subject.length !== 0) {
+      for(var i = 0; i < this.state.subject.length; i++){
+        tutor['subject'] = tutor['subject'].concat(this.state.subject[i].value + ' ');
+      }
     }
     tutor['gender'] = this.state.gender;
     tutor['schedule'] = this.state.schedule;
     tutor['address'] = this.state.address;
     tutor = JSON.stringify(tutor)
     console.log(tutor);
-    actioncreators.signUpTutor(tutor);
+    actionCreators.signUpTutor(tutor);
     this.props.history.push('/profile/tutor/')
   }
   inputSchedule = (e) => {
@@ -88,13 +124,6 @@ class SignUpTutor extends Component {
   }
 
   render() {
-    const university_options = [
-      { value: 'SNU', label: 'SNU' },
-      { value: 'Yonsei', label: 'Yonsei' },
-      { value: 'Korea', label: 'Korea' },
-      { value: 'Kaist', label: 'Kaist' },
-      { value: 'Postech', label: 'Postech' },
-    ]
     let message = '';
     if (this.state.isAuthorized) {
       message = 'Your certified has been authorized!'
@@ -144,29 +173,24 @@ class SignUpTutor extends Component {
                 onChange={(event) => this.setState({ password: event.target.value })}
               />
             </div>
-            <div className="signuptutor-label-password">Password Confimation:
+            <div className="signuptutor-label-password">Password confirmation:
           <Form.Control
                 type="password"
                 className="text-left"
-                onChange={(event) => this.setState({ password_confimation: event.target.value })}
+                onChange={(event) => this.setState({ password_confirmation: event.target.value })}
               />
             </div>
-            <Button onClick={() => this.setState({ step: this.state.step + 1 })}>Next</Button>
+            <Button onClick={this.CheckUniqueID}>Next</Button>
           </div>
         break;
       case 1:
         input =
           <div>
-            <p>cert should be loaded. manually input is also available.</p>
             <label className="signuptutor-label-certificate">Photo:</label>
             <Form.Control type="file" className="signuptutor-input-certificate" />
             <div className="signuptutor-div-authorize">
               <label className="signuptutor-label-certificate">Certificate:</label>
-              <Form.Control type="file" className="signuptutor-input-certificate"
-                onChange={event => this.handleFileUpload(event)} />
-            </div>
-            <div className='university'>university
-              <Select options={university_options} closeMenuOnSelect={true} onChange={(selectedoption) => this.ChangeUniversity(selectedoption)} />
+              <Certificate age={this.setAge} name={this.setName} university={this.setUniversity}/>
             </div>
             <Button onClick={() => this.setState({ step: this.state.step + 1 })}>Next</Button>
             <Button onClick={() => this.setState({ step: this.state.step + 1 })}>Skip</Button>
@@ -184,11 +208,12 @@ class SignUpTutor extends Component {
                 onChange={value => this.setState({ phone: value })}
               />
             </label>
-              Gender
-              <Select options={[{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }]}></Select>
             <label>
-              Age
-              <Form.Control onChange={(event) => this.setState({ age: event.target.value })}></Form.Control>
+              Gender:
+              <Select options={[{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }]}></Select>
+            </label>
+            <label>
+              Photo:
             </label>
             <label className="subject-label">
               Subject
@@ -220,11 +245,13 @@ class SignUpTutor extends Component {
 }
 
 const mapStateToProps = state => {
-
+  return {
+    unique: state.sig.unique,
+  }
 }
 
-const mapDispatchToProps = dispatch => {
-
-}
+const mapDispatchToProps = dispatch => ({
+  checkUniqueID: (id) => dispatch(actionCreators.uniqueID(id)),
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpTutor);
