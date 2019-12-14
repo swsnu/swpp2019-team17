@@ -10,6 +10,7 @@ import SignUp from '../SignUp/SignUp';
 import SignUpTutor from '../SignUp/SignUpTutor';
 import SignUpTutee from '../SignUp/SignUpTutee';
 import Match from '../Match/Match';
+import ProfileTutee from '../Profile/Tutee/ProfileTutee';
 import ProfileTutor from '../Profile/ProfileTutor';
 import Certificate from '../Certificate/Certificate';
 import * as actionCreators from '../../redux/login'

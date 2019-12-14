@@ -60,6 +60,8 @@ class SignUpTutor extends Component {
       alert('password and confimation are not matching')
     }
   }
+
+  // These three set functions put information given by certificate
   setName = (name) => {
     this.setState({
       name: name
@@ -75,6 +77,7 @@ class SignUpTutor extends Component {
       university: university
     })
   }
+
   ClickConfirm = () => {
     let tutor = {}
     tutor['username'] = this.state.id;

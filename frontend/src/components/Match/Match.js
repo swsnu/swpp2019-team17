@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 import * as actionCreators from '../../redux/match';
 
 import MatchedTutor from './MatchedTutor';
+import ReviewBody from '../Review/ReviewBody';
 
 import './Match.css'
 import Header from '../Header/header'
@@ -17,180 +18,413 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Jumbotron from 'react-bootstrap/Jumbotron';
+import Media from 'react-bootstrap/Media';
+import Modal from 'react-bootstrap/Modal';
+
+
+// slider
+import { Slider, Rail, Handles, Tracks, Ticks } from 'react-compound-slider';
+
+// const variables for slider
+const sliderStyle = {  // Give the slider some width
+    position: 'relative',
+    width: '100%',
+    height: 80,
+}
+
+const railStyle = {
+    position: 'absolute',
+    width: '100%',
+    height: 10,
+    marginTop: 35,
+    borderRadius: 5,
+    backgroundColor: '#8B9CB6',
+}
+
+
+export function Handle({
+    handle: { id, value, percent },
+    getHandleProps
+  }) {
+    return (
+      <div
+        style={{
+          left: `${percent}%`,
+          position: 'absolute',
+          marginLeft: -15,
+          marginTop: 25,
+          zIndex: 2,
+          width: 30,
+          height: 30,
+          border: 0,
+          textAlign: 'center',
+          cursor: 'pointer',
+          borderRadius: '50%',
+          backgroundColor: '#2C4870',
+          color: '#333',
+        }}
+        {...getHandleProps(id)}
+      >
+    <div style={{ fontFamily: 'Segoe UI', fontSize: 11, marginTop: -25 }}>
+        {value}
+    </div>
+    </div>
+    )
+}
+
+function Track({ source, target, getTrackProps }) {
+return (
+    <div
+    style={{
+        position: 'absolute',
+        height: 10,
+        zIndex: 1,
+        marginTop: 35,
+        backgroundColor: '#062047',
+        borderRadius: 5,
+        cursor: 'pointer',
+        left: `${source.percent}%`,
+        width: `${target.percent - source.percent}%`,
+    }}
+    {...getTrackProps() /* this will set up events if you want it to be clickeable (optional) */}
+    />
+    )
+}
+
+
+function Tick({ tick, count }) {
+    return (
+      <div>
+        <div
+          style={{
+            position: 'absolute',
+            marginTop: 52,
+            marginLeft: -0.5,
+            width: 1,
+            height: 8,
+            backgroundColor: 'silver',
+            left: `${tick.percent}%`,
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            marginTop: 60,
+            fontSize: 10,
+            textAlign: 'center',
+            marginLeft: `${-(100 / count) / 2}%`,
+            width: `${100 / count}%`,
+            left: `${tick.percent}%`,
+          }}
+        >
+          {tick.value}
+        </div>
+      </div>
+    )
+}
+  
 
 class Match extends Component {
     state = {
-        matchresult: [{gender: 'male', name: 'Gildong Hong', subject: 'Math', available: ['Monday 5PM~7PM', 'Wednesday 5PM~7PM'], profile: profile1}, 
-        {gender: 'female', name: 'Young-hee', subject: 'Science', available:['Friday 1PM~5PM', ''], profile: profile2}],
-        male: true,
-        female: true,
-        science: true,
-        math: true
+        gender: 3,
+        subject: 31,
+        minAge: 20,
+        maxAge: 40,
+        genderStat: [0, 0],
+        subjectStat: [0, 0, 0, 0, 0],
+        modalshow: false
     };
     
     componentDidMount() {
-      this.props.getTutors();
-      // this.setState({matchresult: this.props.loadedTutor});
-      // 테스트를 위해서 꺼둠
+      this.props.getTutors(this.props.childID, 3, 31, 20, 40);
     }
 
-    onChangeMan = (ele) => {
-        
-        this.setState({male: !this.state.male})
-    }
-
-    onChangeGirl = (ele) => {
-        this.setState({female: !this.state.female})
-    }
-
-    onChangeMath = (ele) => {
-        this.setState({math: !this.state.math})
-    }
-
-    onChangeScience = (ele) => {
-        this.setState({science: !this.state.science})
-    }
     
+    onChangeGender = (e) => {
+        let current = this.state.gender;
+        switch (e.target.className) {
+            case "Male":
+                this.setState({gender: this.state.gender ^ 1});
+                current = current ^ 1;
+                break;
+            case "Female":
+                this.setState({gender: this.state.gender ^ 2});
+                current = current ^ 2;
+                break;
+            default:
+                console.log("Something went wrong on onChangeGender!!");
+        }
+
+        this.props.getTutors(this.props.childID, current, this.state.subject, this.state.minAge, this.state.maxAge);
+    }
+
+
+    onChangeSubject = (e) => {
+        console.log(e.target.className);
+        let current = this.state.subject;
+        switch (e.target.className) {
+            case "Korean":
+                this.setState({subject: this.state.subject ^ 1});
+                current = current ^ 1;
+                break;
+            case "English":
+                this.setState({subject: this.state.subject ^ 2});
+                current = current ^ 2;
+                break;
+            case "Math":
+                this.setState({subject: this.state.subject ^ 4});
+                current = current ^ 4;
+                break;
+            case "Social":
+                this.setState({subject: this.state.subject ^ 8});
+                current = current ^ 8;
+                break;
+            case "Science":
+                this.setState({subject: this.state.subject ^ 16});
+                current = current ^ 16;
+                break;
+        }
+
+        this.props.getTutors(this.props.childID, this.state.gender, current, this.state.minAge, this.state.maxAge);
+    }
+
+    onChangeAge = (e) => {
+        console.log(e[0]);
+        console.log(e[1]);
+        this.setState({minAge: e[0]});
+        this.setState({maxAge: e[1]});
+
+        this.props.getTutors(this.props.childID, this.state.gender, this.state.subject, e[0], e[1]);
+    }
+
+
+    setShow = (isShown) => {
+        this.setState({modalshow: isShown});
+    }
+
+    // Detail버튼을 누르면 profile과 review가 있는 modal이 나오게 한다
+    // 물론 내용을 표시하기 위한 값들도 옮겨야 한다. 지금은 구현중...
+    onClickDetail = (id) => {
+        this.props.getReviewByID(id);
+        this.setShow(true);
+        // 여기에 get review를 redux로?
+    }
+
     render() {
-        let genderNum =  [0 , 0]
-        let subjectNum = [0,0,0,0,0]
+        // This gives the tutor basic information in MatchedTutor
+        let tutors = this.props.loadedTutor; 
 
-        const MALE = 0;
-        const FEMALE = 1;
+        // for UI testing when no matching is caught
+        let jsxitems = <MatchedTutor 
+                        id={0}
+                        profile={profile2}
+                        gender="None"
+                        subject="None"
+                        onClickDetail={() => this.onClickDetail(0)}
+                        />;
 
-        const KOREAN = 0;
-        const ENGLISH = 1;
-        const MATH = 2;
-        const SOCIAL = 3;
-        const SCIENCE = 4;
-
-        let tutorlistjsx = null;
-
-        let temp = this.state.matchresult;
-
-        // matchresult를 받았다면, 이를 불러와서 리스트로 만듭니다
-        // 겸사겸사 체크박스에 표시될 값도 표시해줍니다. 
-        // 어떻게 해야 업데이트를 할 수 있을지 생각이 안난다
-        if (this.state.matchresult.length !== 0) {
-        // for temp 
-        if (!this.state.male) {
-            temp = temp.filter((tutor) => tutor.gender !== "male");
-        }
-        if (!this.state.female) {
-            temp = temp.filter((tutor) => tutor.gender !== "female");
-        }
-        if (!this.state.science) {
-            temp = temp.filter(tutor => tutor.subject !== 'Science')
-        }
-        if (!this.state.math) {
-            temp = temp.filter(tutor => tutor.subject !== 'Math')
-        }
-
-        var science = 0;
-        var math = 0;
-
-        tutorlistjsx = temp.map((tutor) => {
-
-
-            //tutorlistjsx = this.state.matchresult.map((tutor) => {
-                /*
-                // adding college dictionary
-                // 그런데 지금 database에 university가 없음...
-                if (!(tutor.university in univdict)) {
-                    univdict[tutor.university] = 1;
-                }
-                else {
-                    univdict[tutor.university] = univdict[tutor.university] + 1;
-                }*/
-
-                // adding gender to list
-                if (tutor.gender === "male") {
-                    genderNum[MALE]++;
-                }
-                else {
-                    genderNum[FEMALE]++;
+        if (tutors.length !== 0) {
+            jsxitems = tutors.map((tutor) => {
+                if (false) {
+                    ////////////////////////////////
+                    // This is for counting stats //
+                    ////////////////////////////////
+                    // 여기에 적절한 값을 넣고 component에 값을 전달해야합니다!!
                 }
 
-
-                if (tutor.subject === 'Science') {
-                    science++;
-                }
-                if (tutor.subject === 'Math') {
-                    math++;
-                }
-
-                return (<MatchedTutor key={tutor.id} name={tutor.name} gender={tutor.gender} subject={tutor.subject} available={tutor.available} profile={tutor.profile}/>);
-            });
+                return <MatchedTutor 
+                        id={tutor.id}
+                        proflie={tutor.profile}
+                        gender={tutor.gender}
+                        subject={tutor.subject}
+                        onClickDetail={() => this.onClickDetail(tutor.id)} />
+            })
         }
 
-        let genderswitch = 
-            <fieldset className="genderswitch-div">
-                <legend>gender</legend>
-            </fieldset>
+        // This will give get review
+        let reviews = this.props.reviewByID;
+
+        let reviewComponent = <ReviewBody title="Good tutor" content="Passionate and gentle"/>
+
+        if (reviews.length !== 0) {
+            reviewComponent = <ReviewBody title={reviews.title} content={reviews.content}/>
+        }
 
         return (
             <div className="matching">
                 <Header isLoggedIn={true} />
-                <Jumbotron>
+                <Jumbotron id="jumbo">
                     <Container id="condition">
                         <Row>
                             <Col>
-                                <legend>gender</legend>
+                                <legend>Gender</legend>
                             </Col>
                             <Col>
                                 <legend>Subject</legend>
                             </Col>
+                            <Col>
+                                <legend>Age</legend>
+                            </Col>
                         </Row>
                         <Row>
-                            <Col>
+                            <Col id="query-item">
                                 <Row>
-                                    <Form.Check type='checkbox'
-                                        defaultChecked='true' onClick={(event) => {this.onChangeMan(event)}} /> male ({genderNum[MALE]})
+                                    <input type='checkbox' id = "Male" className="Male"
+                                        defaultChecked='true' onClick={(event) => {this.onChangeGender(event)}} /> Male ({this.state.genderStat[0]})
                                 </Row>
                                 <Row>
-                                    <Form.Check type='checkbox'
-                                        defaultChecked='true' onClick={(event) => {this.onChangeGirl(event)}} /> female ({genderNum[FEMALE]})
+                                    <input type='checkbox' className="Female"
+                                        defaultChecked='true' onClick={(event) => {this.onChangeGender(event)}} /> Female ({this.state.genderStat[1]})
+                                </Row>
+                            </Col>
+                            <Col id="query-item">
+                                <Row>
+                                    <input type="checkbox" className="Korean"
+                                    defaultChecked='true' onClick={(event) => {this.onChangeSubject(event)}}/> Korean ({this.state.subjectStat[0]})
+                                </Row>
+                                <Row>
+                                    <input type="checkbox" className="English"
+                                    defaultChecked='true' onClick={(event) => {this.onChangeSubject(event)}}/> English ({this.state.subjectStat[1]})
+                                </Row>
+                                <Row>
+                                    <input type="checkbox" defaultChecked='true' className="Math"
+                                        onChange={(event) => {this.onChangeSubject(event)}}/> Math ({this.state.subjectStat[2]})
+                                </Row>
+                                <Row>
+                                    <input type="checkbox" className="Social"
+                                    defaultChecked='true' onChange={(event) => {this.onChangeSubject(event)}}/> Social Study ({this.state.subjectStat[3]}) 
+                                </Row>
+                                <Row>
+                                    <input type="checkbox" defaultChecked='true' className="Science"
+                                        value = {this.state.age}
+                                        onChange={(event) => {this.onChangeSubject(event)}}/> Science ({this.state.subjectStat[4]})
                                 </Row>
                             </Col>
                             <Col>
                                 <Row>
-                                    <Form.Check type="checkbox" defaultChecked='true'/> Korean (0)
-                                </Row>
-                                <Row>
-                                    <Form.Check type="checkbox" defaultChecked='true'/> English (0) 
-                                </Row>
-                                <Row>
-                                    <Form.Check type="checkbox" defaultChecked='true'
-                                        onChange={(event) => {this.onChangeMath(event)}}/> Math ({math}) 
-                                </Row>
-                                <Row>
-                                    <Form.Check type="checkbox" defaultChecked='true'/> Social Study (0) 
-                                </Row>
-                                <Row>
-                                    <Form.Check type="checkbox" defaultChecked='true'
-                                        onChange={(event) => {this.onChangeScience(event)}}/> Science ({science})
+                                    <Slider
+                                        rootStyle = {sliderStyle}
+                                        domain = {[20, 40]}
+                                        step={1}
+                                        mode={2}
+                                        values = {[20, 40]}
+                                        onChange={(event) => {this.onChangeAge(event)}}
+                                        >
+                                            <Rail>
+                                                {({ getRailProps }) => (
+                                                    <div style={railStyle} {...getRailProps()} />
+                                                )}
+                                            </Rail>
+                                        <Handles>
+                                            {({ handles, getHandleProps }) => (
+                                                <div className="slider-handles">
+                                                    {handles.map(handle => (
+                                                        <Handle
+                                                            key={handle.id}
+                                                            handle={handle}
+                                                            getHandleProps={getHandleProps}
+                                                        />
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </Handles>
+                                        <Tracks left={false} right={false}>
+                                            {({ tracks, getTrackProps }) => (
+                                                <div className="slider-tracks">
+                                                {tracks.map(({ id, source, target }) => (
+                                                    <Track
+                                                    key={id}
+                                                    source={source}
+                                                    target={target}
+                                                    getTrackProps={getTrackProps}
+                                                    />
+                                                ))}
+                                                </div>
+                                            )}
+                                        </Tracks>
+                                        <Ticks count={5}>
+                                        {({ ticks }) => (
+                                            <div className="slider-ticks">
+                                            {ticks.map(tick => (
+                                                <Tick key={tick.id} tick={tick} count={ticks.length} />
+                                            ))}
+                                            </div>
+                                        )}
+                                        </Ticks>
+                                    </Slider>
+                                    Put your wish range of tutors' age
                                 </Row>
                             </Col>
                         </Row>
                     </Container>
                 </Jumbotron>
                 <div className="result">
-                    {tutorlistjsx}
+                    {jsxitems};
                 </div>
+            
+
+                <Modal show={this.state.modalshow} onHide={() =>this.setShow(false)}>
+                    <Modal.Header>
+                        <Media>
+                            <img
+                                width={64}
+                                height={64}
+                                src={profile2 /* redux로 교체하기 */}
+                                alt="Profile photo"
+                                rounded
+                            />
+                            <Media.Body>
+                                <Container>
+                                <Row>
+                                    <Col>
+                                    <p><b>{this.props.name}</b></p>
+                                    <p>{this.props.gender}</p>
+                                    </Col>
+                                    <Col>
+                                    <p>{this.props.subject}</p>
+                                    </Col>
+                                    <Col>
+                                    {/* 데모 때는 스케쥴을 둘만 넣었는데 어떻게 넣을지 고려해봐야겠네요 
+                                    <p>{this.props.available[0]}</p>
+                                    <p>{this.props.available[1]}</p>
+                                    */}
+                                    </Col>
+                                </Row>
+                                </Container>
+                            </Media.Body>
+                        </Media>
+                    </Modal.Header>
+                    <Modal.Body>
+                        {reviewComponent}
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={() => {}}>
+                            Request
+                        </Button>
+                        <Button onClick={() => this.setShow(false)}>
+                            Close
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
+            
         )
     }
 }
 
 const mapStateToProps = state => {
     return {
-      loadedTutor: state.mat.tutors
+      loadedTutor: state.mat.tutors,
+      reviewByID: state.mat.reviewByID,
+      childID: state.pro.sentChildID
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        getTutors: () => dispatch(actionCreators.getTutor)
+        // ProfileTutee에서부터 받은 childID, 그리고 여기서 설정한 각종 설정 등을 맞춰서 올려보내줍니다
+        getTutors: (childID, gender, subject, minAge, maxAge) => dispatch(actionCreators.getTutor(childID, gender, subject, minAge, maxAge)),
+        getReviewByID: (id) => dispatch(actionCreators.getReviewByID(id))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Match));
