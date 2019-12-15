@@ -8,6 +8,7 @@ urlpatterns = [
     path('signup/uniqueid/<str:id>', views.uniqueid, name='sidnup'),
     path('signin/', views.signin, name='signin'),
     path('signout/', views.signout, name='signout'),
+    path('isloggedin/', views.isloggedin, name='isloggedin'),
 
     path('tutor/<int:tutor_id>/',views.tutor_page_profile,name='tutor_profile'),
     path('tutor/review/<int:tutor_id>/',views.tutor_page_review,name='tutor_review'),
