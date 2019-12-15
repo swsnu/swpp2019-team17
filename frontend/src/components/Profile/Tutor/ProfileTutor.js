@@ -35,6 +35,11 @@ class ProfileTutor extends Component {
   }
 
   render() {
+    if (!this.props.auth) {
+      alert("not logged in");
+      this.props.history.push('/')
+    }
+
     let tutor = {
       name: "Hong Gil Dong",
       username: "tutoring",
@@ -116,6 +121,7 @@ class ProfileTutor extends Component {
 
 const mapStateToProps = state => {
   return {
+      auth: state.log.authenticated,
       loadedTutor: state.pro.tutor,
   }
 }

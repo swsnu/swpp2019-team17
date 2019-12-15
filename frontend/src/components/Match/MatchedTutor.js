@@ -34,8 +34,8 @@ function MatchedTutor(props) {
             */}
             </Col>
             <Col>
-              <Button>Request</Button>
-              <Button onClick={props.onClickDetail}>Detail</Button>
+              <Button variant="outline-dark">Request</Button>
+              <Button variant="outline-dark" onClick={props.onClickDetail}>Detail</Button>
             </Col>
           </Row>
         </Container>

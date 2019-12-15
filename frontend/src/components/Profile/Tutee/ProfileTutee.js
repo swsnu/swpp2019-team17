@@ -7,6 +7,7 @@ import './ProfileTutee.css';
 
 import TuteeChildListComponent from './TuteeChildListComponent';
 import * as actionCreators from '../../../redux/profile';
+import * as loginCreators from '../../../redux/login';
 
 // bootstrap
 import Button from 'react-bootstrap/Button';
@@ -31,6 +32,8 @@ class ProfileTutee extends Component {
     }
 
     render() {
+
+      console.log(this.props.authenticated);
 
       let tutee_manager = {
         name: "Name",
@@ -76,9 +79,9 @@ class ProfileTutee extends Component {
             <Col xs={2}>
               <div className="button-list">
                 <ButtonGroup vertical>
-                  <Button type="button">Edit Profile</Button>
-                  <Button type="button">Requested Tutoring</Button>
-                  <Button type="button" variant="danger">Delete Account</Button>
+                  <Button variant="dark" type="button">Edit Profile</Button>
+                  <Button variant="dark" type="button">Requested Tutoring</Button>
+                  <Button variant="dark" type="button" variant="danger">Delete Account</Button>
                 </ButtonGroup>
               </div>
             </Col>
@@ -107,7 +110,7 @@ class ProfileTutee extends Component {
 const mapStateToProps = state => {
     return {
         loadedTutee: state.pro.tutee_manager,
-        loadedChildren: state.pro.children
+        loadedChildren: state.pro.children,
     }
 }
 

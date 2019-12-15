@@ -18,7 +18,7 @@ export const getTuteeManager_ = (data) => {
 // should put backend address here in axios
 export const getTuteeManager = () => {
     return dispatch => {
-        return axios.get('/api/뭐시기') //여기에 주소 넣어야함!!
+        return axios.get('/api/getTuteemanager') //여기에 주소 넣어야함!!
             .then((res) => dispatch(getTuteeManager_(res.data)));
     }
 }

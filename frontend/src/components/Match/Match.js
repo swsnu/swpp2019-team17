@@ -397,10 +397,10 @@ class Match extends Component {
                         {reviewComponent}
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button onClick={() => {}}>
+                        <Button variant="outline-dark" onClick={() => {}}>
                             Request
                         </Button>
-                        <Button onClick={() => this.setShow(false)}>
+                        <Button variant="outline-dark" onClick={() => this.setShow(false)}>
                             Close
                         </Button>
                     </Modal.Footer>

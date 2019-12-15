@@ -29,7 +29,7 @@ export const isLoggedIn = () => {
       .get("/api/isloggedin/")
       .then(res => {
         if(res.status==200){
-          dispatch(isLoggedIn_(true));
+          dispatch(isLoggedIn_(res.data));
         } else {
           dispatch(isLoggedIn_(false))
         }

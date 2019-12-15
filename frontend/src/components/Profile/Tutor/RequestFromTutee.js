@@ -26,7 +26,7 @@ class RequestFromTutee extends Component {
     address: '관악로 25길 11, 402호',
     certificate: null,
     //dummy data
-    //실제에서는 id(key값)-> data를 불러와서 setstate
+    modalshow: false,
   };
 
   componentDidMount() {
@@ -34,8 +34,12 @@ class RequestFromTutee extends Component {
     this.props.getRequstFromTutee();
   }
 
-  onClickDetail = (id) => {
-    
+  
+  setShow = (isShown) => {
+    this.setState({modalshow: isShown});
+  }
+
+  onClickDetail = (request) => {
   }
 
   render() {
@@ -60,7 +64,7 @@ class RequestFromTutee extends Component {
     if(this.props.loadedRequests.length !== 0) {
       
       requestTutee = this.props.loadedRequests.map((request) => {
-        return <RequestTuteeComponent name={request.name} onClickDtail={() => this.onClickDetail(tutor.id)} />;
+        return <RequestTuteeComponent name={request.name} onClickDetail={() => this.onClickDetail(request)} />;
       })
     }
   
@@ -108,6 +112,10 @@ class RequestFromTutee extends Component {
         copyright="© 2019 Company"
         logo="https://uploads.divjoy.com/logo.svg"
       />
+
+      <Modal show={this.state.modalshow} onHide={() => this.setShow(false)}>
+        <Modal.Header></Modal.Header>
+      </Modal>
       </>
     );
   }
