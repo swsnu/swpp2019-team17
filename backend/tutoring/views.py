@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse,HttpResponseNotAllowed
 from django.contrib.auth import authenticate,login,logout
+from django.contrib import auth
 import json
 from .models import Tutor,Tutee,Tutoring,Review
 from django.contrib.auth import get_user_model, authenticate, login
@@ -22,8 +23,10 @@ def signin(request):
             user_pass=login_info['password']
         except (KeyError, JSONDecodeError) as e:
             return HttpResponse(status=400)
-
-        userA=authenticate(username=user_name,password=user_pass)
+        '''
+        userA=auth.authenticate(username=user_name,password=user_pass)
+        '''
+        userA=get_object_or_404(User.objects.filter(username=user_name))
         if userA is not None:
             login(request,userA)
             try:

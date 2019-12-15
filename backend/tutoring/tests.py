@@ -1,5 +1,5 @@
 from django.test import TestCase, Client
-from .models import Tutee,TuteeManager,Tutor
+from .models import Tutee,Tutor
 import json
 from django.contrib.auth.hashers import check_password
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -9,8 +9,9 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 
 class ViewTest(TestCase):
     def setUp(self):
+        pass
+
         test_tutor = Tutor.objects.create_user(username='test_id',password='test',name='ske',age='26',address='Seoul',gender='Male',subject='Math',phonenumber='01012341234')
-        test_tutee_manager=TuteeManager.objects.create_user(username='test_id2',password='test')
         '''
         newPhoto.image = SimpleUploadedFile(name='test_image.jpg', content=open(image_path, 'rb').read(), content_type='image/jpeg')
         '''

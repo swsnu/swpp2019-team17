@@ -6,7 +6,7 @@ from django.contrib.postgres.fields import JSONField
 # Create your models here.
 
 class User(AbstractUser):
-    phonenumber=models.CharField(null=True, blank=True, max_length=15)
+    phonenumber=models.CharField(null=True, blank=True, max_length=15,default='01000000000')
 
 class Tutor(User):
     schedule = JSONField(null=True, blank=True) # { 0:{start: date, end: date} 1:{start: date, end: date} ... ]
@@ -24,8 +24,10 @@ class Tutor(User):
     age=models.IntegerField(null=True,blank=True)
 
 class Tutee(User):
+
     address=JSONField(null=True,blank=True) # [Road: "", X: float, Y: float, detail: ""]
     schedule = JSONField(null=True,blank=True)  # [ 0: {start: date,end: date} 1: {start: date, end: date} ... ]
+
     GENDER_CHOICES = (
         ('male', 'Male'),
         ('female', 'Female'),
