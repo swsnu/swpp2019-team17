@@ -51,7 +51,6 @@ def isloggedin(request):
         if request.user.is_authenticated:
             return HttpResponse(status=200)
         else:
-            print("He is not logged in")
             return HttpResponse(status=201)
 
 def uniqueid(request, id):
