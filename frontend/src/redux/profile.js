@@ -32,6 +32,8 @@ export const sendChildID = (id) => ({
 
 // === TUTOR PROFILE PART ===
 const GET_TUTOR = "GET_TUTOR";
+const SEND_TUTOR_ID = "SEND_TUTOR_ID";
+const GET_REQUEST_FROM_TUTEE = "GET_REQUEST_FROM_TUTEE";
 
 export const getTutor_ = (tutor) => {
     return {
@@ -48,13 +50,31 @@ export const getTutor = () => {
     }
 }
 
+export const sendTutorID = (id) => ({
+    type: SEND_TUTOR_ID,
+    sentTutorID: id
+})
+
+export const getRequstFromTutee_ = (requests) => ({
+    type: GET_REQUEST_FROM_TUTEE,
+    requests: requests
+})
+
+export const getRequstFromTutee = (id) => {
+    return dispatch => {
+        return axios.get('/api/뭐시기')
+            .then((res) => dispatch(getRequstFromTutee_(res.data)));
+    }
+}
+
 
 // === ===  reducer === ===
 const initialState = {
     tutee_manager: null,
     children: [],
     tutor: null,
-    sentChildID: null
+    sentChildID: -1,
+    requests: []
 }
 
 export const reducer = (state = initialState, action) => {

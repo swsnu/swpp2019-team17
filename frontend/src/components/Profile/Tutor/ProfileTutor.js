@@ -17,14 +17,9 @@ import Jumbotron from 'react-bootstrap/Jumbotron';
 
 class ProfileTutor extends Component {
   state = {
-    name: 'Gildong Hong',
-    username: 'tutoring',
     photo: '',
     schedule: '',
     age: '23',
-    subject: 'Math',
-    gender: 'Male',
-    phonenumber: '010-1234-5678',
     address: '관악로 25길 11, 402호',
     certificate: null,
     //dummy data
@@ -35,9 +30,14 @@ class ProfileTutor extends Component {
     this.props.getTutor();
   }
 
+  onClickTuteeRequest = (id) => {
+    this.props.history.push('/profile/tutor/request');
+  }
+
   render() {
     let tutor = {
       name: "Hong Gil Dong",
+      username: "tutoring",
       age: 23,
       subject: "Math",
       gender: "Male",
@@ -61,7 +61,7 @@ class ProfileTutor extends Component {
               <div className="profiletutor">
                 <img src={image} className="photo" />
                 <h2>
-                  ID:{this.state.username}
+                  ID:{tutor.username}
                 </h2>
               </div>
             </Jumbotron>
@@ -72,7 +72,7 @@ class ProfileTutor extends Component {
             <div className="button-list">
               <ButtonGroup vertical>
                 <Button type="button">Edit Profile</Button>
-                <Button type="button">Tutoring</Button>
+                <Button type="button" onClick={() => {this.onClickTuteeRequest(tutor.id);} /*backend에 따라 변경 예정*/}>Requesting Tutee</Button>
                 <Button type="button" variant="danger">Delete Account</Button>
               </ButtonGroup>
             </div>
@@ -95,7 +95,7 @@ class ProfileTutor extends Component {
                 phonenumber:{tutor.phone}
               </h3>
               <h3>
-                address:{tutor.address}
+                address:{this.state.address}
               </h3>
             </Jumbotron>
           </Col>
