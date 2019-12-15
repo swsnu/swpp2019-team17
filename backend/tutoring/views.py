@@ -49,7 +49,7 @@ def signout(request):
 def isloggedin(request):
     if request.method == 'GET':
         if request.user.is_authenticated:
-            return JsonResponse(request.user, status=200)
+            return HttpResponse(status=200)
         else:
             print("He is not logged in")
             return HttpResponse(status=201)
