@@ -149,7 +149,7 @@ def signup_tutor(request):
         else:
             None
         # tutor to json, and send back
-        return JsonResponse(tutor.schedule,status=201,safe=False)
+        return JsonResponse(tutor.schedule[0][startX],status=201,safe=False)
     else:
         return HttpResponse(status=405)
 
@@ -327,7 +327,9 @@ def tutee_page_tutoring(request,tuteemanager_id):
             tutor_list=Tutor.objects.filter(subject=option_subject).filter(gender=option_gender).filter(age__gte=option_age_min).filter(age__lte=option_age_max)
             if tutor_list.exists():
                 for tutor_target in tutor_list.iterator():
-                    tutor_list[i].update(distance=get_distance())
+                    target=0
+                    tutor_target.update(distance=get_distance(tutor_target[target]['startX'],tutor_target[target]['startY'],tutor_target[target]['endX'],tutor_target[target]['endY'],
+                    tutee1.address['X'],tutee1.address['Y']))
             sorted_tutor_list=tutor_list.order_by('distance')    
             return JsonResponse(sorted_tutor_list,status=201,safe=False)
         else:
@@ -336,8 +338,8 @@ def tutee_page_tutoring(request,tuteemanager_id):
 def get_distance(start_x,start_y,end_x,end_y,point_x,point_y):
     if start_x==end_x and start_y==end_y:
         return (abs(start_x-point_x)**2+abs(start_y-end_y)**2)**0.5
-    elif start_x==end_x:
-        return 0
+    else:
+        return (abs(end_x-point_x)**2+abs(end_y-end_y)**2)**0.5
 
 def tutee_request_tutoring(request,tutee_id):
     if not request.user.is_authenticated:
