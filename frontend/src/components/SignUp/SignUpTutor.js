@@ -160,7 +160,10 @@ class SignUpTutor extends Component {
     switch (this.state.step) {
       case 0:
         input =
-          <div>
+          <div style={{
+            position: 'absolute', left: '50%', top: '50%',
+            transform: 'translate(-50%, -50%)'
+        }}>
             <Form.Group className="signuptutor-label-id">ID:
           <Form.Control
                 type="text"
@@ -181,26 +184,32 @@ class SignUpTutor extends Component {
                 className="text-left"
                 onChange={(event) => this.setState({ password_confirmation: event.target.value })}
               />
-            </div>
+            </div><br/>
             <Button onClick={this.CheckUniqueID}>Next</Button>
           </div>
         break;
       case 1:
         input =
-          <div>
+          <div style={{
+            position: 'absolute', left: '50%', top: '50%',
+            transform: 'translate(-50%, -50%)'
+        }}>
             <label className="signuptutor-label-certificate">Photo:</label>
-            <Form.Control type="file" className="signuptutor-input-certificate" />
+            <Form.Control type="file" className="signuptutor-input-photo" />
             <div className="signuptutor-div-authorize">
               <label className="signuptutor-label-certificate">Certificate:</label>
               <Certificate age={this.setAge} name={this.setName} university={this.setUniversity}/>
-            </div>
+            </div><br/>
             <Button onClick={() => this.setState({ step: this.state.step + 1 })}>Next</Button>
             <Button onClick={() => this.setState({ step: this.state.step + 1 })}>Skip</Button>
           </div>
         break;
       case 2:
         input =
-          <div>
+          <div style={{
+            position: 'absolute', left: '50%', top: '50%',
+            transform: 'translate(-50%, -50%)'
+        }}>
             <label>
               Phone number
               <PhoneInput
@@ -210,19 +219,19 @@ class SignUpTutor extends Component {
                 onChange={value => this.setState({ phone: value })}
               />
             </label>
+            <br/>
             <label>
               Gender:
               <Select options={[{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }]}></Select>
             </label>
-            <label>
-              Photo:
-            </label>
+            <br/>
             <label className="subject-label">
               Subject
               <div className='select'>
                 <Select options={options} closeMenuOnSelect={false} isMulti={true} onChange={(selectedoptions) => this.ChangeSubject(selectedoptions)} />
               </div>
             </label>
+            <br/>
             <Button onClick={() => this.setState({ step: this.state.step + 1 })}>Skip</Button>
             <Button onClick={() => this.setState({ step: this.state.step + 1 })}>Next</Button>
           </div>
@@ -239,9 +248,9 @@ class SignUpTutor extends Component {
     }
 
     return (
-      <Jumbotron>
+      <div>
         {input}
-      </Jumbotron>
+      </div>
     );
   }
 }

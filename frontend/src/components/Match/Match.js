@@ -207,7 +207,6 @@ class Match extends Component {
     onClickDetail = (id) => {
         this.props.getReviewByID(id);
         this.setShow(true);
-        // 여기에 get review를 redux로?
     }
 
     render() {
@@ -244,7 +243,7 @@ class Match extends Component {
         // This will give get review
         let reviews = this.props.reviewByID;
 
-        let reviewComponent = <ReviewBody title="Good tutor" content="Passionate and gentle"/>
+        let reviewComponent = <ReviewBody title="No Review here" content="Please write review for this tutor"/>
 
         if (reviews.length !== 0) {
             reviewComponent = <ReviewBody title={reviews.title} content={reviews.content}/>
@@ -398,10 +397,10 @@ class Match extends Component {
                         {reviewComponent}
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button onClick={() => {}}>
+                        <Button variant="outline-dark" onClick={() => {}}>
                             Request
                         </Button>
-                        <Button onClick={() => this.setShow(false)}>
+                        <Button variant="outline-dark" onClick={() => this.setShow(false)}>
                             Close
                         </Button>
                     </Modal.Footer>

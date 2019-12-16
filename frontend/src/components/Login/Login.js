@@ -73,10 +73,10 @@ class Login extends Component {
           <Modal.Header><Modal.Title>Sign Up</Modal.Title></Modal.Header>
           <Modal.Body>Are you a tutee? Or are you a tutor?</Modal.Body>
           <Modal.Footer>
-            <Button onClick={() => this.props.history.push('/signup/tutor/')}>
+            <Button variant="outline-dark" onClick={() => this.props.history.push('/signup/tutor/')}>
               Tutor
             </Button>
-            <Button onClick={() => this.props.history.push('/signup/tutee/')}>
+            <Button variant="outline-dark" onClick={() => this.props.history.push('/signup/tutee/')}>
               Tutee
             </Button>
           </Modal.Footer>
