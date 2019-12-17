@@ -9,6 +9,9 @@
     "bootstrap": "^4.3.1",
     "connected-react-router": "^6.5.2",
     "coveralls": "^3.0.7",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.1",
+    "enzyme-to-json": "^3.4.3",
     "fake-auth": "0.0.5",
     "history": "^4.10.1",
     "jest": "^24.9.0",
@@ -60,5 +63,12 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.16.0",
     "eslint-plugin-react-hooks": "^1.7.0"
+  },
+  "jest": {
+    "collectCoverageFrom" : [
+      "src/**/*.{js,jsx}" ,
+      "!src/index.js" ,
+      "!src/serviceWorker.js"
+    ]
   }
 }

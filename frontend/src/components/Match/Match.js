@@ -202,8 +202,6 @@ class Match extends Component {
         this.setState({modalshow: isShown});
     }
 
-    // Detail버튼을 누르면 profile과 review가 있는 modal이 나오게 한다
-    // 물론 내용을 표시하기 위한 값들도 옮겨야 한다. 지금은 구현중...
     onClickDetail = (id) => {
         this.props.getReviewByID(id);
         this.setShow(true);
@@ -215,6 +213,7 @@ class Match extends Component {
 
         // for UI testing when no matching is caught
         let jsxitems = <MatchedTutor 
+                        className="tutor0"
                         id={0}
                         profile={profile2}
                         gender="None"
@@ -224,14 +223,9 @@ class Match extends Component {
 
         if (tutors.length !== 0) {
             jsxitems = tutors.map((tutor) => {
-                if (false) {
-                    ////////////////////////////////
-                    // This is for counting stats //
-                    ////////////////////////////////
-                    // 여기에 적절한 값을 넣고 component에 값을 전달해야합니다!!
-                }
 
                 return <MatchedTutor 
+                        className={tutor + tutor.id}
                         id={tutor.id}
                         proflie={tutor.profile}
                         gender={tutor.gender}
@@ -370,7 +364,7 @@ class Match extends Component {
                                 height={64}
                                 src={profile2 /* redux로 교체하기 */}
                                 alt="Profile photo"
-                                rounded
+                                rounded="true"
                             />
                             <Media.Body>
                                 <Container>

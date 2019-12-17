@@ -15,23 +15,17 @@ function MatchedTutor(props) {
         height={64}
         src={props.profile}
         alt="Profile photo"
-        rounded
+        rounded="true"
       />
       <Media.Body>
         <Container>
           <Row>
             <Col>
-              <p><b>{props.name}</b></p>
-              <p>{props.gender}</p>
+              <p className="tutor-name"><b>{props.name}</b></p>
+              <p className="tutor-gender">{props.gender}</p>
             </Col>
             <Col>
-              <p>{props.subject}</p>
-            </Col>
-            <Col>
-            {/* 데모 때는 스케쥴을 둘만 넣었는데 어떻게 넣을지 고려해봐야겠네요 
-              <p>{props.available[0]}</p>
-              <p>{props.available[1]}</p>
-            */}
+              <p className="tutor-subject">{props.subject}</p>
             </Col>
             <Col>
               <Button variant="outline-dark">Request</Button>
