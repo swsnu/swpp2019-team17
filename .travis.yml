@@ -32,14 +32,11 @@ matrix:
     before_install: 
     - mysql -e "CREATE DATABASE tutoringmachine_db;"
     - mysql -e "CREATE USER 'tutoring'@'localhost' IDENTIFIED BY 'machine';"
-    - mysql -e "GRANT ALL PRIVILEGES ON *.* to 'tutoring'@'machine';"
+    - mysql -e "GRANT ALL PRIVILEGES ON *.* to 'tutoring'@'localhost';"
     - cd backend
     install: 
     - pip install -r requirement_tutoring.txt
     - pip install coveralls
-    migrate:
-    - python manage.py makemigrations tutoring
-    - python manage.py migrate
     script: 
     - pylint manage.py --exit-zero
     - coverage run --source='./tutoring' manage.py test
