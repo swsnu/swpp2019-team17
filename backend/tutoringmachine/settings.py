@@ -83,8 +83,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'tutoringmachine_db',
-        'USER': 'tutoring',
-        'PASSWORD': 'machine',
+        'USER': 'root',
+        'PASSWORD': 'password',
         'HOST':'127.0.0.1',
         'PORT':'3306',
     }
