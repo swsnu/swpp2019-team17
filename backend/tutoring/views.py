@@ -407,6 +407,7 @@ def certificate(request):
             url = "https://kapi.kakao.com/v1/vision/text/recognize"
 
             response_final = requests.post(url, files={'file': copiedblob}, data={"boxes": json.dumps(boxes)}, headers=headers)
+            print(response_final.json())
             return JsonResponse(response_final.json()['result'], status=200, safe=False)
     else:
         return HttpResponseNotAllowed(['POST'])
