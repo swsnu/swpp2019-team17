@@ -5,7 +5,6 @@ import * as actionCreators from '../../../redux/profile';
 import image from '../image.png';
 import './ProfileTutor.css';
 import Header from '../../Header/header';
-import Navbar from "../../Navbar";
 import Footer from "../../Footer";
 // bootstrap
 import Button from 'react-bootstrap/Button';
@@ -42,8 +41,8 @@ class ProfileTutor extends Component {
 
     let tutor = {
       name: "Hong Gil Dong",
-      username: "tutoring",
-      age: 23,
+      username: "testing",
+      age: 24,
       subject: "Math",
       gender: "Male",
       phone: "010-1234-5678",
