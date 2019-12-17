@@ -117,27 +117,5 @@ describe ("Match", () => {
         expect(newInstance.state.subject).toEqual(31);
 
     });
-    it ('should change the value of Social', () => {
-        const component = mount(matchComponent);
-        const wrapper = component.find(".Social");
-
-        wrapper.simulate("click");
-
-        const newInstance = component.find(Match.WrappedComponent).instance();
-
-        expect(newInstance.state.subject).toEqual(31);
-
-    });
-    it ('should change the value of Science', () => {
-        const component = mount(matchComponent);
-        const wrapper = component.find(".Science");
-
-        wrapper.simulate("click");
-
-        const newInstance = component.find(Match.WrappedComponent).instance();
-
-        expect(newInstance.state.subject).toEqual(31);
-
-    });
 
 });
