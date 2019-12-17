@@ -7,21 +7,15 @@ import { history } from '../../redux/reducer';
 import SignUpTutee from './SignUpTutee';
 import { ConnectedRouter } from 'connected-react-router';
 
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 
 import store from '../../redux/store';
-
-import * as actionCreators from '../../redux/match';
 
 
 
 describe ("SignUpTutee", () => {
     let signupComponent;
     //let stubMatchedTutors;
-    let spygetTutor;
-
-    const spyHistory = jest.spyOn(history, 'push')
-    .mockImplementation(path => {});
 
     beforeEach(() => {
 
@@ -34,18 +28,7 @@ describe ("SignUpTutee", () => {
                 </ConnectedRouter>
             </Provider>
 
-/*
-        stubMatchedTutors = [{
-            id: 0,
-            name: "Test subject",
-            profile: null,
-            gender: "Male",
-            subject: "Test"
-        }];
-
-        spygetTutor = jest.spyOn(actionCreators, 'getTutor')
-            .mockImplementation(() => {return dispatch => {tutors: stubMatchedTutors}})
-    */  });
+    });
   
     afterEach(() => {
         jest.clearAllMocks();
@@ -59,4 +42,5 @@ describe ("SignUpTutee", () => {
 
         expect(newInstance.state.id).toEqual("");
     });
+
 });

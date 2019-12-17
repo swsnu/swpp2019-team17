@@ -58,7 +58,7 @@ class Certificate extends Component {
         <p>Name: {name}</p>
         <p>Age: {age}</p>
         <p>University: {university}</p>
-        <p>Department: {department}</p>
+        <p className="department">Department: {department}</p>
       </div>
       console.log(departmentList);
     }
