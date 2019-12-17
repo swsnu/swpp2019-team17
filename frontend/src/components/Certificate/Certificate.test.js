@@ -36,7 +36,7 @@ describe ("SignUpTutee", () => {
             </Provider>
             
         spycertificateTutor = jest.spyOn(actionCreators, 'certificateTutor')
-            .mockImplementation((file) => {return dispatch => {ocr: stubCertificate}})
+            .mockImplementation((file) => {return (dispatch) => ({ocr: stubCertificate})});
     });
   
     afterEach(() => {
