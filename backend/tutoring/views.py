@@ -14,7 +14,7 @@ import copy
 
 User = get_user_model()
 
-@csrf_exempt
+
 def signin(request):
     if request.method == 'POST':
         try:
@@ -63,7 +63,7 @@ def uniqueid(request, id):
         else:
             return HttpResponse(status=200)
 
-@csrf_exempt
+
 def signup_tutee(request):
     if request.method == 'POST':
         try:
@@ -102,7 +102,7 @@ def signup_tutee(request):
         except (KeyError, JSONDecodeError) as e:
             return HttpResponse(status=400)
         tutee = Tutee.objects.create_user(username=username, password=password, phonenumber=phonenumber,
-            age=age, name=name, address=address, gender=gender,subject=subject, schedule=schedule)
+            age=age, name=name, gender=gender,subject=subject)
         tutee.save()
         tutee.refresh_from_db()
         tutee2 = authenticate(request, username=username, password=password)
@@ -111,12 +111,12 @@ def signup_tutee(request):
         else:
             None
         # tutor to json, and send back
-        return JsonResponse(tutee.schedule,status=201,safe=False)
+        return HttpResponse(status=201)
     else:
         return HttpResponse(status=405)
 
 
-@csrf_exempt
+
 def signup_tutor(request):
     if request.method == 'POST':
         try:
@@ -149,7 +149,7 @@ def signup_tutor(request):
         except (KeyError, JSONDecodeError) as e:
             return HttpResponse(status=400)
         tutor = Tutor.objects.create_user(username=username, password=password, phonenumber=phonenumber,
-            address=address, gender=gender,subject=subject, schedule=schedule)
+             gender=gender,subject=subject)
         tutor.save()
         tutor.refresh_from_db()
         tutor2 = authenticate(request, username=username, password=password)
@@ -158,7 +158,7 @@ def signup_tutor(request):
         else:
             None
         # tutor to json, and send back
-        return JsonResponse(tutor.schedule,status=201,safe=False)
+        return HttpResponse(status=201)
     else:
         return HttpResponse(status=405)
 
@@ -389,4 +389,4 @@ def token(request):
     if request.method == 'GET':
         return HttpResponse(status=204)
     else:
-        return HttpResponseNotAllowed(['GET'])
+        return HttpResponse(status=403)

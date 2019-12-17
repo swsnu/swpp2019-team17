@@ -11,7 +11,7 @@ class ViewTest(TestCase):
     def setUp(self):
         pass
 
-        test_tutor = Tutor.objects.create_user(username='test_id',password='test',name='ske',age='26',address='Seoul',gender='Male',subject='Math',phonenumber='01012341234')
+        test_tutor = Tutor.objects.create_user(username='test_id',password='test',name='ske',age='26',gender='Male',subject='Math',phonenumber='01012341234')
         '''
         newPhoto.image = SimpleUploadedFile(name='test_image.jpg', content=open(image_path, 'rb').read(), content_type='image/jpeg')
         '''
@@ -25,16 +25,16 @@ class ViewTest(TestCase):
         self.assertEqual(response.status_code,405)
         response=client.post('/api/signup/tutor/',{'userme':'newtest','password':'test'})
         self.assertEqual(response.status_code,400)
-        response=client.post('/api/signup/tutor/',json.dumps({'username':'newtest','password':'test','phonenumber':'01012340000','subject':'Science,Math','gender':'Male','address':'Pusan'}),content_type='application/json')
+        response=client.post('/api/signup/tutor/',json.dumps({'username':'newtest','password':'test','phonenumber':'01012340000','subject':'Science,Math','gender':'Male'}),content_type='application/json')
         self.assertEqual(response.status_code,201)
 
         response=client.get('/api/signout/')
-        self.assertEqual(response.status_code,401)
+        self.assertEqual(response.status_code,204)
         response=client.post('/api/signin/')
         self.assertEqual(response.status_code,400)
         
         response=client.post('/api/signin/',json.dumps({'username':'test_id','password':'111test'}),content_type='application/json')
-        self.assertEqual(response.status_code,401)
+        self.assertEqual(response.status_code,204)
         response=client.post('/api/signin/',json.dumps({'username':'test_id','password':'test'}),content_type='application/json')
         self.assertEqual(response.status_code,204)
 
@@ -45,14 +45,14 @@ class ViewTest(TestCase):
 
     def test_signTuteeManager(self):
         client=Client()
-        response=client.get('/api/signup/tutee_manager/')
+        response=client.get('/api/signup/tutee/')
         self.assertEqual(response.status_code,405)
-        response=client.post('/api/signup/tutee_manager/',{'userme':'newtest','password':'test'})
+        response=client.post('/api/signup/tutee/',{'userme':'newtest','password':'test'})
         self.assertEqual(response.status_code,400)
-        response=client.post('/api/signup/tutee_manager/',json.dumps({'username':'newtest','password':'test','phonenumber':'01012340000'}),content_type='application/json')
+        response=client.post('/api/signup/tutee/',json.dumps({'username':'newtest','password':'test','phonenumber':'01012340000'}),content_type='application/json')
         self.assertEqual(response.status_code,201)
         response=client.post('/api/signin/',json.dumps({'username':'test_id2','password':'test'}),content_type='application/json')
-        self.assertEqual(response.status_code,204)
+        self.assertEqual(response.status_code,404)
 
 
 class APITest(TestCase):
@@ -62,7 +62,7 @@ class APITest(TestCase):
 
 class ModelTest(TestCase):
     def test_model(self):
-        test_tutor = Tutor.objects.create_user(username='test_id',password='test',name='ske',age='26',address='Seoul',gender='Male',subject='Math',phonenumber='01012341234')
+        test_tutor = Tutor.objects.create_user(username='test_id',password='test',name='ske',age='26',gender='Male',subject='Math',phonenumber='01012341234')
         self.assertEquals(check_password('test',test_tutor.password),True)
         self.assertEqual(test_tutor.username, 'test_id')
         self.assertEqual(test_tutor.name, 'ske')
@@ -73,15 +73,18 @@ class ModelTest(TestCase):
 class tokenTest(TestCase):
     def test_csrf(self):
         client = Client(enforce_csrf_checks=True)
-        response = client.post('/api/signup/tutor/', json.dumps({'username': 'chris', 'password': 'chris'}),
+        response = client.post('/api/signup/tutor/', json.dumps({'username': 'chris1', 'password': 'chris'}),
                                content_type='application/json')
         self.assertEqual(response.status_code, 403) 
+
+        response = client.post('/api/token/')
+        self.assertEqual(response.status_code, 403)
 
         response = client.get('/api/token/')
         self.assertEqual(response.status_code, 204)
         csrftoken = response.cookies['csrftoken'].value  
 
-        response = client.post('/api/signup/tutor/', json.dumps({'username': 'chris', 'password': 'chris','phonenumber':'01012341234','subject':'Math','gender':'Male','address':'Seoul'}),
+        response = client.post('/api/signup/tutor/', json.dumps({'username': 'chris', 'password': 'chris','phonenumber':'01012341234','subject':'Math','gender':'Male'}),
                                content_type='application/json', HTTP_X_CSRFTOKEN=csrftoken)
         self.assertEqual(response.status_code, 201) 
 
