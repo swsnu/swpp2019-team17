@@ -5,9 +5,15 @@ import store from '../../redux/store';
 import { history } from '../../redux/reducer';
 import { Provider } from 'react-redux';
 
+import { Route, Switch } from 'react-router-dom';
+
+import { ConnectedRouter } from 'connected-react-router';
+
+import { shallow, mount } from 'enzyme';
+
+const div = document.createElement('div');
 
 it('renders without crashing', () => {
-  const div = document.createElement('div');
   ReactDOM.render(
     <Provider store={store}>
       <App history={history} />
@@ -15,4 +21,22 @@ it('renders without crashing', () => {
     div
   );
   ReactDOM.unmountComponentAtNode(div);
+});
+
+it ('renders as its null', () => {
+  const props = {
+    history: history,
+    auth: null};
+
+  const app = 
+    <Provider store={store}>
+      <App {...props} />
+    </Provider>
+    
+  const appcomp = mount(app);
+
+  appcomp.setProps({auth: null});
+
+  expect(appcomp.contains(<Route/>)).toBe(false);
+
 });

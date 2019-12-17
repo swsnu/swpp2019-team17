@@ -34,18 +34,7 @@ describe ("SignUpTutee", () => {
                 </ConnectedRouter>
             </Provider>
 
-/*
-        stubMatchedTutors = [{
-            id: 0,
-            name: "Test subject",
-            profile: null,
-            gender: "Male",
-            subject: "Test"
-        }];
-
-        spygetTutor = jest.spyOn(actionCreators, 'getTutor')
-            .mockImplementation(() => {return dispatch => {tutors: stubMatchedTutors}})
-    */  });
+    });
   
     afterEach(() => {
         jest.clearAllMocks();
@@ -59,4 +48,5 @@ describe ("SignUpTutee", () => {
 
         expect(newInstance.state.id).toEqual("");
     });
+
 });
