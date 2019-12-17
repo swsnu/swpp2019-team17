@@ -23,10 +23,14 @@ matrix:
     - cat ./coverage/lcov/info | ./node_modules/coveralls/bin/coveralls.js
     
   - language: python
+    dist: xenial
+    services:
+    - mysql
     python: 
     - "3.7"
     - "3.8"
     before_install: 
+    - mysql -e "CREATE DATABASE tutoringmachine_db;"
     - cd backend
     install: 
     - pip install -r requirement_tutoring.txt
@@ -36,7 +40,7 @@ matrix:
     - python manage.py migrate
     script: 
     - pylint manage.py --exit-zero
-    - coverage run --branch --source='./tutoring' manage.py test
+    - coverage run --source='./tutoring' manage.py test
     - coverage report -m
     after_success: 
     - coveralls
