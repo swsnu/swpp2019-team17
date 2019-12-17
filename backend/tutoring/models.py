@@ -9,8 +9,8 @@ class User(AbstractUser):
     phonenumber=models.CharField(null=True, blank=True, max_length=15,default='01000000000')
 
 class Tutor(User):
-    schedule = JSONField(null=True, blank=True) # { 0:{start: date, end: date} 1:{start: date, end: date} ... ]
-    address = JSONField(null=True, blank=True) # { 0:{startRoad: "", startX: float, startY: float, endRoad: "", endX: float, endY: float}, 1:{...} ...]
+    schedule = models.CharField(null=True, blank=True) # { 0:{start: date, end: date} 1:{start: date, end: date} ... ]
+    address = models.CharField(null=True, blank=True) # { 0:{startRoad: "", startX: float, startY: float, endRoad: "", endX: float, endY: float}, 1:{...} ...]
     # certificate = models.ImageField
     GENDER_CHOICES = (
         ('male', 'Male'),
@@ -25,8 +25,8 @@ class Tutor(User):
 
 class Tutee(User):
 
-    address=JSONField(null=True,blank=True) # [Road: "", X: float, Y: float, detail: ""]
-    schedule = JSONField(null=True,blank=True)  # [ 0: {start: date,end: date} 1: {start: date, end: date} ... ]
+    address=models.CharField(null=True,blank=True) # [Road: "", X: float, Y: float, detail: ""]
+    schedule = models.CharField(null=True,blank=True)  # [ 0: {start: date,end: date} 1: {start: date, end: date} ... ]
 
     GENDER_CHOICES = (
         ('male', 'Male'),
