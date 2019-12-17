@@ -41,7 +41,7 @@ describe ("Match", () => {
         }];
 
         spygetTutor = jest.spyOn(actionCreators, 'getTutor')
-            .mockImplementation(() => {return dispatch => {tutors: stubMatchedTutors}})
+            .mockImplementation(() => {return (dispatch) => ({tutors: stubMatchedTutors})});
     });
     
     afterEach(() => {
