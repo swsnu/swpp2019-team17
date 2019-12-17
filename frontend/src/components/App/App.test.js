@@ -5,11 +5,9 @@ import store from '../../redux/store';
 import { history } from '../../redux/reducer';
 import { Provider } from 'react-redux';
 
-import { Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
-import { ConnectedRouter } from 'connected-react-router';
-
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 
 const div = document.createElement('div');
 

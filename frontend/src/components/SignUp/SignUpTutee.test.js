@@ -7,21 +7,15 @@ import { history } from '../../redux/reducer';
 import SignUpTutee from './SignUpTutee';
 import { ConnectedRouter } from 'connected-react-router';
 
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 
 import store from '../../redux/store';
-
-import * as actionCreators from '../../redux/match';
 
 
 
 describe ("SignUpTutee", () => {
     let signupComponent;
     //let stubMatchedTutors;
-    let spygetTutor;
-
-    const spyHistory = jest.spyOn(history, 'push')
-    .mockImplementation(path => {});
 
     beforeEach(() => {
 
