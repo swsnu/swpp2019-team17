@@ -38,6 +38,8 @@ matrix:
     - pip install -r requirement_tutoring.txt
     - pip install coveralls
     script: 
+    - python manage.py makemigrations tutoring
+    - python manage.py migrate
     - pylint manage.py --exit-zero
     - coverage run --source='./tutoring' manage.py test
     - coverage report -m
