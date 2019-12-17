@@ -36,7 +36,7 @@ matrix:
     - pip install -r requirement_tutoring.txt
     - pip install coveralls
     migrate:
-    - python manage.py makemigrations
+    - python manage.py makemigrations tutoring
     - python manage.py migrate
     script: 
     - pylint manage.py --exit-zero
