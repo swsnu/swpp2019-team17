@@ -12,7 +12,6 @@ import './SignUpTutee.css';
 
 // for Bootstrap
 import Button from 'react-bootstrap/Button';
-import Jumbotron from 'react-bootstrap/Jumbotron';
 import Form from 'react-bootstrap/Form';
 
 class SignUpTutee extends Component {
@@ -61,7 +60,7 @@ class SignUpTutee extends Component {
     tutee = JSON.stringify(tutee)
     console.log(tutee);
     actionCreators.signUpTutee(tutee);
-    this.props.history.push('/tutee/match/')
+    this.props.history.push('/profile/tutee')
   }
 
   ClickNext = () => {
@@ -102,7 +101,10 @@ class SignUpTutee extends Component {
     switch (this.state.step) {
       case 0:
         input =
-          <div>
+          <div className="login-form" style={{
+            position: 'absolute', left: '50%', top: '50%',
+            transform: 'translate(-50%, -50%)'
+        }}>
             <Form.Group>
               <div className="id">
                 <Form.Label>ID</Form.Label>
@@ -130,16 +132,20 @@ class SignUpTutee extends Component {
                   value={this.state.password_confirmation}
                 />
               </div>
+              <br/>
               <Button onClick={this.CheckUniqueID} >Next</Button>
             </Form.Group>
           </div>
         break;
       case 1:
         input =
-          <div>
+          <div className="login-form" style={{
+            position: 'absolute', left: '50%', top: '50%',
+            transform: 'translate(-50%, -50%)'
+        }}>
             <label>
               Name:
-                <input onChange={(e) => this.setState({ name: e.target.value })} />
+                <Form.Control onChange={(e) => this.setState({ name: e.target.value })} />
             </label>
             <label>
               Age:
@@ -149,6 +155,7 @@ class SignUpTutee extends Component {
               Gender:
                 <Select options={[{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }]}></Select>
             </label>
+            <br/>
             <Form.Label>Phone number:</Form.Label>
             <PhoneInput className="text-left"
               country="KR"
@@ -167,7 +174,7 @@ class SignUpTutee extends Component {
         break;
       case 2:
         input =
-          <div>
+          <div className="login-form">
             <AvailableTimes height={1000} onChange={(e) => this.setState({ schedule: e })} />
             <Button type="button" onClick={this.ClickConfirm}>Confirm</Button>
           </div>
