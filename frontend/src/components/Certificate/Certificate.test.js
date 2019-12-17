@@ -7,7 +7,7 @@ import { history } from '../../redux/reducer';
 import Certificate from './Certificate';
 import { ConnectedRouter } from 'connected-react-router';
 
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 
 import store from '../../redux/store';
 
@@ -21,8 +21,6 @@ describe ("SignUpTutee", () => {
     const fileContents = 'file contents';
     const file = new Blob([fileContents], {type : 'text/plain'});
 
-    const spyHistory = jest.spyOn(history, 'push')
-    .mockImplementation(path => {});
 
     beforeEach(() => {
 
@@ -36,7 +34,7 @@ describe ("SignUpTutee", () => {
             </Provider>
             
         spycertificateTutor = jest.spyOn(actionCreators, 'certificateTutor')
-            .mockImplementation((file) => {return (dispatch) => ({ocr: stubCertificate})});
+            .mockImplementation((fi) => {return (dispatch) => ({ocr: stubCertificate})});
     });
   
     afterEach(() => {
@@ -47,9 +45,7 @@ describe ("SignUpTutee", () => {
     it ('gets the certificate', () => {
         const component = mount(certificateComponent);
 
-        const certificateButton = component.find('input').simulate('change', {target: {files: [file]}});
-
-        let department = component.find('.department');
+        component.find('input').simulate('change', {target: {files: [file]}});
 
         expect(spycertificateTutor).toHaveBeenCalledTimes(1);
     });
