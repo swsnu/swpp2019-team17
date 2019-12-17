@@ -155,11 +155,10 @@ def signup_tutor(request):
         tutor2 = authenticate(request, username=username, password=password)
         if tutor2 is not None:
             login(request, tutor2)
-            print(tutor2)
         else:
             None
         # tutor to json, and send back
-        return JsonResponse(tutor.schedule[0][startX],status=201,safe=False)
+        return JsonResponse(tutor.schedule,status=201,safe=False)
     else:
         return HttpResponse(status=405)
 
@@ -259,69 +258,43 @@ def tutee_page_create(request):
         else:
             return HttpResponse(status=405)  
 
-def tutee_page_profile(request,tuteemanager_id):
+def tutee_page_profile(request,tutee_id):
     if not request.user.is_authenticated:
         return HttpResponse(status=401)
     else:
-        tutee_manager1 = TuteeManager.objects.get(id=tuteemanager_id)
+        tutee1 = Tutee.objects.get(id=tutee_id)
         if request.method == 'GET':
-            tutee_list = [Tutee for Tutee in Tutee.objects.filter(tutee_manager_id=tuteemanager_id).values()]  
-            return JsonResponse(tutee_list,safe=False,status=200)
-        elif request.method == 'POST':
-            try:
-                req_data = json.loads(request.body.decode())
-                name1 = req_data['name']
-                gender1 = req_data['gender']
-            except (KeyError, JSONDecodeError) as e:
-                return HttpResponse(status=400)
-            tutee=Tutee()
-            tutee.name=name1
-            tutee.gender=gender1
-            tutee.tutee_manager=tutee_manager1
-            tutee.save()
-            return HttpResponse(status=201)
+            return JsonResponse(tutee1,safe=False,status=200)
         elif request.method == 'PUT':
             try:
                 req_data = json.loads(request.body.decode())
                 name1 = req_data['name']
                 gender1 = req_data['gender']
-                tuteeid = req_data['ChildID']
             except (KeyError, JSONDecodeError) as e:
                 return HttpResponse(status=400)
-            Tutee.objects.filter(id=tuteeid).update(name=name1)
-            Tutee.objects.filter(id=tuteeid).update(gender=gender1)
+            Tutee.objects.filter(id=tutee_id).update(name=name1)
+            Tutee.objects.filter(id=tutee_id).update(gender=gender1)
             return HttpResponse(status=201)
         elif request.method == 'DELETE':
-            try:
-                req_data = json.loads(request.body.decode())
-                tuteeid = req_data['ChildID']
-            except (KeyError, JSONDecodeError) as e:
-                return HttpResponse(status=400)
-            tutee=Tutee.objects.get(id=tuteeid)
-            tutee.delete()
+            tutee1.delete()
             return HttpResponse(status=204)
         else:
             return HttpResponse(status=405)       
 
-def tutee_page_review(request,tuteemanager_id):
-    get_object_or_404(TuteeManager.objects.filter(id=tuteemanager_id))
+def tutee_page_review(request,tutee_id):
+    get_object_or_404(Tutee.objects.filter(id=tutee_id))
     if request.method == 'GET':
-        review_list = [Review for Review in Review.objects.filter(tutee_id=tuteemanager_id).values()]  
+        review_list = [Review for Review in Review.objects.filter(tutee_id=tutee_id).values()]  
         return JsonResponse(review_list,safe=False,status=200)
     else:    
         return HttpResponse(status=405)
 
-def tutee_page_tutoring(request,tuteemanager_id):
+def tutee_page_tutoring(request,tutee_id):
     if not request.user.is_authenticated:
         return HttpResponse(status=401)
     else:
         if request.method == 'GET':
-            try:
-                req_data = json.loads(request.body.decode())
-                tuteeid = req_data['ChildID']
-            except (KeyError, JSONDecodeError) as e:
-                return HttpResponse(status=400)
-            tutoring_list = [Tutoring for Tutoring in Tutoring.objects.filter(tutee_id=tuteeid).values()]
+            tutoring_list = [Tutoring for Tutoring in Tutoring.objects.filter(tutee_id=tutee_id).values()]
             return JsonResponse(tutoring_list,status=201,safe=False)
         elif request.method == 'POST':
             try:
@@ -330,16 +303,10 @@ def tutee_page_tutoring(request,tuteemanager_id):
                 option_subject = req_data['subject']
                 option_age_min = req_data['minAge']
                 option_age_max = req_data['maxAge']
-                tuteeid = req_data['ChildID']
             except (KeyError, JSONDecodeError) as e:
                 return HttpResponse(status=400)
-            tutee1=Tutee.objects.get(id=tuteeid)
+            tutee1=Tutee.objects.get(id=tutee_id)
             tutor_list=Tutor.objects.filter(subject=option_subject).filter(gender=option_gender).filter(age__gte=option_age_min).filter(age__lte=option_age_max)
-            if tutor_list.exists():
-                for tutor_target in tutor_list.iterator():
-                    target=0
-                    tutor_target.update(distance=get_distance(tutor_target[target]['startX'],tutor_target[target]['startY'],tutor_target[target]['endX'],tutor_target[target]['endY'],
-                    tutee1.address['X'],tutee1.address['Y']))
             sorted_tutor_list=tutor_list.order_by('distance')    
             return JsonResponse(sorted_tutor_list,status=201,safe=False)
         else:

@@ -14,9 +14,9 @@ urlpatterns = [
     path('tutor/review/<int:tutor_id>/',views.tutor_page_review,name='tutor_review'),
     path('tutor/tutoring/<int:tutor_id>/',views.tutor_page_tutoring,name='tutor_tutoring'),
     
-    path('tutee/<int:tuteemanager_id>/',views.tutee_page_profile,name='tutee_profile'),
-    path('tutee/review/<int:tuteemanager_id>/',views.tutee_page_review,name='tutee_profile'),
-    path('tutee/tutoring/<int:tuteemanager_id>/',views.tutee_page_tutoring,name='tutee_profile'),
+    path('tutee/<int:tutee_id>/',views.tutee_page_profile,name='tutee_profile'),
+    path('tutee/review/<int:tutee_id>/',views.tutee_page_review,name='tutee_profile'),
+    path('tutee/tutoring/<int:tutee_id>/',views.tutee_page_tutoring,name='tutee_profile'),
 
     path('tutee/request/<int:tutee_id>/',views.tutee_request_tutoring,name='tutee_request'),
 
