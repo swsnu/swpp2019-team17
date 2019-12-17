@@ -8,6 +8,7 @@ import Header from '../../Header/header';
 import Navbar from "../../Navbar";
 import Footer from "../../Footer";
 import RequestTuteeComponent from "./RequestTuteeComponent";
+import TutorProfileUI from './TutorProfileUI';
 
 // bootstrap
 import Button from 'react-bootstrap/Button';
@@ -72,21 +73,7 @@ class RequestFromTutee extends Component {
     return (
       <>
       <Container>
-        <Header isLoggedIn={true} />
-        <Row>
-          <Col xs={2}>
-          </Col>
-          <Col>
-            <Jumbotron>
-              <div className="profiletutor">
-                <img src={image} className="photo" />
-                <h2>
-                  ID:{tutor.username}
-                </h2>
-              </div>
-            </Jumbotron>
-          </Col>
-        </Row>
+      <TutorProfileUI username={tutor.username}/>
         <Row>
           <Col xs={2}>
             <div className="button-list">

@@ -6,6 +6,8 @@ import image from '../image.png';
 import './ProfileTutor.css';
 import Header from '../../Header/header';
 import Footer from "../../Footer";
+import TutorProfileUI from './TutorProfileUI';
+
 // bootstrap
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
@@ -56,21 +58,7 @@ class ProfileTutor extends Component {
     return (
       <>
       <Container>
-        <Header isLoggedIn={true} />
-        <Row>
-          <Col xs={2}>
-          </Col>
-          <Col>
-            <Jumbotron>
-              <div className="profiletutor">
-                <img src={image} className="photo" />
-                <h2>
-                  ID:{tutor.username}
-                </h2>
-              </div>
-            </Jumbotron>
-          </Col>
-        </Row>
+      <TutorProfileUI image={image} username={tutor.username}/>
         <Row>
           <Col xs={2}>
             <div className="button-list">
