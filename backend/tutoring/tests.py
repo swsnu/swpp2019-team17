@@ -122,17 +122,6 @@ class ViewTest(TestCase):
         response=client.delete('/api/tutee/request/1/')
         self.assertEqual(response.status_code,405)
 
-
-class APITest(TestCase):
-    def test_api(self):
-        client=Client()
-        response=client.get('/api/address/wherearewe/')
-        self.assertEqual(response.status_code,404)
-        response=client.get('/api/address/관악로25길11/')
-        self.assertEqual(response.status_code,200)
-        response = client.delete('/api/token/')
-        self.assertEqual(response.status_code, 403)
-        
         
 
 class ModelTest(TestCase):
