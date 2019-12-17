@@ -314,9 +314,9 @@ def tutee_page_tutoring(request,tutee_id):
 
 def get_distance(start_x,start_y,end_x,end_y,point_x,point_y):
     if start_x==end_x and start_y==end_y:
-        return (abs(start_x-point_x)**2+abs(start_y-end_y)**2)**0.5
+        return (abs(start_x-point_x)**2+abs(start_y-point_y)**2)**0.5
     else:
-        return (abs(end_x-point_x)**2+abs(end_y-end_y)**2)**0.5
+        return (abs(end_x-point_x)**2+abs(end_y-point_y)**2)**0.5
 
 def tutee_request_tutoring(request,tutee_id):
     if not request.user.is_authenticated:
@@ -329,6 +329,7 @@ def tutee_request_tutoring(request,tutee_id):
                 option_subject = req_data['subject']
             except (KeyError, JSONDecodeError) as e:
                 return HttpResponse(status=400)
+            tutee1=Tutee.objects.get(id=tutee_id)
             tutoring_new = Tutoring()
             tutoring_new.tutee=tutee1
             tutoring_new.tutor=Tutor.objects.get(id=tutorid)
