@@ -187,27 +187,6 @@ def tutor_page_profile(request,tutor_id):
         }
         '''
         return HttpResponse(status=200)
-        '''
-    elif request.method == 'POST':
-        try:
-            req_data = json.loads(request.body.decode())
-            name = req_data['name']
-            age = req_data['age']
-            subject = req_data['subject']
-            phonenumber = req_data['phonenumber']
-            gender = req_data['gender']
-        except (KeyError, JSONDecodeError) as e:
-            return HttpResponse(status=400)
-        tutor=Tutor.objects.get(id=tutor_id)
-
-        tutor.name = name
-        tutor.age = age
-        tutor.subject = subject
-        tutor.gender = gender
-        tutor.phonenumber = phonenumber
-        tutor.save()
-        return HttpResponse(status=201)
-        '''
     else:    
         return HttpResponse(status=405) 
 
